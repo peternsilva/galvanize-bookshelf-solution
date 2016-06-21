@@ -1,0 +1,14 @@
+{
+  "name": "galvanize-reads",
+  "version": "0.1.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ken McGrady <ken.mcgrady@gmail.com>",
+  "license": "MIT"
+}
