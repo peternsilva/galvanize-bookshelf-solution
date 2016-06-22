@@ -10,7 +10,7 @@ const knex = require('knex')(knexConfig);
 router.get('/', (req, res, next) => {
   knex('authors').select()
     .then((authors) => {
-      res.json(authors);
+      res.send(authors);
     })
     .catch((err) => {
       return next(err);
@@ -18,9 +18,10 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  knex('authors').insert(req.body)
-    .then((author) => {
-      res.json(author);
+  knex('authors').returning('*')
+    .insert(req.body)
+    .then((insertedAuthors) => {
+      res.send(insertedAuthors[0]);
     })
     .catch((err) => {
       return next(err);
@@ -28,10 +29,10 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-  knex('authors').select()
+  knex('authors').first()
     .where('id', req.params.id)
     .then((author) => {
-      res.json(author);
+      res.send(author);
     })
     .catch((err) => {
       return next(err);
@@ -42,7 +43,7 @@ router.put('/:id', (req, res, next) => {
   knex('authors').where('id', req.params.id)
     .update(req.body)
     .then((author) => {
-      res.json(author);
+      res.send(author);
     })
     .catch((err) => {
       return next(err);
@@ -52,8 +53,8 @@ router.put('/:id', (req, res, next) => {
 router.delete('/:id', (req, res, next) => {
   knex('authors').where('id', req.params.id)
     .del()
-    .then((authors) => {
-      res.json(authors);
+    .then((response) => {
+      res.send(response);
     })
     .catch((err) => {
       return next(err);

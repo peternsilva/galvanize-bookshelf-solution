@@ -10,7 +10,7 @@ const knex = require('knex')(knexConfig);
 router.get('/', (req, res, next) => {
   knex('books').select()
     .then((books) => {
-      res.json(books);
+      res.send(books);
     })
     .catch((err) => {
       return next(err);
@@ -18,9 +18,10 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  knex('books').insert(req.body)
-    .then((book) => {
-      res.json(book);
+  knex('books').returning('*')
+    .insert(req.body)
+    .then((insertedBook) => {
+      res.send(insertedBook[0]);
     })
     .catch((err) => {
       return next(err);
@@ -28,10 +29,10 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-  knex('books').select()
+  knex('books').first()
     .where('id', req.params.id)
     .then((book) => {
-      res.json(book);
+      res.send(book);
     })
     .catch((err) => {
       return next(err);
@@ -39,10 +40,11 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-  knex('books').where('id', req.params.id)
+  knex('books').returning('*')
+    .where('id', req.params.id)
     .update(req.body)
-    .then((book) => {
-      res.json(book);
+    .then((updatedBook) => {
+      res.send(updatedBook[0]);
     })
     .catch((err) => {
       return next(err);
@@ -52,8 +54,8 @@ router.put('/:id', (req, res, next) => {
 router.delete('/:id', (req, res, next) => {
   knex('books').where('id', req.params.id)
     .del()
-    .then((books) => {
-      res.json(books);
+    .then(() => {
+      res.send('Deleted user id', req.params.id);
     })
     .catch((err) => {
       return next(err);
