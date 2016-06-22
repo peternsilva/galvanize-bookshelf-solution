@@ -1,0 +1,1 @@
+window.BONUS_CONFIG = {};

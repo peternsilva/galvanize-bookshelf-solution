@@ -20,10 +20,12 @@ Build the interface for books that accesses the database to create a user.
 
 Add authorization parameters for users.
 
-## Part 5 - Add Le
-
-1. Migrate to allow users to have their own book list.
+## Part 5 - Add User Library
 
 # Deployment
 
-# Bonus
+# Bonuses
+
+* Ability to change the order based on query parameter
+* Add Search
+* Add Privileges to Admin users
