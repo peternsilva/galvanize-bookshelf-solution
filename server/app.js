@@ -18,7 +18,7 @@ app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// app.use('/auth', authRoutes);
+app.use('/auth', authRoutes);
 app.use('/authors', authorRoutes);
 app.use('/books', bookRoutes);
 
@@ -29,8 +29,7 @@ app.use((_req, _res, next) => {
 });
 
 app.use((err, _req, res, _next) => {
-  res.status(err.status || 500);
-  res.send('Error:', err);
+  res.status(err.status || 500).send('Error:', err);
 });
 
 app.listen(port, () => {
