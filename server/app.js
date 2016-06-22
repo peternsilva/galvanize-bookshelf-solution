@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // app.use('/auth', authRoutes);
 app.use('/authors', authorRoutes);
-// app.use('/books', bookRoutes);
+app.use('/books', bookRoutes);
 
 app.use((_req, _res, next) => {
   let err = new Error();
