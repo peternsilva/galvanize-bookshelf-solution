@@ -29,8 +29,10 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
+  const id = Number.parseInt(req.params.id);
+
   knex('books').first()
-    .where('id', req.params.id)
+    .where('id', id)
     .then((book) => {
       res.send(book);
     })
@@ -40,8 +42,10 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
+  const id = Number.parseInt(req.params.id);
+
   knex('books').returning('*')
-    .where('id', req.params.id)
+    .where('id', id)
     .update(req.body)
     .then((updatedBook) => {
       res.send(updatedBook[0]);
@@ -52,10 +56,12 @@ router.put('/:id', (req, res, next) => {
 });
 
 router.delete('/:id', (req, res, next) => {
-  knex('books').where('id', req.params.id)
+  const id = Number.parseInt(req.params.id);
+
+  knex('books').where('id', id)
     .del()
     .then(() => {
-      res.send('Deleted user id', req.params.id);
+      res.send(`Deleted book ${id}`);
     })
     .catch((err) => {
       return next(err);
