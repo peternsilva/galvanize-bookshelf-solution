@@ -1,14 +1,29 @@
 {
-  "name": "galvanize-reads",
-  "version": "0.1.0",
+  "name": "galvanize-bookshelf-server",
+  "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "app.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Ken McGrady <ken.mcgrady@gmail.com>",
-  "license": "MIT"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gschool/galvanize-bookshelf-solution.git"
+  },
+  "author": "Ian Smith",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gschool/galvanize-bookshelf-solution/issues"
+  },
+  "homepage": "https://github.com/gschool/galvanize-bookshelf-solution#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "knex": "^0.11.7",
+    "morgan": "^1.7.0",
+    "pg": "^5.2.0"
+  }
 }
