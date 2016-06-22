@@ -7,7 +7,7 @@ module.exports.up = (knex, Promise) => {
     table.string('genre').notNullable();
     table.text('description').notNullable();
     table.text('cover_url').notNullable();
-    table.integer('authors_id')
+    table.integer('author_id')
       .notNullable()
       .references('id')
       .inTable('authors')
