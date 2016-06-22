@@ -1,8 +1,29 @@
 (function() {
   var imgUrlValid = true;
+  var $xhr;
 
   $('.button-collapse').sideNav();
   $('.modal-trigger').leanModal();
+
+  var hasQueryParams = window.location.search.indexOf('?') >=0;
+  var queryParams = {};
+  if (hasQueryParams) {
+    window.location.search.substr(1).split('&').forEach(function(paramStr) {
+      var param = paramStr.split('=')
+      queryParams[param[0]] = param[1];
+    });
+  }
+
+  if (queryParams.id) {
+    $xhr = $.getJSON(`http://localhost:8000/books/${queryParams.id}`);
+    $xhr.done(function (book) {
+      $('.book-metadata h1').text(book.title);
+      $('.book-metadata h2').text(book.authors_id);
+      $('.book-metadata h3').text('2014');
+      $('.book-metadata p').text(book.description);
+    });
+  }
+
   var $img = $('.book img').on('error', function(event) {
     imgUrlValid = false;
     $(event.target).width(imgWidth);

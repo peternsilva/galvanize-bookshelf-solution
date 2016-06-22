@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const path = require('path');
 const port = process.env.PORT || 8000;
 
 const morgan = require('morgan');
@@ -18,6 +19,7 @@ app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(express.static(path.join('..', 'client')));
 app.use('/auth', authRoutes);
 app.use('/authors', authorRoutes);
 app.use('/books', bookRoutes);
