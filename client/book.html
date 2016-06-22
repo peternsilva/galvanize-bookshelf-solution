@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Galvanize Bookshelf - Books</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+    <!--Import index.css-->
+    <link type="text/css" rel="stylesheet" href="css/book.css"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+  <body>
+    <div class="navbar-fixed">
+      <nav>
+        <div class="nav-wrapper">
+          <a href="index.html" class="brand-logo">Galvanize Bookshelf</a>
+          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="books.html">Books</a></li>
+            <li><a href="authors.html">Authors</a></li>
+            <li><a href="login.html">Login</a></li>
+          </ul>
+          <ul class="side-nav" id="mobile-demo">
+            <li><a href="books.html">Books</a></li>
+            <li><a href="authors.html">Authors</a></li>
+            <li><a href="login.html">Login</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col s12 m5 center-align book">
+            <div>
+              <img src="http://01eba9f59936628a9c10-a672e330d72d3d2e689cb64015c1f8c5.r97.cf2.rackcdn.com/javascript-and-jquery-book-cover.png">
+            </div>
+            <div class="actions">
+              <div>
+                <a class="waves-effect waves-light btn-large add">Add to Library</a>
+              </div>
+              <div>
+                <a class="waves-effect waves-light btn edit">Edit</a>
+                <a class="waves-effect waves-light btn delete modal-trigger" href="#confirm">Delete</a>
+              </div>
+            </div>
+            <div class="save hide">
+              <a class="waves-effect waves-light btn-large save">Save</a>
+            </div>
+          </div>
+          <div class="col s12 m7 book-metadata">
+            <h1>JavaScript &amp; jQuery</h1>
+            <h2>Jon Duckett</h2>
+            <h3>2014</h3>
+            <p class="flow-text">
+              This book was written for anyone who wants to use JavaScript to make their websites a little more interesting, engaging, interactive, or usable. In particular, it is aimed at people who do not have a degree in computer science (well, not yet anyway). Programming books can be intimidating, so we wanted to create a book that taught readers how to use JavaScript in a gentler, more visual way. And importantly, we did not want to assume that the reader had any experience of programming beyond the ability to create a web page in HTML and CSS. (After all, many kinds of people are creating websites these days, and not all of us come from a programming background.) So, if you have ever struggled to get a script working on your web pages, want a better idea of how to customize scripts, or want to write your own scripts from scratch, this book was written for you. We can't promise to remove the unfamiliar terms that programmers use, but we do tell you what they mean (with the aid of visual examples and diagrams) so that JavaScript won't seem like a foreign language any more.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div id="confirm" class="modal">
+        <div class="modal-content">
+          <h4>Are you sure you want to delete?</h4>
+          <p>You will be unable to undo this operation</p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat confirm-delete"><strong>Yes, Delete</strong></a>
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat reject-delete">No, Do Not Delete</a>
+        </div>
+      </div>
+    </main>
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script src="js/bonuses.js"></script>
+    <script src="js/book.js"></script>
+  </body>
+</html>
