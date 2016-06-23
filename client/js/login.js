@@ -2,6 +2,10 @@
   'use strict';
 
   $('.button-collapse').sideNav();
+  if(window.COOKIES.userId) {
+    return window.location.href = '/';
+  }
+
   $('.login').click(function(event) {
     var email = $('#email').val().trim();
     var password = $('#password').val();

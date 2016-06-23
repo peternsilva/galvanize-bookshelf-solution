@@ -1,36 +1,13 @@
 (function() {
   'use strict';
 
-  $('.button-collapse').sideNav();
-  var cookies = {};
-  document.cookie.split('; ').forEach(function(prop) {
-    var propKey = prop.split('=')[0];
-    var propValue = prop.split('=')[1];
-    cookies[propKey] = propValue;
-  });
 
-  if(cookies.userId) {
-    var h1 = $('<h1>').text('Welcome user!');
-    $('main .container').replaceWith(h1);
 
-    $('.session').text('Logout').click(function(event) {
-      var $xhr = $.ajax({
-        url: 'http://localhost:8000/users/authentication',
-        type: 'DELETE',
-      });
-
-      $xhr.done(function() {
-        if($xhr.status !== 200) {
-          return Materialize.toast('Unable to log out. Please try again.');
-        }
-        
-        window.location.href = '/';
-      });
-
-      $xhr.fail(function() {
-        Materialize.toast('Unable to log out. Please try again.');
-      });
-    });
+  if(window.COOKIES.userId) {
+    var h1 = $('<div class="container">')
+      .append($('<h1>').text('Welcome user!'));
+    $('main .container')
+      .replaceWith(h1);
     return;
   }
 
