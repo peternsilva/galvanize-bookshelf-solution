@@ -1,4 +1,6 @@
 (function() {
+  $('.button-collapse').sideNav();
+  
   var $xhr = $.getJSON('http://localhost:8000/books')
   $xhr.done(function (data) {
     var $book, $img, $a, $link;

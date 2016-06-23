@@ -21,6 +21,8 @@
       $('.book-metadata h2').text(book.authors_id);
       $('.book-metadata h3').text('2014');
       $('.book-metadata p').text(book.description);
+      $('.book img').attr('src', book.cover_url)
+        .attr('alt', book.title);
     });
   }
 
@@ -113,6 +115,10 @@
       return Materialize.toast('Please enter a valid 4 digit year', 2000);
     }
 
+    if(!$summaryTextarea.text().trim()) {
+      return Materialize.toast('Please enter a summary', 2000);
+    }
+
     if(!$imgUrl.val().trim()) {
       return Materialize.toast('Please enter an image url', 2000);
     }
@@ -121,23 +127,42 @@
       return Materialize.toast('Please enter a valid image url', 2000);
     }
 
-    var $titleH1 = $('<h1>').text($titleInput.val().trim());
-    var $authorH2 = $('<h2>').text($authorSelect.find(':selected').text());
-    var $publishYearH3 = $('<h3>').text($publishYearInput.val().trim());
-    var $summaryP = $('<p>').addClass('flow-text')
-      .text($summaryTextarea.text());
+    var $putXhr = $.ajax({
+      url: `/books/${queryParams.id}`,
+      type: 'PUT',
+      data: {
+        title: $titleInput.val().trim(),
+        genre: 'Python',
+        cover_url: $imgUrl.val().trim(),
+        authors_id: $authorSelect.children('select').val(),
+        description: $summaryTextarea.text().trim()
+      }
+    });
+    $putXhr.done(function(updatedBook) {
+      if($putXhr.status !== 200) {
+        Materialize.toast('Save failed. Please try again.', 2000);
+      }
+      var $titleH1 = $('<h1>').text($titleInput.val().trim());
+      var $authorH2 = $('<h2>').text($authorSelect.find(':selected').text());
+      var $publishYearH3 = $('<h3>').text($publishYearInput.val().trim());
+      var $summaryP = $('<p>').addClass('flow-text')
+        .text($summaryTextarea.text());
 
-    var imgUrl = $imgUrl.val();
+      var imgUrl = $imgUrl.val();
 
-    $titleInput.replaceWith($titleH1);
-    $authorSelect.replaceWith($authorH2);
-    $publishYearInput.replaceWith($publishYearH3);
-    $summaryTextarea.replaceWith($summaryP);
-    $imgUrl.remove();
+      $titleInput.replaceWith($titleH1);
+      $authorSelect.replaceWith($authorH2);
+      $publishYearInput.replaceWith($publishYearH3);
+      $summaryTextarea.replaceWith($summaryP);
+      $imgUrl.remove();
 
-    // Replace Actions with Save button
-    $('.save').addClass('hide');
-    $('.actions').removeClass('hide');
+      // Replace Actions with Save button
+      $('.save').addClass('hide');
+      $('.actions').removeClass('hide');
+    });
+    $putXhr.fail(function(result) {
+      Materialize.toast('Save failed. Please try again.', 2000);
+    });
   });
 
   $('.modal a.confirm-delete').click(function (event) {
