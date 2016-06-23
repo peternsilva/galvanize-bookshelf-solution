@@ -1,3 +1,7 @@
+.book {
+  height: 350px;
+}
+
 .book img {
   max-width: 100%;
   max-height: 300px;
