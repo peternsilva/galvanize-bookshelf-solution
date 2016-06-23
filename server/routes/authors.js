@@ -41,6 +41,19 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
+router.get('/:id/books', (req, res, next) => {
+  const id = Number.parseInt(req.params.id);
+
+  knex('books')
+    .where('author_id', id)
+    .then((books) => {
+      res.send(books);
+    })
+    .catch((err) => {
+      return next(err);
+    });
+});
+
 router.put('/:id', (req, res, next) => {
   const id = Number.parseInt(req.params.id);
 

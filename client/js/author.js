@@ -17,11 +17,39 @@
   if (queryParams.id) {
     $xhr = $.getJSON(`http://localhost:8000/authors/${queryParams.id}`);
     $xhr.done(function (authorResponse) {
+      if ($xhr.status !== 200) {
+        return Materialize.toast('Unable to retrieve author. Please try again.', 2000);
+      }
       author = authorResponse;
-      $('.author-metadata h1').text(`${author.first_name} ${author.last_name}`);
-      $('.author-metadata p').text(author.biography);
-      $('.author img').attr('src', author.portrait_url)
-        .attr('alt', `${author.first_name} ${author.last_name}`);
+
+      var $booksXhr = $.getJSON(`http://localhost:8000/authors/${queryParams.id}/books`)
+
+      $booksXhr.done(function (books) {
+        if ($booksXhr.status !== 200) {
+          return Materialize.toast('Unable to retrieve books for author. Please try again.', 2000);
+        }
+
+        $('.author-metadata h1').text(`${author.first_name} ${author.last_name}`);
+        $('.author-metadata p').text(author.biography);
+        $('.author img').attr('src', author.portrait_url)
+          .attr('alt', `${author.first_name} ${author.last_name}`);
+        $('.author-metadata .books').append(books.map(function(book) {
+          var row = $('<div class="row book">');
+          var firstCol = $('<div class="col s10">');
+          var secondCol = $('<div class="col s2">');
+          var title = $('<a>')
+            .attr('href', `book.html?id=${book.id}`)
+            .text(book.title);
+          var img = $('<img>')
+            .attr('src', book.cover_url)
+            .attr('alt', book.title);
+
+          row.append(firstCol.append(title));
+          row.append(secondCol.append(img));
+
+          return row;
+        }));
+      });
     });
   }
 

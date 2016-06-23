@@ -30,7 +30,10 @@
         }
 
         $('.book-metadata h1').text(book.title);
-        $('.book-metadata h2').text(`${author.first_name} ${author.last_name}`);
+        $('.book-metadata h2')
+          .append($('<a>')
+            .attr('href', `author.html?id=${book.author_id}`)
+            .text(`${author.first_name} ${author.last_name}`));
         $('.book-metadata h3').text('2014');
         $('.book-metadata p').text(book.description);
         $('.book img').attr('src', book.cover_url)
@@ -168,8 +171,13 @@
       if($putXhr.status !== 200) {
         Materialize.toast('Save failed. Please try again.', 2000);
       }
+
+      book = updatedBook;
       var $titleH1 = $('<h1>').text($titleInput.val().trim());
-      var $authorH2 = $('<h2>').text($authorSelect.find(':selected').text());
+      var $authorH2 = $('<h2>')
+        .append($('<a>')
+          .attr('href', `author.html?id=${book.author_id}`)
+          .text($authorSelect.find(':selected').text()));
       var $publishYearH3 = $('<h3>').text($publishYearInput.val().trim());
       var $summaryP = $('<p>').addClass('flow-text')
         .text($summaryTextarea.text());
