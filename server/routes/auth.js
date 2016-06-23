@@ -8,6 +8,7 @@ const knexConfig = require('../knexfile')[environment];
 const knex = require('knex')(knexConfig);
 
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 router.get('/login', (req, res, next) => {
   // render login page
@@ -17,14 +18,28 @@ router.post('/login', (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  knex('users').where('email', email)
-    .then((data) => {
-      console.log(data[0]);
+  knex('users').first()
+    .where('email', email)
+    .then((user) => {
+      let data = {
+        id: user.id
+      };
+      let secret = process.env.SECRET || 'secret';
+      let options = {
+        expiresInMinutes: 15
+      };
+      
+      jwt.sign(data, secret, options, (err, token) => {
+        if (err) {
+          return next(err);
+        }
+
+        res.send(token);
+      });
     })
     .catch((err) => {
       return next(err);
     });
-  // log user in if authenticated
 });
 
 router.get('/register', (req, res, next) => {

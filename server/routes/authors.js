@@ -55,10 +55,9 @@ router.put('/:id', (req, res, next) => {
 });
 
 router.delete('/:id', (req, res, next) => {
-  let id = Number.parseInt(req.params.id);
+  const id = Number.parseInt(req.params.id);
 
-  knex('authors').returning('*')
-    .where('id', id)
+  knex('authors').where('id', id)
     .del()
     .then(() => {
       res.send(`Successfully deleted ${id}`);
