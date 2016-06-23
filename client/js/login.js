@@ -34,7 +34,7 @@
         return Materialize.toast('User could not be logged in. Please try again.');
       }
 
-      Materialize.toast('User Logged in', 2000);
+      window.location.href = '/';
     });
 
     $xhr.fail(function() {
