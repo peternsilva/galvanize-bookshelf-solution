@@ -41,7 +41,8 @@ router.post('/authentication', (req, res, next) => {
           lastName: user.last_name
         };
 
-        res.redirect('/');
+        res.cookie('userId', user.id);
+        res.sendStatus(200);
       });
       // let data = {
       //   id: user.id,
@@ -102,7 +103,8 @@ router.post('/', (req, res, next) => {
 
 router.delete('/authentication', (req, res, next) => {
   req.session = null;
-  res.redirect('/');
+  res.clearCookie('userId');
+  res.sendStatus(200);
 });
 
 module.exports = router;
