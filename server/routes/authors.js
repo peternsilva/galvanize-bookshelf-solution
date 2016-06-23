@@ -46,8 +46,8 @@ router.put('/:id', (req, res, next) => {
 
   knex('authors').where('id', id)
     .update(req.body)
-    .then((updatedAuthor) => {
-      res.send(updatedAuthor);
+    .then((updatedAuthors) => {
+      res.send(updatedAuthors[0]);
     })
     .catch((err) => {
       return next(err);

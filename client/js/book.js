@@ -18,7 +18,7 @@
     $xhr = $.getJSON(`http://localhost:8000/books/${queryParams.id}`);
     $xhr.done(function (book) {
       $('.book-metadata h1').text(book.title);
-      $('.book-metadata h2').text(book.authors_id);
+      $('.book-metadata h2').text(book.author_id);
       $('.book-metadata h3').text('2014');
       $('.book-metadata p').text(book.description);
       $('.book img').attr('src', book.cover_url)
@@ -130,14 +130,16 @@
     var $putXhr = $.ajax({
       url: `/books/${queryParams.id}`,
       type: 'PUT',
-      data: {
+      contentType: 'application/json',
+      data: JSON.stringify({
         title: $titleInput.val().trim(),
         genre: 'Python',
         cover_url: $imgUrl.val().trim(),
-        authors_id: $authorSelect.children('select').val(),
+        author_id: Number.parseInt($authorSelect.find(':selected').text()),
         description: $summaryTextarea.text().trim()
-      }
+      })
     });
+
     $putXhr.done(function(updatedBook) {
       if($putXhr.status !== 200) {
         Materialize.toast('Save failed. Please try again.', 2000);
@@ -166,7 +168,20 @@
   });
 
   $('.modal a.confirm-delete').click(function (event) {
-    window.location.href = 'books.html';
+    var $delXhr = $.ajax({
+      url: `/books/${queryParams.id}`,
+      type: 'DELETE'
+    });
+    $delXhr.done(function() {
+      if($delXhr.status !== 200) {
+        Materialize.toast('Delete failed. Please try again.', 2000);
+      }
+
+      window.location.href = 'books.html';
+    });
+    $delXhr.fail(function(result) {
+      Materialize.toast('Delete failed. Please try again.', 2000);
+    });
   });
 
   $('a.add').click(function (event) {

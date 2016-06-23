@@ -1,8 +1,30 @@
 (function() {
   var imgUrlValid = true;
+  var author = {};
 
   $('.button-collapse').sideNav();
   $('.modal-trigger').leanModal();
+
+  var hasQueryParams = window.location.search.indexOf('?') >=0;
+  var queryParams = {};
+  if (hasQueryParams) {
+    window.location.search.substr(1).split('&').forEach(function(paramStr) {
+      var param = paramStr.split('=')
+      queryParams[param[0]] = param[1];
+    });
+  }
+
+  if (queryParams.id) {
+    $xhr = $.getJSON(`http://localhost:8000/authors/${queryParams.id}`);
+    $xhr.done(function (authorResponse) {
+      author = authorResponse;
+      $('.author-metadata h1').text(`${author.first_name} ${author.last_name}`);
+      $('.author-metadata p').text(author.biography);
+      $('.author img').attr('src', author.portrait_url)
+        .attr('alt', `${author.first_name} ${author.last_name}`);
+    });
+  }
+
   var $img = $('.author img').on('error', function(event) {
     imgUrlValid = false;
     $(event.target).width(imgWidth);
@@ -18,11 +40,11 @@
 
     var $firstNameInput = $('<input type="text">')
       .addClass('first-name')
-      .val($name.text().split(' ')[0]);
+      .val(author.first_name);
 
     var $lastNameInput = $('<input type="text">')
       .addClass('last-name')
-      .val($name.text().split(' ')[1]);
+      .val(author.last_name);
 
     var inputs = [$firstNameInput, $lastNameInput];
     var $inputRow = $('<div class="row name">');
@@ -92,29 +114,64 @@
       return Materialize.toast('Please enter a valid image url', 2000);
     }
 
-    var $nameH1 = $('<h1>')
-      .text(`${$fnameInput.val().trim()} ${$lnameInput.val().trim()}`);
-    var $biographyP = $('<p>').addClass('flow-text')
-      .text($biographyTextarea.text());
+    var $putXhr = $.ajax({
+      url: `/authors/${queryParams.id}`,
+      type: 'PUT',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        first_name: $fnameInput.val().trim(),
+        last_name: $lnameInput.val().trim(),
+        biography: $biographyTextarea.text().trim(),
+        portrait_url: $imgUrl.val().trim()
+      })
+    });
 
-    $('.author-metadata .name').replaceWith($nameH1);
-    $biographyTextarea.replaceWith($biographyP);
-    $imgUrl.remove();
+    $putXhr.done(function(updatedAuthor) {
+      if($putXhr.status !== 200) {
+        Materialize.toast('Save failed. Please try again.', 2000);
+      }
 
-    // Replace Actions with Save button
-    $('.save').addClass('hide');
-    $('.actions').removeClass('hide');
+      author = updatedAuthor;
+      var $nameH1 = $('<h1>')
+        .text(`${$fnameInput.val().trim()} ${$lnameInput.val().trim()}`);
+      var $biographyP = $('<p>').addClass('flow-text')
+        .text($biographyTextarea.text());
+
+      $('.author-metadata .name').replaceWith($nameH1);
+      $biographyTextarea.replaceWith($biographyP);
+      $imgUrl.remove();
+
+      // Replace Actions with Save button
+      $('.save').addClass('hide');
+      $('.actions').removeClass('hide');
+    });
+    $putXhr.fail(function(result) {
+      Materialize.toast('Save failed. Please try again.', 2000);
+    });
   });
 
   $('.modal a.confirm-delete').click(function (event) {
-    window.location.href = 'authors.html';
+    var $delXhr = $.ajax({
+      url: `/authors/${queryParams.id}`,
+      type: 'DELETE'
+    });
+    $delXhr.done(function() {
+      if($delXhr.status !== 200) {
+        Materialize.toast('Delete failed. Please try again.', 2000);
+      }
+
+      window.location.href = 'authors.html';
+    });
+    $delXhr.fail(function(result) {
+      Materialize.toast('Delete failed. Please try again.', 2000);
+    });
   });
 
   $('a.delete').click(function (event) {
     if($('.book').length > 0) {
       return Materialize.toast('Please remove all books for this author', 2000);
     }
-    
+
     $('#confirm').openModal();
   });
 }());
