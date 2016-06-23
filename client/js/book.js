@@ -29,6 +29,10 @@
           return Materialize.toast('Could not download author. Please try again', 2000);
         }
 
+        if(window.COOKIES.userId) {
+          $('.add').removeClass('hide');
+        }
+
         $('.book-metadata h1').text(book.title);
         $('.book-metadata h2')
           .append($('<a>')
@@ -214,6 +218,21 @@
   });
 
   $('a.add').click(function (event) {
+    $xhr = $.ajax({
+      url: `http://localhost:8000/users/${window.COOKIES.userId}/books/${book.id}`,
+      type: 'POST'
+    });
 
+    $xhr.done(function() {
+      if($xhr.status !== 200) {
+        return Materialize.toast('Could not add book. Please try again.', 2000);
+      }
+
+      $('.add').text('Remove From Library');
+    });
+
+    $xhr.fail(function() {
+      Materialize.toast('Could not add book. Please try again.', 2000);
+    });
   });
 }());

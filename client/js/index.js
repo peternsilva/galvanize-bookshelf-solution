@@ -1,14 +1,35 @@
 (function() {
   'use strict';
 
-
-
   if(window.COOKIES.userId) {
-    var h1 = $('<div class="container">')
-      .append($('<h1>').text('Welcome user!'));
-    $('main .container')
-      .replaceWith(h1);
-    return;
+    var container = $('<div class="container">');
+    var h1 = $('<h1>').text('My Library');
+    var row = $('<div class="row">');
+
+    container.append(h1);
+    container.append(row);
+
+    var $xhr = $.getJSON(`http://localhost:8000/users/${window.COOKIES.userId}/books`);
+    $xhr.done(function (books) {
+      if($xhr.status !== 200) {
+        return Materialize.toast('Unable to retrieve books. Please try again.', 2000);
+      }
+
+      var $book, $img, $a, $link;
+      for(var book of books) {
+        $book = $('<div class="col s12 m4 l3 center-align book">');
+        $a = $(`<a href="book.html?id=${book.id}">`);
+        $link = $('<div>')
+          .append($a.clone().text(book.title));
+        $img = $('<img>').attr('src', book.cover_url).attr('alt', book.title);
+
+        $book.append($('<div>').append($a.append($img)));
+        $book.append($link);
+        row.append($book);
+      }
+
+      $('main .container').replaceWith(container);
+    });
   }
 
   $('.register').click(function(event) {
