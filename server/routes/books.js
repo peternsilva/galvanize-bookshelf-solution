@@ -8,8 +8,7 @@ const knexConfig = require('../knexfile')[environment];
 const knex = require('knex')(knexConfig);
 
 router.get('/', (req, res, next) => {
-  knex('books').select()
-    .then((books) => {
+  knex('books').then((books) => {
       res.send(books);
     })
     .catch((err) => {

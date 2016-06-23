@@ -48,8 +48,7 @@ router.post('/', (req, res, next) => {
 router.get('/:id/books', (req, res, next) => {
   const id = Number.parseInt(req.params.id);
 
-  knex('books')
-    .innerJoin('users_books', 'users_books.book_id', 'books.id')
+  knex('books').innerJoin('users_books', 'users_books.book_id', 'books.id')
     .where('users_books.user_id', id)
     .then((books) => {
       res.send(books);

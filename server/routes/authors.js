@@ -8,8 +8,7 @@ const knexConfig = require('../knexfile')[environment];
 const knex = require('knex')(knexConfig);
 
 router.get('/', (req, res, next) => {
-  knex('authors').select()
-    .then((authors) => {
+  knex('authors').then((authors) => {
       res.send(authors);
     })
     .catch((err) => {
@@ -44,8 +43,7 @@ router.get('/:id', (req, res, next) => {
 router.get('/:id/books', (req, res, next) => {
   const id = Number.parseInt(req.params.id);
 
-  knex('books')
-    .where('author_id', id)
+  knex('books').where('author_id', id)
     .then((books) => {
       res.send(books);
     })
