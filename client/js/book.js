@@ -34,7 +34,7 @@
           .append($('<a>')
             .attr('href', `author.html?id=${book.author_id}`)
             .text(`${author.first_name} ${author.last_name}`));
-        $('.book-metadata h3').text('2014');
+        $('.book-metadata h3').text(book.genre);
         $('.book-metadata p').text(book.description);
         $('.book img').attr('src', book.cover_url)
           .attr('alt', book.title);
@@ -60,16 +60,16 @@
 
       var $title = $('.book-metadata h1');
       var $author = $('.book-metadata h2');
-      var $publishedYear = $('.book-metadata h3');
+      var $genre = $('.book-metadata h3');
       var $summary = $('.book-metadata p');
 
       var $titleInput = $('<input type="text">')
         .addClass('title')
         .val($title.text());
 
-      var $publishedYearInput = $('<input type="text">')
-        .addClass('publishYear')
-        .val($publishedYear.text());
+      var $genreInput = $('<input type="text">')
+        .addClass('genre')
+        .val($genre.text());
 
       var $summaryTextArea = $('<textarea>')
         .addClass('flow-text')
@@ -104,7 +104,7 @@
 
       $title.replaceWith($titleInput);
       $author.replaceWith($selectAuthor);
-      $publishedYear.replaceWith($publishedYearInput);
+      $genre.replaceWith($genreInput);
       $summary.replaceWith($summaryTextArea);
       $img.after($imgUrl);
 
@@ -122,7 +122,7 @@
     var $titleInput = $('.book-metadata .title');
     var $authorSelect = $('.book-metadata div.author');
     var $titleInput = $('.book-metadata .title');
-    var $publishYearInput = $('.book-metadata .publishYear');
+    var $genreInput = $('.book-metadata .genre');
     var $summaryTextarea = $('.book-metadata textarea');
     var $imgUrl = $('.book .img-url');
 
@@ -134,12 +134,8 @@
       return Materialize.toast('Please add an author first', 2000);
     }
 
-    if(!$publishYearInput.val().trim()) {
-      return Materialize.toast('Please enter a year', 2000);
-    }
-
-    if(!/^\d{4}$/.test($publishYearInput.val().trim())) {
-      return Materialize.toast('Please enter a valid 4 digit year', 2000);
+    if(!$genreInput.val().trim()) {
+      return Materialize.toast('Please enter a genre', 2000);
     }
 
     if(!$summaryTextarea.text().trim()) {
@@ -160,7 +156,7 @@
       contentType: 'application/json',
       data: JSON.stringify({
         title: $titleInput.val().trim(),
-        genre: 'Python',
+        genre: $genreInput.val().trim(),
         cover_url: $imgUrl.val().trim(),
         author_id: Number.parseInt($authorSelect.find(':selected').attr('value')),
         description: $summaryTextarea.text().trim()
@@ -178,7 +174,7 @@
         .append($('<a>')
           .attr('href', `author.html?id=${book.author_id}`)
           .text($authorSelect.find(':selected').text()));
-      var $publishYearH3 = $('<h3>').text($publishYearInput.val().trim());
+      var $genreH3 = $('<h3>').text($genreInput.val().trim());
       var $summaryP = $('<p>').addClass('flow-text')
         .text($summaryTextarea.text());
 
@@ -186,7 +182,7 @@
 
       $titleInput.replaceWith($titleH1);
       $authorSelect.replaceWith($authorH2);
-      $publishYearInput.replaceWith($publishYearH3);
+      $genreInput.replaceWith($genreH3);
       $summaryTextarea.replaceWith($summaryP);
       $imgUrl.remove();
 
@@ -194,6 +190,7 @@
       $('.save').addClass('hide');
       $('.actions').removeClass('hide');
     });
+
     $putXhr.fail(function(result) {
       Materialize.toast('Save failed. Please try again.', 2000);
     });

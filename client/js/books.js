@@ -1,10 +1,14 @@
 (function() {
   $('.button-collapse').sideNav();
-  
+
   var $xhr = $.getJSON('http://localhost:8000/books')
-  $xhr.done(function (data) {
+  $xhr.done(function (books) {
+    if($xhr.status !== 200) {
+      return Materialize.toast('Unable to retrieve books. Please try again.', 2000);
+    }
+
     var $book, $img, $a, $link;
-    for(var book of data) {
+    for(var book of books) {
       $book = $('<div class="col s12 m4 l3 center-align book">');
       $a = $(`<a href="book.html?id=${book.id}">`);
       $link = $('<div>')

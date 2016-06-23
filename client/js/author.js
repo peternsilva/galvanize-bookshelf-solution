@@ -3,7 +3,6 @@
   var author = {};
 
   $('.button-collapse').sideNav();
-  $('.modal-trigger').leanModal();
 
   var hasQueryParams = window.location.search.indexOf('?') >=0;
   var queryParams = {};
@@ -108,9 +107,6 @@
     $biography.replaceWith($biographyTextarea);
     $img.after($imgUrl);
 
-    // Initialize the select
-    $('select').material_select();
-
     // Replace Actions with Save button
     $('.actions').addClass('hide');
     $('.save').removeClass('hide');
@@ -183,6 +179,7 @@
       url: `/authors/${queryParams.id}`,
       type: 'DELETE'
     });
+
     $delXhr.done(function() {
       if($delXhr.status !== 200) {
         Materialize.toast('Delete failed. Please try again.', 2000);
