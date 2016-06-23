@@ -17,8 +17,16 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+  const book = {
+    title: req.body.title.trim(),
+    genre: req.body.genre.trim(),
+    description: req.body.description.trim(),
+    cover_url: req.body.coverUrl.trim(),
+    author_id: req.body.authorId
+  };
+
   knex('books').returning('*')
-    .insert(req.body)
+    .insert(book)
     .then((insertedBook) => {
       res.send(insertedBook[0]);
     })

@@ -75,6 +75,23 @@ router.post('/:userId/books/:bookId', (req, res, next) => {
     });
 });
 
+router.delete('/:userId/books/:bookId', (req, res, next) => {
+  const userId = req.params.userId;
+  const bookId = req.params.bookId;
+
+  knex('users_books').where({
+      user_id: userId,
+      book_id: bookId
+    })
+    .del()
+    .then(() => {
+      res.send(`Deleted book from your library.`);
+    })
+    .catch((err) => {
+      return next(err);
+    });
+});
+
 router.post('/authentication', (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
