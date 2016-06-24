@@ -18,12 +18,18 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   const book = {
-    title: req.body.title.trim(),
-    genre: req.body.genre.trim(),
-    description: req.body.description.trim(),
-    cover_url: req.body.coverUrl.trim(),
+    title: req.body.title,
+    genre: req.body.genre,
+    description: req.body.description,
+    cover_url: req.body.coverUrl,
     author_id: req.body.authorId
   };
+
+  if (book.title.trim() === '') {
+    next(new Error('Please insert title.'));
+  } else if (book.genre.trim() === '') {
+    next(new Error('Please insert genre.'));
+  }
 
   knex('books').returning('*')
     .insert(book)

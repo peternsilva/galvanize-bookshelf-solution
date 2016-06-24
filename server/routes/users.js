@@ -58,6 +58,27 @@ router.get('/:id/books', (req, res, next) => {
     });
 });
 
+router.get('/:userId/books/:bookId', (req, res, next) => {
+  const userId = Number.parseInt(req.params.userId);
+  const bookId = Number.parseInt(req.params.bookId);
+
+  knex('books').innerJoin('users_books', 'users_books.book_id', 'books.id')
+    .where({
+      'books.id': bookId,
+      'users_books.user_id': userId
+    })
+    .then((books) => {
+      if (!books.length) {
+        return res.sendStatus(404);
+      }
+      
+      res.send(books[0]);
+    })
+    .catch((err) => {
+      return next(err);
+    });
+});
+
 router.post('/:userId/books/:bookId', (req, res, next) => {
   const userId = Number.parseInt(req.params.userId);
   const bookId = Number.parseInt(req.params.bookId);
