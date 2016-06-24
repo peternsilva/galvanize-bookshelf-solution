@@ -90,6 +90,7 @@ router.put('/:id', (req, res, next) => {
   const id = Number.parseInt(req.params.id);
 
   knex('authors').where('id', id)
+    .returning('*')
     .update(author)
     .then((updatedAuthors) => {
       res.send(updatedAuthors[0]);

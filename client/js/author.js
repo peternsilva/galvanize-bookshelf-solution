@@ -36,16 +36,7 @@
     });
   }
 
-  var $img = $('.author img').on('error', function(event) {
-    imgUrlValid = false;
-    $(event.target).width(imgWidth);
-    $(event.target).height(imgHeight)
-  });
-
-  var imgWidth = $img.width();
-  var imgHeight = $img.height();
-
-  $('a.edit').click(function (event) {
+  function toEditMode() {
     var $name = $('.author-metadata h1');
     var $biography = $('.author-metadata p');
 
@@ -69,7 +60,7 @@
     var $biographyTextarea = $('<textarea>')
       .addClass('flow-text')
       .height($biography.height())
-      .text($biography.text().trim());
+      .text(state.author.biography.trim());
 
     var $imgUrl = $('<input type="url">')
       .addClass('img-url')
@@ -94,6 +85,38 @@
     // Replace Actions with Save button
     $('.actions').addClass('hide');
     $('.save').removeClass('hide');
+  }
+
+  function toViewMode() {
+    var $fnameInput = $('.author-metadata .first-name');
+    var $lnameInput = $('.author-metadata .last-name');
+    var $biographyTextarea = $('.author-metadata textarea');
+    var $imgUrl = $('.author .img-url');
+    var $nameH1 = $('<h1>')
+      .text(`${state.author.first_name} ${state.author.last_name}`);
+    var $biographyP = $('<p>').addClass('flow-text')
+      .text(state.author.biography);
+
+    $('.author-metadata .name').replaceWith($nameH1);
+    $biographyTextarea.replaceWith($biographyP);
+    $imgUrl.remove();
+
+    // Replace Actions with Save button
+    $('.save').addClass('hide');
+    $('.actions').removeClass('hide');
+  }
+
+  var $img = $('.author img').on('error', function(event) {
+    imgUrlValid = false;
+    $(event.target).width(imgWidth);
+    $(event.target).height(imgHeight)
+  });
+
+  var imgWidth = $img.width();
+  var imgHeight = $img.height();
+
+  $('a.edit').click(function (event) {
+    toEditMode();
   });
 
   $('a.save').click(function(event) {
@@ -127,10 +150,10 @@
       type: 'PUT',
       contentType: 'application/json',
       data: JSON.stringify({
-        first_name: $fnameInput.val().trim(),
-        last_name: $lnameInput.val().trim(),
+        firstName: $fnameInput.val().trim(),
+        lastName: $lnameInput.val().trim(),
         biography: $biographyTextarea.text().trim(),
-        portrait_url: $imgUrl.val().trim()
+        portraitUrl: $imgUrl.val().trim()
       })
     });
 
@@ -139,27 +162,17 @@
         Materialize.toast('Save failed. Please try again.', 2000);
       }
 
-      author = updatedAuthor;
-      var $nameH1 = $('<h1>')
-        .text(`${$fnameInput.val().trim()} ${$lnameInput.val().trim()}`);
-      var $biographyP = $('<p>').addClass('flow-text')
-        .text($biographyTextarea.text());
-
-      $('.author-metadata .name').replaceWith($nameH1);
-      $biographyTextarea.replaceWith($biographyP);
-      $imgUrl.remove();
-
-      // Replace Actions with Save button
-      $('.save').addClass('hide');
-      $('.actions').removeClass('hide');
+      state.author = updatedAuthor;
+      toViewMode();
     });
+
     $putXhr.fail(function(result) {
       Materialize.toast('Save failed. Please try again.', 2000);
     });
   });
 
   $('.modal a.confirm-delete')
-    .click(window.HELPERS.deleteResource('author'));
+    .click(deleteResource('author'));
 
   $('a.delete').click(function (event) {
     if($('.book').length > 0) {
