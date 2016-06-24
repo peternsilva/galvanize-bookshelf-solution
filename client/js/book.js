@@ -145,8 +145,8 @@
       data: JSON.stringify({
         title: $titleInput.val().trim(),
         genre: $genreInput.val().trim(),
-        cover_url: $imgUrl.val().trim(),
-        author_id: Number.parseInt($authorSelect.find(':selected').attr('value')),
+        coverUrl: $imgUrl.val().trim(),
+        authorId: Number.parseInt($authorSelect.find(':selected').attr('value')),
         description: $summaryTextarea.text().trim()
       })
     });

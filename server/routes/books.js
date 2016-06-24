@@ -77,7 +77,7 @@ router.put('/:id', (req, res, next) => {
     next(new Error('Please insert description.'));
   } else if (book.cover_url.trim() === '') {
     next(new Error('Please insert cover url.'));
-  } else if (Number.isNaN(Number.parseInt(book.author_id)) || book.author_id.trim() === '') {
+  } else if (Number.isNaN(Number.parseInt(book.author_id))) {
     next(new Error('Please insert author id as a number.'));
   }
 
