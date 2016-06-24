@@ -1,37 +1,31 @@
 (function() {
   var imgUrlValid = true;
-  var book;
-  var $xhr;
+  var state = {};
 
   $('.modal-trigger').leanModal();
 
   if (window.QUERY_PARAMETERS.id) {
-    $xhr = $.getJSON(`http://localhost:8000/books/${window.QUERY_PARAMETERS.id}`);
-    $xhr.done(function (bookResponse) {
-      book = bookResponse;
-      if ($xhr.status !== 200) {
-        return Materialize.toast('Could not download book. Please try again', 2000);
-      }
-
-      var $authorXhr = $.getJSON(`http://localhost:8000/authors/${book.author_id}`);
-      $authorXhr.done(function(author) {
-        if ($authorXhr.status !== 200) {
-          return Materialize.toast('Could not download author. Please try again', 2000);
-        }
+    window.HELPERS.getState({
+      book: `http://localhost:8000/books/${window.QUERY_PARAMETERS.id}`
+    }, function(bookState) {
+      window.HELPERS.getState({
+        author: `http://localhost:8000/authors/${bookState.book.author_id}`
+      }, function (authorState) {
+        Object.assign(state, bookState, authorState);
 
         if(window.COOKIES.userId) {
           $('.add').removeClass('hide');
         }
 
-        $('.book-metadata h1').text(book.title);
+        $('.book-metadata h1').text(state.book.title);
         $('.book-metadata h2')
           .append($('<a>')
-            .attr('href', `author.html?id=${book.author_id}`)
-            .text(`${author.first_name} ${author.last_name}`));
-        $('.book-metadata h3').text(book.genre);
-        $('.book-metadata p').text(book.description);
-        $('.book img').attr('src', book.cover_url)
-          .attr('alt', book.title);
+            .attr('href', `author.html?id=${state.book.author_id}`)
+            .text(`${state.author.first_name} ${state.author.last_name}`));
+        $('.book-metadata h3').text(state.book.genre);
+        $('.book-metadata p').text(state.book.description);
+        $('.book img').attr('src', state.book.cover_url)
+          .attr('alt', state.book.title);
       });
     });
   }
@@ -145,7 +139,7 @@
     }
 
     var $putXhr = $.ajax({
-      url: `/books/${queryParams.id}`,
+      url: `/books/${window.QUERY_PARAMETERS.id}`,
       type: 'PUT',
       contentType: 'application/json',
       data: JSON.stringify({
@@ -190,22 +184,8 @@
     });
   });
 
-  $('.modal a.confirm-delete').click(function (event) {
-    var $delXhr = $.ajax({
-      url: `/books/${queryParams.id}`,
-      type: 'DELETE'
-    });
-    $delXhr.done(function() {
-      if($delXhr.status !== 200) {
-        Materialize.toast('Delete failed. Please try again.', 2000);
-      }
-
-      window.location.href = 'books.html';
-    });
-    $delXhr.fail(function(result) {
-      Materialize.toast('Delete failed. Please try again.', 2000);
-    });
-  });
+  $('.modal a.confirm-delete')
+    .click(window.HELPERS.deleteResource('book'));
 
   $('a.add').click(function (event) {
     $xhr = $.ajax({

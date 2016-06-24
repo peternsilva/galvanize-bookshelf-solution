@@ -1,54 +1,38 @@
 (function() {
-  var imgUrlValid = true;
-  var author = {};
+  const {getState, deleteResource, createUrl} = window.HELPERS;
+  let imgUrlValid = true;
+  let state = {};
 
-  $('.button-collapse').sideNav();
+  if (window.QUERY_PARAMETERS.id) {
+    getState({
+      author: createUrl(`/authors/${window.QUERY_PARAMETERS.id}`),
+      books: createUrl(`/authors/${window.QUERY_PARAMETERS.id}/books`)
+    }, function (completedState) {
+      state = completedState;
 
-  var hasQueryParams = window.location.search.indexOf('?') >=0;
-  var queryParams = {};
-  if (hasQueryParams) {
-    window.location.search.substr(1).split('&').forEach(function(paramStr) {
-      var param = paramStr.split('=')
-      queryParams[param[0]] = param[1];
-    });
-  }
+      const {author, books} = state;
+      const name = `${author.first_name} ${author.last_name}`;
 
-  if (queryParams.id) {
-    $xhr = $.getJSON(`http://localhost:8000/authors/${queryParams.id}`);
-    $xhr.done(function (authorResponse) {
-      if ($xhr.status !== 200) {
-        return Materialize.toast('Unable to retrieve author. Please try again.', 2000);
-      }
-      author = authorResponse;
+      $('.author-metadata h1').text(name);
+      $('.author-metadata p').text(author.biography);
+      $('.author img').attr('src', author.portrait_url)
+        .attr('alt', name);
+      $('.author-metadata .books').append(books.map(function(book) {
+        var row = $('<div class="row book">');
+        var firstCol = $('<div class="col s10">');
+        var secondCol = $('<div class="col s2">');
+        var title = $('<a>')
+          .attr('href', `book.html?id=${book.id}`)
+          .text(book.title);
+        var img = $('<img>')
+          .attr('src', book.cover_url)
+          .attr('alt', book.title);
 
-      var $booksXhr = $.getJSON(`http://localhost:8000/authors/${queryParams.id}/books`)
+        row.append(firstCol.append(title));
+        row.append(secondCol.append(img));
 
-      $booksXhr.done(function (books) {
-        if ($booksXhr.status !== 200) {
-          return Materialize.toast('Unable to retrieve books for author. Please try again.', 2000);
-        }
-
-        $('.author-metadata h1').text(`${author.first_name} ${author.last_name}`);
-        $('.author-metadata p').text(author.biography);
-        $('.author img').attr('src', author.portrait_url)
-          .attr('alt', `${author.first_name} ${author.last_name}`);
-        $('.author-metadata .books').append(books.map(function(book) {
-          var row = $('<div class="row book">');
-          var firstCol = $('<div class="col s10">');
-          var secondCol = $('<div class="col s2">');
-          var title = $('<a>')
-            .attr('href', `book.html?id=${book.id}`)
-            .text(book.title);
-          var img = $('<img>')
-            .attr('src', book.cover_url)
-            .attr('alt', book.title);
-
-          row.append(firstCol.append(title));
-          row.append(secondCol.append(img));
-
-          return row;
-        }));
-      });
+        return row;
+      }));
     });
   }
 
@@ -139,7 +123,7 @@
     }
 
     var $putXhr = $.ajax({
-      url: `/authors/${queryParams.id}`,
+      url: `/authors/${window.QUERY_PARAMETERS.id}`,
       type: 'PUT',
       contentType: 'application/json',
       data: JSON.stringify({
@@ -174,23 +158,8 @@
     });
   });
 
-  $('.modal a.confirm-delete').click(function (event) {
-    var $delXhr = $.ajax({
-      url: `/authors/${queryParams.id}`,
-      type: 'DELETE'
-    });
-
-    $delXhr.done(function() {
-      if($delXhr.status !== 200) {
-        Materialize.toast('Delete failed. Please try again.', 2000);
-      }
-
-      window.location.href = 'authors.html';
-    });
-    $delXhr.fail(function(result) {
-      Materialize.toast('Delete failed. Please try again.', 2000);
-    });
-  });
+  $('.modal a.confirm-delete')
+    .click(window.HELPERS.deleteResource('author'));
 
   $('a.delete').click(function (event) {
     if($('.book').length > 0) {

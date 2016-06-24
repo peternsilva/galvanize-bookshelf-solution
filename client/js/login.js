@@ -1,7 +1,6 @@
 (function() {
   'use strict';
 
-  $('.button-collapse').sideNav();
   if(window.COOKIES.userId) {
     return window.location.href = '/';
   }
