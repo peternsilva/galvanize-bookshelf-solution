@@ -29,6 +29,12 @@ router.post('/', (req, res, next) => {
     next(new Error('Please insert title.'));
   } else if (book.genre.trim() === '') {
     next(new Error('Please insert genre.'));
+  } else if (book.description.trim() === '') {
+    next(new Error('Please insert description.'));
+  } else if (book.cover_url.trim() === '') {
+    next(new Error('Please insert cover url.'));
+  } else if (Number.isNaN(Number.parseInt(book.author_id)) || book.author_id.trim() === '') {
+    next(new Error('Please insert author id as a number.'));
   }
 
   knex('books').returning('*')
@@ -55,11 +61,31 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
+  const book = {
+    title: req.body.title,
+    genre: req.body.genre,
+    description: req.body.description,
+    cover_url: req.body.coverUrl,
+    author_id: req.body.authorId
+  };
+
+  if (book.title.trim() === '') {
+    next(new Error('Please insert title.'));
+  } else if (book.genre.trim() === '') {
+    next(new Error('Please insert genre.'));
+  } else if (book.description.trim() === '') {
+    next(new Error('Please insert description.'));
+  } else if (book.cover_url.trim() === '') {
+    next(new Error('Please insert cover url.'));
+  } else if (Number.isNaN(Number.parseInt(book.author_id)) || book.author_id.trim() === '') {
+    next(new Error('Please insert author id as a number.'));
+  }
+
   const id = Number.parseInt(req.params.id);
 
   knex('books').returning('*')
     .where('id', id)
-    .update(req.body)
+    .update(book)
     .then((updatedBook) => {
       res.send(updatedBook[0]);
     })
