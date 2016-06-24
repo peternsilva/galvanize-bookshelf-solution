@@ -86,7 +86,7 @@
         $option = $('<option>')
           .attr('value', authors[i].id)
           .text(`${authors[i].first_name} ${authors[i].last_name}`)
-          .prop('selected', authors[i].id === book.author_id);
+          .prop('selected', authors[i].id === state.book.author_id);
         $selectAuthor.append($option);
       }
 
@@ -189,7 +189,7 @@
 
   $('a.add').click(function (event) {
     $xhr = $.ajax({
-      url: `http://localhost:8000/users/${window.COOKIES.userId}/books/${book.id}`,
+      url: `http://localhost:8000/users/${window.COOKIES.userId}/books/${state.book.id}`,
       type: 'POST'
     });
 

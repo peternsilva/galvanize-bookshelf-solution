@@ -85,7 +85,7 @@
         return Materialize.toast('User could not be created. Please try again.');
       }
 
-      Materialize.toast('User Created', 2000);
+      window.location.href = '/login.html';
     });
 
     $xhr.fail(function() {

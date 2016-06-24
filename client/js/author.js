@@ -51,11 +51,11 @@
 
     var $firstNameInput = $('<input type="text">')
       .addClass('first-name')
-      .val(author.first_name);
+      .val(state.author.first_name);
 
     var $lastNameInput = $('<input type="text">')
       .addClass('last-name')
-      .val(author.last_name);
+      .val(state.author.last_name);
 
     var inputs = [$firstNameInput, $lastNameInput];
     var $inputRow = $('<div class="row name">');
