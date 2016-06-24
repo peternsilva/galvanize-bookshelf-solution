@@ -17,8 +17,25 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+  let author = {
+    first_name: req.body.firstName,
+    last_name: req.body.lastName,
+    biography: req.body.biography,
+    portrait_url: req.body.portraitUrl
+  };
+
+  if (author.first_name.trim() === '') {
+    next(new Error('Please insert first name.'));
+  } else if (author.last_name.trim() === '') {
+    next(new Error('Please insert last name.'));
+  } else if (author.biography.trim() === '') {
+    next(new Error('Please insert biography.'));
+  } else if (author.portrait_url.trim() === '') {
+    next(new Error('Please insert portrait url.'));
+  }
+
   knex('authors').returning('*')
-    .insert(req.body)
+    .insert(author)
     .then((insertedAuthors) => {
       res.send(insertedAuthors[0]);
     })
@@ -53,10 +70,27 @@ router.get('/:id/books', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
+  let author = {
+    first_name: req.body.firstName,
+    last_name: req.body.lastName,
+    biography: req.body.biography,
+    portrait_url: req.body.portraitUrl
+  };
+
+  if (author.first_name.trim() === '') {
+    next(new Error('Please insert first name.'));
+  } else if (author.last_name.trim() === '') {
+    next(new Error('Please insert last name.'));
+  } else if (author.biography.trim() === '') {
+    next(new Error('Please insert biography.'));
+  } else if (author.portrait_url.trim() === '') {
+    next(new Error('Please insert portrait url.'));
+  }
+
   const id = Number.parseInt(req.params.id);
 
   knex('authors').where('id', id)
-    .update(req.body)
+    .update(author)
     .then((updatedAuthors) => {
       res.send(updatedAuthors[0]);
     })
