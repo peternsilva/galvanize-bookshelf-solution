@@ -18,7 +18,7 @@
       var $book, $img, $a, $link;
       for(var book of books) {
         $book = $('<div class="col s12 m4 l3 center-align book">');
-        $a = $(`<a href="book.html?id=${book.id}">`);
+        $a = $(`<a href="book.html?id=${book.book_id}">`);
         $link = $('<div>')
           .append($a.clone().text(book.title));
         $img = $('<img>').attr('src', book.cover_url).attr('alt', book.title);
