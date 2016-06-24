@@ -3,20 +3,10 @@
   var book;
   var $xhr;
 
-  $('.button-collapse').sideNav();
   $('.modal-trigger').leanModal();
 
-  var hasQueryParams = window.location.search.indexOf('?') >=0;
-  var queryParams = {};
-  if (hasQueryParams) {
-    window.location.search.substr(1).split('&').forEach(function(paramStr) {
-      var param = paramStr.split('=')
-      queryParams[param[0]] = param[1];
-    });
-  }
-
-  if (queryParams.id) {
-    $xhr = $.getJSON(`http://localhost:8000/books/${queryParams.id}`);
+  if (window.QUERY_PARAMETERS.id) {
+    $xhr = $.getJSON(`http://localhost:8000/books/${window.QUERY_PARAMETERS.id}`);
     $xhr.done(function (bookResponse) {
       book = bookResponse;
       if ($xhr.status !== 200) {

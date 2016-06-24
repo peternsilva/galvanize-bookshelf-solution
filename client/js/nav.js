@@ -29,4 +29,12 @@
     });
   }
 
+  window.QUERY_PARAMETERS = {};
+  if (window.location.search) {
+    // strip the leading ? on the query parameters string
+    window.location.search.substr(1).split('&').forEach(function(paramStr) {
+      var param = paramStr.split('=');
+      window.QUERY_PARAMETERS[param[0]] = param[1];
+    });
+  }
 }());
