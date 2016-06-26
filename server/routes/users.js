@@ -71,7 +71,7 @@ router.get('/:userId/books/:bookId', (req, res, next) => {
       if (!books.length) {
         return res.sendStatus(404);
       }
-      
+
       res.send(books[0]);
     })
     .catch((err) => {
