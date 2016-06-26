@@ -1,0 +1,27 @@
+nav {
+  background-color: #455a64;
+  height: 56px;
+  line-height: 56px; }
+  nav .active {
+    height: 56px; }
+  nav .logo-text {
+    border-left: 0.1rem solid #b6b6b6;
+    bottom: 8px;
+    font-size: 1.25rem;
+    font-weight: 200;
+    letter-spacing: 0.2rem;
+    line-height: 2rem;
+    padding-left: 0.75rem;
+    position: relative;
+    text-transform: uppercase; }
+  nav .logo-png {
+    padding-left: 15px;
+    padding-top: 13px;
+    width: 130px; }
+  nav ul li {
+    font-size: 1.25rem;
+    font-weight: 200;
+    letter-spacing: 0.2rem;
+    text-transform: uppercase; }
+  nav ul a {
+    color: #b6b6b6; }
