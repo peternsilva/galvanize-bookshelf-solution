@@ -9,7 +9,7 @@
   "scripts": {
     "knex": "knex",
     "heroku-postbuild": "knex migrate:latest",
-    "mocha": "mocha"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
