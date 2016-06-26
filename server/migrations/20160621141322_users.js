@@ -1,16 +1,16 @@
 'use strict';
 
-module.exports.up = (knex, Promise) => {
+exports.up = function(knex, Promise) {
   return knex.schema.createTable('users', (table) => {
     table.increments();
-    table.string('first_name').notNullable();
-    table.string('last_name').notNullable();
-    table.string('email').unique().notNullable();
-    table.string('password').notNullable();
+    table.string('first_name').notNullable().defaultTo('');
+    table.string('last_name').notNullable().defaultTo('');
+    table.string('email').unique().notNullable().defaultTo('');
+    table.string('password').notNullable().defaultTo('');
     table.timestamps(true, true);
   });
 };
 
-module.exports.down = (knex, Promise) => {
+exports.down = function(knex, Promise) {
   return knex.schema.dropTable('users');
 };

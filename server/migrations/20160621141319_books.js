@@ -1,21 +1,22 @@
 'use strict';
 
-module.exports.up = (knex, Promise) => {
+exports.up = function(knex, Promise) {
   return knex.schema.createTable('books', (table) => {
     table.increments();
-    table.string('title').notNullable();
-    table.string('genre').notNullable();
-    table.text('description').notNullable();
-    table.text('cover_url').notNullable();
     table.integer('author_id')
       .notNullable()
       .references('id')
       .inTable('authors')
-      .onDelete('CASCADE');
+      .onDelete('CASCADE')
+      .index();
+    table.string('title').notNullable().defaultTo('');
+    table.string('genre').notNullable().defaultTo('');
+    table.text('description').notNullable().defaultTo('');
+    table.text('cover_url').notNullable().defaultTo('');
     table.timestamps(true, true);
   });
 };
 
-module.exports.down = (knex, Promise) => {
+exports.down = function(knex, Promise) {
   return knex.schema.dropTable('books');
 };
