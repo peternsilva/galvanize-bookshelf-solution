@@ -1,33 +1,19 @@
-# Galvanize Reads
+# Galvanize Bookshelf
 
-In this exercise, you're tasked with creating a the backend for a website that manages books. To get started, fork and clone this repository.
+This is a multi-day assignment split into the following parts. Your task is to complete each part's assignment, one at a time, before moving on to the next part.
 
-## Part 1 - Data Model
+1. [Knex.js Migrations and Seeds](1_fs.md)
+1. [Express and Knex](2_http.md)
+1. [User Registration](3_express.md)
+1. [User Authentication](4_rest.md)
 
-```shell
-createdb bookshelf_dev
-createdb bookshelf_test
-```
+Additionally, each part has a set of optional bonus assignments to try once you completed the its main assignment. Since parts share many of the same bonus assignments, you may move to the next part without having finished all the bonuses.
 
-1. Develop seed migration to create tables.
-2. Insert some initial Data
-3. Document the relationships?
+The [solutions](https://github.com/gSchool/galvanize-bookshelf-solution) are available to instructors as well as students who've completed this series.
 
-## Part 2 - REST interface for books
-
-Build the interface for books that accesses the database
-
-## Part 3 - REST interface for users
-
-Build the interface for books that accesses the database to create a user.
-
-## Part 4 - Session Management for users
-
-Add authorization parameters for users.
+---
 
 ## Part 5 - Add User Library
-
-# Deployment
 
 # Bonuses
 
