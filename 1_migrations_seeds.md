@@ -3,7 +3,7 @@
 Fork and clone.
 
 ```shell
-cd galvanize-bookshelf/server
+cd galvanize-bookshelf
 npm install
 ```
 
@@ -55,17 +55,17 @@ Translate the following entity relationship diagram into Knex migration files.
 
 More specifically, the Knex migrations should:
 
-- Live in the `server/migrations` directory.
+- Live in the `migrations` directory.
 - Migrate one table per migration file.
-- Pass all the tests when `npm test test/part1.migrations.test.js` is run from the `server` directory.
+- Pass all the tests when `npm test test/part1.migrations.test.js` is run.
 
 ## Seeds
 
 Translate the following [JavaScript entities](https://gist.github.com/ryansobol/fb74ad1e3090b1ce5abdc0d30ae154e8) into Knex seed files. More specifically, the Knex seeds should:
 
-- Live in the `server/seeds` directory.
+- Live in the `seeds` directory.
 - Seed one table per seed file.
-- Pass all the tests when `npm test test/part1.seeds.test.js` is run from the `server` directory.
+- Pass all the tests when `npm test test/part1.seeds.test.js` is run.
 
 ## Bonus
 
