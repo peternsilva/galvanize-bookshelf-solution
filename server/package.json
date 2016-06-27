@@ -7,8 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "knex": "knex",
     "heroku-postbuild": "knex migrate:latest",
+    "knex": "knex",
     "test": "mocha"
   },
   "repository": {
@@ -34,5 +34,8 @@
     "mocha": "^2.5.3",
     "morgan": "^1.7.0",
     "pg": "^6.0.0"
+  },
+  "engines": {
+    "node": "6.2.2"
   }
 }
