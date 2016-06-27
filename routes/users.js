@@ -9,7 +9,25 @@ const knex = require('knex')(knexConfig);
 const _ = require('lodash');
 
 const bcrypt = require('bcrypt');
-// const jwt = require('jsonwebtoken');
+
+const bookToCamelCase = function(book) {
+  return {
+    id: book.book_id,
+    title: book.title,
+    genre: book.genre,
+    description: book.description,
+    coverUrl: book.cover_url,
+    authorId: book.author_id
+  };
+};
+
+const userToCamelCase = function(user) {
+  return {
+    firstName: user.first_name,
+    lastName: user.last_name,
+    email: user.email
+  };
+};
 
 router.post('/', (req, res, next) => {
   let email = req.body.email;
@@ -32,7 +50,7 @@ router.post('/', (req, res, next) => {
             password: hash
           })
           .then((user) => {
-            res.status(200).send(_.omit(user[0], 'password'));
+            res.status(200).send(userToCamelCase(user[0]));
             // login newly registered user
           })
           .catch((err) => {
@@ -51,7 +69,7 @@ router.get('/:id/books', (req, res, next) => {
   knex('books').innerJoin('users_books', 'users_books.book_id', 'books.id')
     .where('users_books.user_id', id)
     .then((books) => {
-      res.send(books);
+      res.send(books.map(bookToCamelCase));
     })
     .catch((err) => {
       return next(err);
@@ -72,7 +90,7 @@ router.get('/:userId/books/:bookId', (req, res, next) => {
         return res.sendStatus(404);
       }
 
-      res.send(books[0]);
+      res.send(bookToCamelCase(books[0]));
     })
     .catch((err) => {
       return next(err);
@@ -89,7 +107,7 @@ router.post('/:userId/books/:bookId', (req, res, next) => {
       user_id: userId
     })
     .then((insertedUserBook) => {
-      res.send(insertedUserBook[0]);
+      res.send(bookToCamelCase(insertedUserBook[0]));
     })
     .catch((err) => {
       return next(err);
@@ -137,32 +155,11 @@ router.post('/authentication', (req, res, next) => {
           return next(err);
         }
 
-        req.session.user = {
-          id: user.id,
-          firstName: user.first_name,
-          lastName: user.last_name
-        };
+        req.session.user = userToCamelCase(user);
 
         res.cookie('userId', user.id);
         res.sendStatus(200);
       });
-      // let data = {
-      //   id: user.id,
-      //   firstName: user.first_name,
-      //   lastName: user.last_name
-      // };
-      // let secret = process.env.SECRET || 'secret';
-      // let options = {
-      //   expiresInMinutes: 15
-      // };
-      //
-      // jwt.sign(data, secret, options, (err, token) => {
-      //   if (err) {
-      //     return next(err);
-      //   }
-      //
-      //   res.send(token);
-      // });
     })
     .catch((err) => {
       return next(err);

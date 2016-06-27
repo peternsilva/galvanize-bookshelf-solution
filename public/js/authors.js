@@ -1,10 +1,10 @@
 (function() {
   var authors = window.HELPERS.displayResources('author', function(author) {
-    var name = `${author.first_name} ${author.last_name}`;
+    var name = `${author.firstName} ${author.lastName}`;
     return {
       id: author.id,
       title: name,
-      imageUrl: author.portrait_url
+      imageUrl: author.portraitUrl
     };
   }, function (authors) {
     $('.authors .row').append(authors);

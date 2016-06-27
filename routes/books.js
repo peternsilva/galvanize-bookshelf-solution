@@ -7,9 +7,30 @@ const environment = process.env.NODE_ENV || 'development';
 const knexConfig = require('../knexfile')[environment];
 const knex = require('knex')(knexConfig);
 
+const toCamelCase = function(book) {
+  return {
+    id: book.id,
+    title: book.title,
+    genre: book.genre,
+    description: book.description,
+    coverUrl: book.cover_url,
+    authorId: book.author_id
+  };
+};
+
+const toSnakeCase = function(book) {
+  return {
+    title: book.title,
+    genre: book.genre,
+    description: book.description,
+    cover_url: book.coverUrl,
+    author_id: book.authorId
+  };
+};
+
 router.get('/', (req, res, next) => {
   knex('books').then((books) => {
-      res.send(books);
+      res.send(books.map(toCamelCase));
     })
     .catch((err) => {
       return next(err);
@@ -17,13 +38,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  const book = {
-    title: req.body.title,
-    genre: req.body.genre,
-    description: req.body.description,
-    cover_url: req.body.coverUrl,
-    author_id: req.body.authorId
-  };
+  const book = toSnakeCase(req.body);
 
   if (book.title.trim() === '') {
     next(new Error('Please insert title.'));
@@ -53,7 +68,7 @@ router.get('/:id', (req, res, next) => {
   knex('books').first()
     .where('id', id)
     .then((book) => {
-      res.send(book);
+      res.send(toCamelCase(book));
     })
     .catch((err) => {
       return next(err);
@@ -61,13 +76,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-  const book = {
-    title: req.body.title,
-    genre: req.body.genre,
-    description: req.body.description,
-    cover_url: req.body.coverUrl,
-    author_id: req.body.authorId
-  };
+  const book = toSnakeCase(req.body);
 
   if (book.title.trim() === '') {
     next(new Error('Please insert title.'));
@@ -87,7 +96,7 @@ router.put('/:id', (req, res, next) => {
     .where('id', id)
     .update(book)
     .then((updatedBook) => {
-      res.send(updatedBook[0]);
+      res.send(toCamelCase(updatedBook[0]));
     })
     .catch((err) => {
       return next(err);

@@ -1,8 +1,4 @@
 (function() {
-  var createUrl = function(path) {
-    return `http://localhost:8000${path}`;
-  };
-
   var displayResources = function (resourceName, convert, callback) {
     var plural = `${resourceName}s`;
     var $xhr = $.getJSON(`http://localhost:8000/${plural}`)
@@ -113,7 +109,6 @@
   }
 
   window.HELPERS = {
-    createUrl,
     displayResources,
     updateResource,
     deleteResource,

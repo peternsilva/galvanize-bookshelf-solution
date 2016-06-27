@@ -3,7 +3,6 @@
     getState,
     deleteResource,
     updateResource,
-    createUrl
   } = window.HELPERS;
 
   let state = {};
@@ -14,12 +13,12 @@
 
   if (window.QUERY_PARAMETERS.id) {
     getState({
-      book: createUrl(`/books/${window.QUERY_PARAMETERS.id}`),
-      authors: createUrl(`/authors`)
+      book: `/books/${window.QUERY_PARAMETERS.id}`,
+      authors: `/authors`
     }, function(completedState) {
       state = completedState
       state.author = state.authors.filter(function(author) {
-        return author.id === state.book.author_id;
+        return author.id === state.book.authorId;
       })[0];
 
       if(window.COOKIES.userId) {
@@ -30,7 +29,7 @@
     });
   } else {
     getState({
-      authors: createUrl(`/authors`)
+      authors: `/authors`
     }, function(completedState) {
       state = completedState
       state.book = {};
@@ -39,7 +38,7 @@
       $('.book-metadata .author').append(state.authors.map(function (author) {
         return $('<option>')
           .attr('value', author.id)
-          .text(`${author.first_name} ${author.last_name}`);
+          .text(`${author.firstName} ${author.lastName}`);
       }));
       $('select').material_select();
     });
@@ -49,8 +48,8 @@
     const titleH1 = $('<h1>').addClass('title').text(state.book.title);
     const authorH2 = $('<h2>').addClass('author')
       .append($('<a>')
-        .attr('href', `author.html?id=${state.book.author_id}`)
-        .text(`${state.author.first_name} ${state.author.last_name}`));
+        .attr('href', `author.html?id=${state.book.authorId}`)
+        .text(`${state.author.firstName} ${state.author.lastName}`));
     const genreH3 = $('<h3>').addClass('genre').text(state.book.genre);
     const descriptionP = $('<p>')
       .addClass('description')
@@ -63,9 +62,9 @@
     $('.description').replaceWith(descriptionP);
     $('.cover-field').addClass('hide');
     $('.book img')
-      .attr('src', state.book.cover_url)
+      .attr('src', state.book.coverUrl)
       .attr('alt', state.book.title);
-    $('.img-url').val(state.book.cover_url);
+    $('.img-url').val(state.book.coverUrl);
     $('.book-metadata label').remove();
 
     // Replace Actions with Save button
@@ -78,16 +77,16 @@
     $('.book-metadata .title').val(state.book.title);
     $('.book-metadata .genre').val(state.book.genre);
     $('.book-metadata textarea').text(state.book.description);
-    $('.img-url').val(state.book.cover_url);
+    $('.img-url').val(state.book.coverUrl);
     $('label').addClass('active');
     $('.cover-field').removeClass('hide');
 
     $('.book-metadata .author').append(state.authors.map(function (author) {
       return $('<option>')
         .attr('value', author.id)
-        .text(`${author.first_name} ${author.last_name}`);
+        .text(`${author.firstName} ${author.lastName}`);
     }));
-    $(`.book-metadata .author`).val(state.book.author_id);
+    $(`.book-metadata .author`).val(state.book.authorId);
     $('select').material_select();
 
     // Replace Actions with Save button
@@ -133,9 +132,9 @@
     }, function (book) {
       state.book = book;
       state.author = state.authors.filter(function(author) {
-        return author.id === state.book.author_id;
+        return author.id === state.book.authorId;
       })[0];
-      
+
       toViewMode();
     });
   });

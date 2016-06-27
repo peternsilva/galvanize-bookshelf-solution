@@ -2,8 +2,7 @@
   const {
     getState,
     deleteResource,
-    updateResource,
-    createUrl
+    updateResource
   } = window.HELPERS;
 
   let state = {};
@@ -11,13 +10,12 @@
 
   if (window.QUERY_PARAMETERS.id) {
     getState({
-      author: createUrl(`/authors/${window.QUERY_PARAMETERS.id}`),
-      books: createUrl(`/authors/${window.QUERY_PARAMETERS.id}/books`)
+      author: `/authors/${window.QUERY_PARAMETERS.id}`,
+      books: `/authors/${window.QUERY_PARAMETERS.id}/books`
     }, function (completedState) {
       state = completedState;
 
       const {author, books} = state;
-      const name = `${author.first_name} ${author.last_name}`;
 
       toViewMode();
 
@@ -29,7 +27,7 @@
           .attr('href', `book.html?id=${book.id}`)
           .text(book.title);
         var img = $('<img>')
-          .attr('src', book.cover_url)
+          .attr('src', book.coverUrl)
           .attr('alt', book.title);
 
         row.append(firstCol.append(title));
@@ -42,10 +40,10 @@
 
   const toEditMode = function() {
     $('.author-metadata').html(inputHTML);
-    $('.author-metadata .first-name').val(state.author.first_name);
-    $('.author-metadata .last-name').val(state.author.last_name);
+    $('.author-metadata .first-name').val(state.author.firstName);
+    $('.author-metadata .last-name').val(state.author.lastName);
     $('.author-metadata textarea').text(state.author.biography);
-    $('.img-url').val(state.author.portrait_url);
+    $('.img-url').val(state.author.portraitUrl);
     $('.portrait-field').addClass('hide');
     $('label').addClass('active');
 
@@ -56,13 +54,13 @@
 
   const toViewMode = function() {
     const $nameH1 = $('<h1>')
-      .text(`${state.author.first_name} ${state.author.last_name}`);
+      .text(`${state.author.firstName} ${state.author.lastName}`);
     const $biographyP = $('<p>').addClass('flow-text')
       .text(state.author.biography);
 
     $('.author-metadata .name').replaceWith($nameH1);
     $('.author-metadata .biography').replaceWith($biographyP);
-    $('.author img').attr('src', state.author.portrait_url)
+    $('.author img').attr('src', state.author.portraitUrl)
     $('.portrait-field').addClass('hide');
     $('.author-metadata label').remove();
 

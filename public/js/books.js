@@ -3,7 +3,7 @@
     return {
       id: book.id,
       title: book.title,
-      imageUrl: book.cover_url
+      imageUrl: book.coverUrl
     };
   }, function (books) {
     $('.books .row').append(books);
