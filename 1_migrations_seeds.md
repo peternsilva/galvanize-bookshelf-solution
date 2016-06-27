@@ -1,6 +1,6 @@
 # Knex Migrations and Seeds
 
-In the first part of this assignment, you'll lay the foundation on a web application that manages your book collection by building a few Knex migration and seed files. Start by forking and cloning this repository to your development environment.
+In this assignment, you're going to build a web application that manages your book collection. In the first part, you'll lay the foundation by building a few Knex migration and seed files. Start by forking and cloning this repository to your development environment.
 
 Next, install the necessary dependencies via NPM.
 
