@@ -1,4 +1,4 @@
-## Knex Migrations and Seeds
+# Knex Migrations and Seeds
 
 In this
 
@@ -7,7 +7,7 @@ createdb bookshelf_dev
 createdb bookshelf_test
 ```
 
-### Migrations
+## Migrations
 
 Translate the following entity relationship diagram into Knex migration files.
 
@@ -42,6 +42,16 @@ Translate the following entity relationship diagram into Knex migration files.
 └─────────────┴─────────────────────────┴──────────────────────────────────────────┘
 ```
 
-### Seeds
+More specifically, the Knex migrations should:
 
-Translate the following [JavaScript entities](https://gist.github.com/ryansobol/fb74ad1e3090b1ce5abdc0d30ae154e8) into Knex seed files.
+- Live in the `server/migrations` directory.
+- Migrate one table per migration file.
+- Pass all the tests when `npm test test/part1.migrations.test.js` is run.
+
+## Seeds
+
+Translate the following [JavaScript entities](https://gist.github.com/ryansobol/fb74ad1e3090b1ce5abdc0d30ae154e8) into Knex seed files. More specifically, the Knex seeds should:
+
+- Live in the `server/seeds` directory.
+- Seed one table per seed file.
+- Pass all the tests when `npm test test/part1.seeds.test.js` is run.
