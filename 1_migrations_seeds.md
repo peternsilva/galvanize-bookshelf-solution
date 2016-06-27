@@ -20,21 +20,20 @@ createdb bookshelf_test
                                  ┼
                                  │
                                  │
-                                 │
                                  ○
                                 ╱│╲
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                                      books                                      │
-├─────────────┬─────────────────────────┬─────────────────────────────────────────┤
-│id           │serial                   │primary key                              │
-│author_id    │integer                  │foreign key authors(id) on delete cascade│
-│title        │varchar(255)             │not null, default ''                     │
-│genre        │varchar(255)             │not null, default ''                     │
-│description  │text                     │not null, default ''                     │
-│cover_url    │text                     │not null, default ''                     │
-│created_at   │timestamp with time zone │not null, default now()                  │
-│updated_at   │timestamp with time zone │not null, default now()                  │
-└─────────────┴─────────────────────────┴─────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│                                      books                                       │
+├─────────────┬─────────────────────────┬──────────────────────────────────────────┤
+│id           │serial                   │primary key                               │
+│author_id    │integer                  │foreign key authors(id) on delete cascade │
+│title        │varchar(255)             │not null, default ''                      │
+│genre        │varchar(255)             │not null, default ''                      │
+│description  │text                     │not null, default ''                      │
+│cover_url    │text                     │not null, default ''                      │
+│created_at   │timestamp with time zone │not null, default now()                   │
+│updated_at   │timestamp with time zone │not null, default now()                   │
+└─────────────┴─────────────────────────┴──────────────────────────────────────────┘
 ```
 
 1. Develop seed migration to create tables.
