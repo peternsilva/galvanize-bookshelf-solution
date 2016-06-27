@@ -1,6 +1,17 @@
 # Knex Migrations and Seeds
 
-In this
+Fork and clone.
+
+```shell
+cd galvanize-bookshelf/server
+npm install
+```
+
+```shell
+brew services stop postgresql
+initdb pg
+postgres -D
+```
 
 ```shell
 createdb bookshelf_dev
@@ -46,7 +57,7 @@ More specifically, the Knex migrations should:
 
 - Live in the `server/migrations` directory.
 - Migrate one table per migration file.
-- Pass all the tests when `npm test test/part1.migrations.test.js` is run.
+- Pass all the tests when `npm test test/part1.migrations.test.js` is run from the `server` directory.
 
 ## Seeds
 
@@ -54,4 +65,18 @@ Translate the following [JavaScript entities](https://gist.github.com/ryansobol/
 
 - Live in the `server/seeds` directory.
 - Seed one table per seed file.
-- Pass all the tests when `npm test test/part1.seeds.test.js` is run.
+- Pass all the tests when `npm test test/part1.seeds.test.js` is run from the `server` directory.
+
+## Bonus
+
+Deploy the code to Heroku. More specifically, the deployment should:
+
+- Create a Heroku app called `USERNAME-galvanize-bookshelf` where `USERNAME` is the lowercase form of your GitHub username.
+- Update the `package.json` file with the version of Node from your development environment.
+- Turn on the Heroku PostgreSQL add-on for your new Heroku app.
+- Update the `knexfile.js` file with the production connection information.
+- Update the `package.json` file with a post-build script to migrate the database.
+- Add and commit the changes to your local git repository.
+- Push the changes to the master branch of your Heroku remote.
+- Run Knex seeds on the production environment.
+- Check the production database has the correct number of tables and rows with the `heroku pg:info` command.
