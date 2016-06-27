@@ -4,6 +4,8 @@
     deleteResource,
     updateResource,
   } = window.HELPERS;
+  const userId = window.COOKIES.userId;
+  const bookId = window.QUERY_PARAMETERS.id
 
   let state = {};
 
@@ -11,18 +13,27 @@
 
   $('.modal-trigger').leanModal();
 
-  if (window.QUERY_PARAMETERS.id) {
-    getState({
-      book: `/books/${window.QUERY_PARAMETERS.id}`,
+  if (bookId) {
+    const statePrep = {
+      book: `/books/${bookId}`,
       authors: `/authors`
-    }, function(completedState) {
+    };
+
+    if(userId) {
+      statePrep.hasBook = `/users/${userId}/books/${bookId}`
+    }
+
+    getState(statePrep, function(completedState) {
       state = completedState
       state.author = state.authors.filter(function(author) {
         return author.id === state.book.authorId;
       })[0];
 
-      if(window.COOKIES.userId) {
-        $('.add').removeClass('hide');
+      if(userId) {
+        $('.add-remove').removeClass('hide');
+        if(state.hasBook) {
+          $('.add-remove').text('Remove from Library');
+        }
       }
 
       toViewMode();
@@ -140,12 +151,13 @@
   });
 
   $('.modal a.confirm-delete')
-    .click(window.HELPERS.deleteResource('book'));
+    .click(deleteResource('book'));
 
-  $('a.add').click(function (event) {
+  $('a.add-remove').click(function (event) {
+    const isAdd = $(event.target).text() === 'Add to Library';
     $xhr = $.ajax({
-      url: `/users/${window.COOKIES.userId}/books/${state.book.id}`,
-      type: 'POST'
+      url: `/users/${userId}/books/${state.book.id}`,
+      type: isAdd ? 'POST' : 'DELETE'
     });
 
     $xhr.done(function() {
@@ -153,7 +165,11 @@
         return Materialize.toast('Could not add book. Please try again.', 2000);
       }
 
-      $('.add').text('Remove From Library');
+      if (isAdd) {
+        $('.add-remove').text('Remove from Library');
+      } else {
+        $('.add-remove').text('Add to Library');
+      }
     });
 
     $xhr.fail(function() {

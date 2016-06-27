@@ -101,6 +101,15 @@
           }
         });
         $xhr.fail(function () {
+          if($xhr.status === 404) {
+            state[stateName] = undefined;
+            requestCompletedCount += 1;
+            if(requestCount === requestCompletedCount) {
+              return callback(state);
+            }
+            return;
+          }
+
           return Materialize.toast(`Unable to retrieve ${stateName}. Please try again.`, 2000);
         });
       }($xhr, stateName));
