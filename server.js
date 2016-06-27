@@ -28,7 +28,7 @@ app.use(session({
   ]
 }));
 
-app.use(express.static(path.join('..', 'client')));
+app.use(express.static(path.join('public')));
 app.use('/users', userRoutes);
 app.use('/authors', authorRoutes);
 app.use('/books', bookRoutes);
