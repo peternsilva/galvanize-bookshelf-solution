@@ -31,7 +31,7 @@ const toCamelCase = function(author) {
 const toSnakeCase = function(author) {
   return {
     first_name: author.firstName,
-    last_name: author.last_name,
+    last_name: author.lastName,
     biography: author.biography,
     portrait_url: author.portraitUrl
   };
