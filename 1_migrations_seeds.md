@@ -1,9 +1,15 @@
 ## Knex Migrations and Seeds
 
+In this
+
 ```shell
 createdb bookshelf_dev
 createdb bookshelf_test
 ```
+
+### Migrations
+
+Translate the following entity relationship diagram into Knex migration files.
 
 ```text
 ┌────────────────────────────────────────────────────────────────┐
@@ -36,6 +42,6 @@ createdb bookshelf_test
 └─────────────┴─────────────────────────┴──────────────────────────────────────────┘
 ```
 
-1. Develop seed migration to create tables.
-2. Insert some initial Data
-3. Document the relationships?
+### Seeds
+
+Translate the following [JavaScript entities](https://gist.github.com/ryansobol/fb74ad1e3090b1ce5abdc0d30ae154e8) into Knex seed files.
