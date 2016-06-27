@@ -59,7 +59,7 @@ Translate the following entity relationship diagram into Knex migration files.
 └─────────────┴─────────────────────────┴──────────────────────────────────────────┘
 ```
 
-More specifically, the Knex migration files should:
+More specifically, the migration files should:
 
 - Live in the `migrations` directory.
 - Migrate one table per migration file.
@@ -67,7 +67,7 @@ More specifically, the Knex migration files should:
 
 ## Seeds
 
-Translate the following [JavaScript entities](https://gist.github.com/ryansobol/fb74ad1e3090b1ce5abdc0d30ae154e8) into Knex seed files. More specifically, the Knex seed files should:
+Translate the following [JavaScript entities](https://gist.github.com/ryansobol/fb74ad1e3090b1ce5abdc0d30ae154e8) into Knex seed files. More specifically, the seed files should:
 
 - Live in the `seeds` directory.
 - Seed one table per seed file.
@@ -77,14 +77,14 @@ Translate the following [JavaScript entities](https://gist.github.com/ryansobol/
 
 Deploy the code to Heroku. More specifically, the deployment should:
 
-- Create a Heroku app called `USERNAME-galvanize-bookshelf` where `USERNAME` is the lowercase form of your GitHub username.
+- Create a Heroku app called `USERNAME-galvanize-bookshelf` where `USERNAME` is your GitHub username in lowercase.
 - Update the `package.json` file with the version of Node from your development environment.
-- Turn on the Heroku PostgreSQL add-on for your new Heroku app.
-- Update the `knexfile.js` file with the production connection information.
-- Update the `package.json` file with a post-build script to migrate the database.
+- Enable the Heroku PostgreSQL add-on for your new Heroku app.
+- Update the `knexfile.js` file with the `production` database connection information.
+- Update the `package.json` file with a `heroku-postbuild` script to migrate the production database.
 - Add and commit the changes to your local git repository.
 - Push the changes to the master branch of your Heroku remote.
-- Run Knex seeds on the production environment.
-- Check the production database has the correct number of tables and rows with the `heroku pg:info` command.
+- Seed the production database by running a one-off command on Heroku.
+- After about one minute, check that the production database has the correct number of tables and rows.
 
 Once you're satisfied, find a fellow student and see if he or she would like some help.
