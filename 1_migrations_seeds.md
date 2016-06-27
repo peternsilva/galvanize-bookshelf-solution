@@ -1,11 +1,15 @@
 # Knex Migrations and Seeds
 
-Fork and clone.
+In the first part of this assignment, you'll lay the foundation on a web application that manages your book collection by building a few Knex migration and seed files. Start by forking and cloning this repository to your development environment.
+
+Next, install the necessary dependencies via NPM.
 
 ```shell
 cd galvanize-bookshelf
 npm install
 ```
+
+Next, stop the PostgreSQL service, initialize a project-specific PostgreSQL cluster, and start a local PostgreSQL server.
 
 ```shell
 brew services stop postgresql
@@ -13,12 +17,21 @@ initdb pg
 postgres -D
 ```
 
+Next, create a development and a test database.
+
 ```shell
 createdb bookshelf_dev
 createdb bookshelf_test
 ```
 
-Update the `knexfile.js` file with the development and test connection information.
+Next, update the `knexfile.js` file with connection information for the development and test environments.
+
+```javascript
+'postgres://localhost/bookshelf_dev'
+'postgres://localhost/bookshelf_test'
+```
+
+Finally, ensure the test suite can connect to the right database.
 
 ```shell
 npm test
