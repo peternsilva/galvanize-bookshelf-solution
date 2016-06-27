@@ -59,6 +59,8 @@ main {
     color: #727272; }
     main a:hover {
       color: #607d8b; }
+  main .card {
+    margin-top: 30px; }
 
 footer.page-footer {
   background-color: #607d8b; }
