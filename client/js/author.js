@@ -1,7 +1,13 @@
 (function() {
-  const {getState, deleteResource, createUrl} = window.HELPERS;
-  let imgUrlValid = true;
+  const {
+    getState,
+    deleteResource,
+    updateResource,
+    createUrl
+  } = window.HELPERS;
+
   let state = {};
+  const inputHTML = $('.author-metadata').html();
 
   if (window.QUERY_PARAMETERS.id) {
     getState({
@@ -13,11 +19,9 @@
       const {author, books} = state;
       const name = `${author.first_name} ${author.last_name}`;
 
-      $('.author-metadata h1').text(name);
-      $('.author-metadata p').text(author.biography);
-      $('.author img').attr('src', author.portrait_url)
-        .attr('alt', name);
-      $('.author-metadata .books').append(books.map(function(book) {
+      toViewMode();
+
+      $('.books').append(books.map(function(book) {
         var row = $('<div class="row book">');
         var firstCol = $('<div class="col s10">');
         var secondCol = $('<div class="col s2">');
@@ -36,138 +40,71 @@
     });
   }
 
-  function toEditMode() {
-    var $name = $('.author-metadata h1');
-    var $biography = $('.author-metadata p');
-
-    var $firstNameInput = $('<input type="text">')
-      .addClass('first-name')
-      .val(state.author.first_name);
-
-    var $lastNameInput = $('<input type="text">')
-      .addClass('last-name')
-      .val(state.author.last_name);
-
-    var inputs = [$firstNameInput, $lastNameInput];
-    var $inputRow = $('<div class="row name">');
-    var $col;
-    for(var i = 0; i <= inputs.length; i++) {
-      $col = $('<div class="col s6">')
-        .append(inputs[i]);
-      $inputRow.append($col)
-    }
-
-    var $biographyTextarea = $('<textarea>')
-      .addClass('flow-text')
-      .height($biography.height())
-      .text(state.author.biography.trim());
-
-    var $imgUrl = $('<input type="url">')
-      .addClass('img-url')
-      .val($img.attr('src'));
-
-    $imgUrl.on('keyup', function(event) {
-      var imgUrl = $(event.target).val();
-      imgWidth = $img.width();
-      imgHeight = $img.height();
-      $img.attr('src', imgUrl);
-      $img.css('width', 'auto');
-      $img.css('height', 'auto');
-
-      // Assume the image url is valid. It will invalidate if there is an error
-      imgUrlValid = true;
-    });
-
-    $name.replaceWith($inputRow);
-    $biography.replaceWith($biographyTextarea);
-    $img.after($imgUrl);
+  const toEditMode = function() {
+    $('.author-metadata').html(inputHTML);
+    $('.author-metadata .first-name').val(state.author.first_name);
+    $('.author-metadata .last-name').val(state.author.last_name);
+    $('.author-metadata textarea').text(state.author.biography);
+    $('.img-url').val(state.author.portrait_url);
+    $('.portrait-field').addClass('hide');
+    $('label').addClass('active');
 
     // Replace Actions with Save button
     $('.actions').addClass('hide');
-    $('.save').removeClass('hide');
-  }
+    $('.save-action').removeClass('hide');
+  };
 
-  function toViewMode() {
-    var $fnameInput = $('.author-metadata .first-name');
-    var $lnameInput = $('.author-metadata .last-name');
-    var $biographyTextarea = $('.author-metadata textarea');
-    var $imgUrl = $('.author .img-url');
-    var $nameH1 = $('<h1>')
+  const toViewMode = function() {
+    const $nameH1 = $('<h1>')
       .text(`${state.author.first_name} ${state.author.last_name}`);
-    var $biographyP = $('<p>').addClass('flow-text')
+    const $biographyP = $('<p>').addClass('flow-text')
       .text(state.author.biography);
 
     $('.author-metadata .name').replaceWith($nameH1);
-    $biographyTextarea.replaceWith($biographyP);
-    $imgUrl.remove();
+    $('.author-metadata .biography').replaceWith($biographyP);
+    $('.author img').attr('src', state.author.portrait_url)
+    $('.portrait-field').addClass('hide');
+    $('.author-metadata label').remove();
 
     // Replace Actions with Save button
-    $('.save').addClass('hide');
+    $('.save-action').addClass('hide');
     $('.actions').removeClass('hide');
-  }
-
-  var $img = $('.author img').on('error', function(event) {
-    imgUrlValid = false;
-    $(event.target).width(imgWidth);
-    $(event.target).height(imgHeight)
-  });
-
-  var imgWidth = $img.width();
-  var imgHeight = $img.height();
+  };
 
   $('a.edit').click(function (event) {
     toEditMode();
   });
 
   $('a.save').click(function(event) {
-    var $fnameInput = $('.author-metadata .first-name');
-    var $lnameInput = $('.author-metadata .last-name');
-    var $biographyTextarea = $('.author-metadata textarea');
-    var $imgUrl = $('.author .img-url');
+    var fname = $('.author-metadata .first-name').val().trim();
+    var lname = $('.author-metadata .last-name').val().trim();
+    var biography = $('.author-metadata textarea').val().trim();
+    var imgUrl = $('.author .img-url').val().trim();
 
-    if(!$fnameInput.val().trim()) {
+    if(!fname) {
       return Materialize.toast('Please enter a first name', 2000);
     }
 
-    if(!$lnameInput.val().trim()) {
+    if(!lname) {
       return Materialize.toast('Please enter a last name', 2000);
     }
 
-    if(!$biographyTextarea.text().trim()) {
+    if(!biography) {
       return Materialize.toast('Please add a biography', 2000);
     }
 
-    if(!$imgUrl.val().trim()) {
+    if(!imgUrl) {
       return Materialize.toast('Please enter an image url', 2000);
     }
 
-    if(!imgUrlValid) {
-      return Materialize.toast('Please enter a valid image url', 2000);
-    }
-
-    var $putXhr = $.ajax({
-      url: `/authors/${window.QUERY_PARAMETERS.id}`,
-      type: 'PUT',
-      contentType: 'application/json',
-      data: JSON.stringify({
-        firstName: $fnameInput.val().trim(),
-        lastName: $lnameInput.val().trim(),
-        biography: $biographyTextarea.text().trim(),
-        portraitUrl: $imgUrl.val().trim()
-      })
-    });
-
-    $putXhr.done(function(updatedAuthor) {
-      if($putXhr.status !== 200) {
-        Materialize.toast('Save failed. Please try again.', 2000);
-      }
-
-      state.author = updatedAuthor;
+    updateResource('author', {
+      firstName: fname,
+      lastName: lname,
+      biography: biography,
+      portraitUrl: imgUrl
+    }, function(author) {
+      state.author = author;
       toViewMode();
-    });
-
-    $putXhr.fail(function(result) {
-      Materialize.toast('Save failed. Please try again.', 2000);
     });
   });
 

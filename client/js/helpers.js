@@ -31,6 +31,39 @@
     });
   };
 
+  var updateResource = function (resourceName, data, callback) {
+    let $xhr;
+    const dataJSON = JSON.stringify(data);
+
+    if(window.QUERY_PARAMETERS.id) {
+      $xhr = $.ajax({
+        url: `/${resourceName}s/${window.QUERY_PARAMETERS.id}`,
+        type: 'PUT',
+        contentType: 'application/json',
+        data: dataJSON
+      });
+    } else {
+      $xhr = $.ajax({
+        url: `/${resouceName}s`,
+        type: 'POST',
+        contentType: 'application/json',
+        data: dataJSON
+      });
+    }
+
+    $xhr.done(function(author) {
+      if($xhr.status !== 200) {
+        Materialize.toast('Save failed. Please try again.', 2000);
+      }
+
+      callback(author);
+    });
+
+    $xhr.fail(function(result) {
+      Materialize.toast('Save failed. Please try again.', 2000);
+    });
+  };
+
   var deleteResource = function (resourceName) {
     var plural = `${resourceName}s`;
     return function(event) {
@@ -82,6 +115,7 @@
   window.HELPERS = {
     createUrl,
     displayResources,
+    updateResource,
     deleteResource,
     getState
   };

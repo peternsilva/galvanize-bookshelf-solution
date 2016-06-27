@@ -1,109 +1,102 @@
 (function() {
-  var imgUrlValid = true;
-  var state = {};
+  const {
+    getState,
+    deleteResource,
+    updateResource,
+    createUrl
+  } = window.HELPERS;
+
+  let state = {};
+
+  const inputHTML = $('.book-metadata').html();
 
   $('.modal-trigger').leanModal();
 
   if (window.QUERY_PARAMETERS.id) {
-    window.HELPERS.getState({
-      book: `http://localhost:8000/books/${window.QUERY_PARAMETERS.id}`
-    }, function(bookState) {
-      window.HELPERS.getState({
-        author: `http://localhost:8000/authors/${bookState.book.author_id}`
-      }, function (authorState) {
-        Object.assign(state, bookState, authorState);
+    getState({
+      book: createUrl(`/books/${window.QUERY_PARAMETERS.id}`),
+      authors: createUrl(`/authors`)
+    }, function(completedState) {
+      state = completedState
+      state.author = state.authors.filter(function(author) {
+        return author.id === state.book.author_id;
+      })[0];
 
-        if(window.COOKIES.userId) {
-          $('.add').removeClass('hide');
-        }
+      if(window.COOKIES.userId) {
+        $('.add').removeClass('hide');
+      }
 
-        $('.book-metadata h1').text(state.book.title);
-        $('.book-metadata h2')
-          .append($('<a>')
-            .attr('href', `author.html?id=${state.book.author_id}`)
-            .text(`${state.author.first_name} ${state.author.last_name}`));
-        $('.book-metadata h3').text(state.book.genre);
-        $('.book-metadata p').text(state.book.description);
-        $('.book img').attr('src', state.book.cover_url)
-          .attr('alt', state.book.title);
-      });
+      toViewMode();
+    });
+  } else {
+    getState({
+      authors: createUrl(`/authors`)
+    }, function(completedState) {
+      state = completedState
+      state.book = {};
+      state.author = {};
+
+      $('.book-metadata .author').append(state.authors.map(function (author) {
+        return $('<option>')
+          .attr('value', author.id)
+          .text(`${author.first_name} ${author.last_name}`);
+      }));
+      $('select').material_select();
     });
   }
 
-  var $img = $('.book img').on('error', function(event) {
-    imgUrlValid = false;
-    $(event.target).width(imgWidth);
-    $(event.target).height(imgHeight)
-  });
+  const toViewMode = function() {
+    const titleH1 = $('<h1>').addClass('title').text(state.book.title);
+    const authorH2 = $('<h2>').addClass('author')
+      .append($('<a>')
+        .attr('href', `author.html?id=${state.book.author_id}`)
+        .text(`${state.author.first_name} ${state.author.last_name}`));
+    const genreH3 = $('<h3>').addClass('genre').text(state.book.genre);
+    const descriptionP = $('<p>')
+      .addClass('description')
+      .addClass('flow-text')
+      .text(state.book.description);
 
-  var imgWidth = $img.width();
-  var imgHeight = $img.height();
+    $('.title').replaceWith(titleH1);
+    $('.author').replaceWith(authorH2);
+    $('.genre').replaceWith(genreH3);
+    $('.description').replaceWith(descriptionP);
+    $('.cover-field').addClass('hide');
+    $('.book img')
+      .attr('src', state.book.cover_url)
+      .attr('alt', state.book.title);
+    $('.img-url').val(state.book.cover_url);
+    $('.book-metadata label').remove();
+
+    // Replace Actions with Save button
+    $('.actions').removeClass('hide');
+    $('.save-action').addClass('hide');
+  };
+
+  const toEditMode = function() {
+    $('.book-metadata').html(inputHTML);
+    $('.book-metadata .title').val(state.book.title);
+    $('.book-metadata .genre').val(state.book.genre);
+    $('.book-metadata textarea').text(state.book.description);
+    $('.img-url').val(state.book.cover_url);
+    $('label').addClass('active');
+    $('.cover-field').removeClass('hide');
+
+    $('.book-metadata .author').append(state.authors.map(function (author) {
+      return $('<option>')
+        .attr('value', author.id)
+        .text(`${author.first_name} ${author.last_name}`);
+    }));
+    $(`.book-metadata .author`).val(state.book.author_id);
+    $('select').material_select();
+
+    // Replace Actions with Save button
+    $('.actions').addClass('hide');
+    $('.save-action').removeClass('hide');
+  }
 
   $('a.edit').click(function (event) {
-    $xhr = $.getJSON(`http://localhost:8000/authors`);
-    $xhr.done(function (authors) {
-      if ($xhr.status !== 200) {
-        return Materialize.toast('Unable to edit. Please try again.', 2000);
-      }
-
-      var $title = $('.book-metadata h1');
-      var $author = $('.book-metadata h2');
-      var $genre = $('.book-metadata h3');
-      var $summary = $('.book-metadata p');
-
-      var $titleInput = $('<input type="text">')
-        .addClass('title')
-        .val($title.text());
-
-      var $genreInput = $('<input type="text">')
-        .addClass('genre')
-        .val($genre.text());
-
-      var $summaryTextArea = $('<textarea>')
-        .addClass('flow-text')
-        .height($summary.height())
-        .text($summary.text().trim());
-
-      var $imgUrl = $('<input type="url">')
-        .addClass('img-url')
-        .val($img.attr('src'));
-
-      $imgUrl.on('keyup', function(event) {
-        var imgUrl = $(event.target).val();
-        imgWidth = $img.width();
-        imgHeight = $img.height();
-        $img.attr('src', imgUrl);
-        $img.css('width', 'auto');
-        $img.css('height', 'auto');
-
-        // Assume the image url is valid. It will invalidate if there is an error
-        imgUrlValid = true;
-      });
-
-      var $selectAuthor = $('<select>').addClass('author');
-      var $option;
-      for (var i = 0; i < authors.length; i++) {
-        $option = $('<option>')
-          .attr('value', authors[i].id)
-          .text(`${authors[i].first_name} ${authors[i].last_name}`)
-          .prop('selected', authors[i].id === state.book.author_id);
-        $selectAuthor.append($option);
-      }
-
-      $title.replaceWith($titleInput);
-      $author.replaceWith($selectAuthor);
-      $genre.replaceWith($genreInput);
-      $summary.replaceWith($summaryTextArea);
-      $img.after($imgUrl);
-
-      // Initialize the select
-      $('select').material_select();
-
-      // Replace Actions with Save button
-      $('.actions').addClass('hide');
-      $('.save').removeClass('hide');
-
-    });
+    toEditMode();
   });
 
   $('a.save').click(function(event) {
@@ -134,11 +127,7 @@
       return Materialize.toast('Please enter an image url', 2000);
     }
 
-    if(!imgUrlValid) {
-      return Materialize.toast('Please enter a valid image url', 2000);
-    }
-
-    var $putXhr = $.ajax({
+    var $xhr = $.ajax({
       url: `/books/${window.QUERY_PARAMETERS.id}`,
       type: 'PUT',
       contentType: 'application/json',
@@ -151,35 +140,16 @@
       })
     });
 
-    $putXhr.done(function(updatedBook) {
-      if($putXhr.status !== 200) {
+    $xhr.done(function(updatedBook) {
+      if($xhr.status !== 200) {
         Materialize.toast('Save failed. Please try again.', 2000);
       }
 
-      book = updatedBook;
-      var $titleH1 = $('<h1>').text($titleInput.val().trim());
-      var $authorH2 = $('<h2>')
-        .append($('<a>')
-          .attr('href', `author.html?id=${book.author_id}`)
-          .text($authorSelect.find(':selected').text()));
-      var $genreH3 = $('<h3>').text($genreInput.val().trim());
-      var $summaryP = $('<p>').addClass('flow-text')
-        .text($summaryTextarea.text());
-
-      var imgUrl = $imgUrl.val();
-
-      $titleInput.replaceWith($titleH1);
-      $authorSelect.replaceWith($authorH2);
-      $genreInput.replaceWith($genreH3);
-      $summaryTextarea.replaceWith($summaryP);
-      $imgUrl.remove();
-
-      // Replace Actions with Save button
-      $('.save').addClass('hide');
-      $('.actions').removeClass('hide');
+      state.book = updatedBook;
+      toViewMode();
     });
 
-    $putXhr.fail(function(result) {
+    $xhr.fail(function(result) {
       Materialize.toast('Save failed. Please try again.', 2000);
     });
   });
@@ -189,7 +159,7 @@
 
   $('a.add').click(function (event) {
     $xhr = $.ajax({
-      url: `http://localhost:8000/users/${window.COOKIES.userId}/books/${state.book.id}`,
+      url: `/users/${window.COOKIES.userId}/books/${state.book.id}`,
       type: 'POST'
     });
 

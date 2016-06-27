@@ -47,9 +47,13 @@
         <div class="row">
           <div class="col s12 m5 center-align book">
             <div>
-              <img src="">
+              <img src="#" alt="Book Cover Image">
             </div>
-            <div class="actions">
+            <div class="input-field cover-field">
+              <input type="url" id="cover-url" class="img-url">
+              <label for="cover-url">Cover Url</label>
+            </div>
+            <div class="actions hide">
               <div>
                 <a class="waves-effect waves-light btn-large add hide">Add to Library</a>
               </div>
@@ -58,15 +62,36 @@
                 <a class="waves-effect waves-light btn delete modal-trigger" href="#confirm">Delete</a>
               </div>
             </div>
-            <div class="save hide">
+            <div class="save-action">
               <a class="waves-effect waves-light btn-large save">Save</a>
             </div>
           </div>
           <div class="col s12 m7 book-metadata">
-            <h1></h1>
-            <h2></h2>
-            <h3></h3>
-            <p class="flow-text"></p>
+            <div class="row">
+              <div class="col s12 input-field">
+                <input type="text" id="title" class="title">
+                <label for="title">Title</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12 input-field">
+                <select id="author" class="author">
+                </select>
+                <label for="author">Author</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12 input-field">
+                <input type="text" id="genre" class="genre">
+                <label for="genre">Genre</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12 input-field">
+                <textarea id="description" class=" description flow-text materialize-textarea"></textarea>
+                <label for="description">Description</label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
