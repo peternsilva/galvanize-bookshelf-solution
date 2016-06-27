@@ -18,6 +18,12 @@ createdb bookshelf_dev
 createdb bookshelf_test
 ```
 
+Update the `knexfile.js` file with the development and test connection information.
+
+```shell
+npm test
+```
+
 ## Migrations
 
 Translate the following entity relationship diagram into Knex migration files.
@@ -80,3 +86,5 @@ Deploy the code to Heroku. More specifically, the deployment should:
 - Push the changes to the master branch of your Heroku remote.
 - Run Knex seeds on the production environment.
 - Check the production database has the correct number of tables and rows with the `heroku pg:info` command.
+
+Once you're satisfied, find a fellow student and see if he or she would like some help.
