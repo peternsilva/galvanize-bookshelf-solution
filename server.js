@@ -8,7 +8,6 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('cookie-session');
-const favicon = require('serve-favicon');
 
 const userRoutes = require('./routes/users');
 const authorRoutes = require('./routes/authors');
