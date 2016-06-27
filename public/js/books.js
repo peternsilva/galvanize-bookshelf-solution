@@ -8,4 +8,6 @@
   }, function (books) {
     $('.books .row').append(books);
   });
+
+  $('.parallax').parallax();
 }());
