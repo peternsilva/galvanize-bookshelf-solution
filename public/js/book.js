@@ -1,59 +1,17 @@
 (function() {
+  'use strict';
+
   const {
     getState,
     deleteResource,
-    updateResource,
+    updateResource
   } = window.HELPERS;
   const userId = window.COOKIES.userId;
-  const bookId = window.QUERY_PARAMETERS.id
-
+  const bookId = window.QUERY_PARAMETERS.id;
+  const inputHTML = $('.book-metadata').html();
   let state = {};
 
-  const inputHTML = $('.book-metadata').html();
-
   $('.modal-trigger').leanModal();
-
-  if (bookId) {
-    const statePrep = {
-      book: `/books/${bookId}`,
-      authors: `/authors`
-    };
-
-    if(userId) {
-      statePrep.hasBook = `/users/${userId}/books/${bookId}`
-    }
-
-    getState(statePrep, function(completedState) {
-      state = completedState
-      state.author = state.authors.filter(function(author) {
-        return author.id === state.book.authorId;
-      })[0];
-
-      if(userId) {
-        $('.add-remove').removeClass('hide');
-        if(state.hasBook) {
-          $('.add-remove').text('Remove from Library');
-        }
-      }
-
-      toViewMode();
-    });
-  } else {
-    getState({
-      authors: `/authors`
-    }, function(completedState) {
-      state = completedState
-      state.book = {};
-      state.author = {};
-
-      $('.book-metadata .author').append(state.authors.map(function (author) {
-        return $('<option>')
-          .attr('value', author.id)
-          .text(`${author.firstName} ${author.lastName}`);
-      }));
-      $('select').material_select();
-    });
-  }
 
   const toViewMode = function() {
     const titleH1 = $('<h1>').addClass('title').text(state.book.title);
@@ -83,6 +41,49 @@
     $('.save-action').addClass('hide');
   };
 
+  if (bookId) {
+    const statePrep = {
+      book: `/books/${bookId}`,
+      authors: '/authors'
+    };
+
+    if (userId) {
+      statePrep.hasBook = `/users/${userId}/books/${bookId}`;
+    }
+
+    getState(statePrep, (completedState) => {
+      state = completedState;
+      state.author = state.authors.filter((author) =>
+        author.id === state.book.authorId
+      )[0];
+
+      if (userId) {
+        $('.add-remove').removeClass('hide');
+        if (state.hasBook) {
+          $('.add-remove').text('Remove from Library');
+        }
+      }
+
+      toViewMode();
+    });
+  }
+  else {
+    getState({
+      authors: '/authors'
+    }, (completedState) => {
+      state = completedState;
+      state.book = {};
+      state.author = {};
+
+      $('.book-metadata .author').append(state.authors.map((author) =>
+        $('<option>')
+          .attr('value', author.id)
+          .text(`${author.firstName} ${author.lastName}`)
+      ));
+      $('select').material_select();
+    });
+  }
+
   const toEditMode = function() {
     $('.book-metadata').html(inputHTML);
     $('.book-metadata .title').val(state.book.title);
@@ -92,24 +93,25 @@
     $('label').addClass('active');
     $('.cover-field').removeClass('hide');
 
-    $('.book-metadata .author').append(state.authors.map(function (author) {
-      return $('<option>')
+    $('.book-metadata .author').append(state.authors.map((author) =>
+      $('<option>')
         .attr('value', author.id)
-        .text(`${author.firstName} ${author.lastName}`);
-    }));
-    $(`.book-metadata .author`).val(state.book.authorId);
+        .text(`${author.firstName} ${author.lastName}`)
+    ));
+
+    $('.book-metadata .author').val(state.book.authorId);
     $('select').material_select();
 
     // Replace Actions with Save button
     $('.actions').addClass('hide');
     $('.save-action').removeClass('hide');
-  }
+  };
 
-  $('a.edit').click(function (event) {
+  $('a.edit').click((_event) => {
     toEditMode();
   });
 
-  $('a.save').click(function(event) {
+  $('a.save').click((_event) => {
     const title = $('.book-metadata .title').val().trim();
     const authorId = Number.parseInt(
       $('.book-metadata div.author').children('select').val());
@@ -117,34 +119,34 @@
     const description = $('.book-metadata textarea').val().trim();
     const coverUrl = $('.book .img-url').val().trim();
 
-    if(!title) {
+    if (!title) {
       return Materialize.toast('Please enter a title', 2000);
     }
 
-    if(!authorId) {
+    if (!authorId) {
       return Materialize.toast('Please add an author first', 2000);
     }
 
-    if(!genre) {
+    if (!genre) {
       return Materialize.toast('Please enter a genre', 2000);
     }
 
-    if(!description) {
+    if (!description) {
       return Materialize.toast('Please enter a summary', 2000);
     }
 
-    if(!coverUrl) {
+    if (!coverUrl) {
       return Materialize.toast('Please enter an image url', 2000);
     }
 
     updateResource('book', {
       title, genre, coverUrl, description,
       authorId: Number.parseInt(authorId)
-    }, function (book) {
+    }, (book) => {
       state.book = book;
-      state.author = state.authors.filter(function(author) {
-        return author.id === state.book.authorId;
-      })[0];
+      state.author = state.authors.filter((author) =>
+        author.id === state.book.authorId
+      )[0];
 
       toViewMode();
     });
@@ -153,27 +155,28 @@
   $('.modal a.confirm-delete')
     .click(deleteResource('book'));
 
-  $('a.add-remove').click(function (event) {
+  $('a.add-remove').click((_event) => {
     const isAdd = $(event.target).text() === 'Add to Library';
-    $xhr = $.ajax({
+    const $xhr = $.ajax({
       url: `/users/${userId}/books/${state.book.id}`,
       type: isAdd ? 'POST' : 'DELETE'
     });
 
-    $xhr.done(function() {
-      if($xhr.status !== 200) {
+    $xhr.done(() => {
+      if ($xhr.status !== 200) {
         return Materialize.toast('Could not add book. Please try again.', 2000);
       }
 
       if (isAdd) {
         $('.add-remove').text('Remove from Library');
-      } else {
+      }
+      else {
         $('.add-remove').text('Add to Library');
       }
     });
 
-    $xhr.fail(function() {
+    $xhr.fail(() => {
       Materialize.toast('Could not add book. Please try again.', 2000);
     });
   });
-}());
+})();

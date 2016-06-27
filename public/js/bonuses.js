@@ -1,1 +1,5 @@
-window.BONUS_CONFIG = {};
+(function() {
+  'use strict';
+
+  window.BONUS_CONFIG = {};
+})();

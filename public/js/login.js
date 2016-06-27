@@ -1,46 +1,47 @@
 (function() {
   'use strict';
 
-  if(window.COOKIES.userId) {
-    return window.location.href = '/';
+  if (window.COOKIES.userId) {
+    window.location.href = '/';
+
+    return;
   }
 
-  $('.login').click(function(event) {
-    var email = $('#email').val().trim();
-    var password = $('#password').val();
+  $('.login').click((_event) => {
+    const email = $('#email').val().trim();
+    const password = $('#password').val();
 
     // Validation
-    if(!email) {
+    if (!email) {
       return Materialize.toast('Please enter an email.', 2000);
     }
 
-    if(email.indexOf('@') < 0) {
+    if (email.indexOf('@') < 0) {
       return Materialize.toast('Please enter a valid email.', 2000);
     }
 
-    if(!password) {
+    if (!password) {
       return Materialize.toast('Please enter a password.', 2000);
     }
 
-    var $xhr = $.ajax({
+    const $xhr = $.ajax({
       url: '/users/authentication',
       type: 'POST',
       contentType: 'application/json',
-      data: JSON.stringify({
-        email: email,
-        password: password
-      })
+      data: JSON.stringify({ email, password })
     });
 
-    $xhr.done(function() {
-      if($xhr.status !== 200) {
-        return Materialize.toast('User could not be logged in. Please try again.');
+    $xhr.done(() => {
+      if ($xhr.status !== 200) {
+        Materialize.toast('User could not be logged in. Please try again.');
+
+        return;
       }
 
       window.location.href = '/';
     });
 
-    $xhr.fail(function() {
+    $xhr.fail(() => {
       Materialize.toast('User could not be logged in. Please try again.');
     });
   });
