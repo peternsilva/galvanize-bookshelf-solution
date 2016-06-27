@@ -9,4 +9,6 @@
   }, function (authors) {
     $('.authors .row').append(authors);
   });
+
+  $('.parallax').parallax();
 }());
