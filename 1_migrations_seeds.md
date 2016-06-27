@@ -61,21 +61,21 @@ Translate the following entity relationship diagram into Knex migration files.
 └─────────────┴─────────────────────────┴────────────────────────┘
                                  ┼
                                  │
-                                 │
-                                 ○
-                                ╱│╲
-┌──────────────────────────────────────────────────────────────────────────────────┐
-│                                      books                                       │
-├─────────────┬─────────────────────────┬──────────────────────────────────────────┤
-│id           │serial                   │primary key                               │
-│author_id    │integer                  │foreign key authors(id) on delete cascade │
-│title        │varchar(255)             │not null, default ''                      │
-│genre        │varchar(255)             │not null, default ''                      │
-│description  │text                     │not null, default ''                      │
-│cover_url    │text                     │not null, default ''                      │
-│created_at   │timestamp with time zone │not null, default now()                   │
-│updated_at   │timestamp with time zone │not null, default now()                   │
-└─────────────┴─────────────────────────┴──────────────────────────────────────────┘
+                                 └────┐
+                                      ○
+                                     ╱│╲
+┌────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                           books                                            │
+├─────────────┬─────────────────────────┬────────────────────────────────────────────────────┤
+│id           │serial                   │primary key                                         │
+│author_id    │integer                  │not null, foreign key authors(id) on delete cascade │
+│title        │varchar(255)             │not null, default ''                                │
+│genre        │varchar(255)             │not null, default ''                                │
+│description  │text                     │not null, default ''                                │
+│cover_url    │text                     │not null, default ''                                │
+│created_at   │timestamp with time zone │not null, default now()                             │
+│updated_at   │timestamp with time zone │not null, default now()                             │
+└─────────────┴─────────────────────────┴────────────────────────────────────────────────────┘
 ```
 
 More specifically, the migration files should:
