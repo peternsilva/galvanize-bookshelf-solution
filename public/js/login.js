@@ -23,7 +23,7 @@
     }
 
     var $xhr = $.ajax({
-      url: 'http://localhost:8000/users/authentication',
+      url: '/users/authentication',
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify({

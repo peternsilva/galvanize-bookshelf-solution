@@ -65,7 +65,7 @@
     }
 
     var $xhr = $.ajax({
-      url: 'http://localhost:8000/users',
+      url: '/users',
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify({

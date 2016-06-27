@@ -11,7 +11,7 @@
   if(window.COOKIES.userId) {
     $('.session').text('Logout').click(function(event) {
       var $xhr = $.ajax({
-        url: 'http://localhost:8000/users/authentication',
+        url: '/users/authentication',
         type: 'DELETE',
       });
 

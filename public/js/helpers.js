@@ -1,7 +1,7 @@
 (function() {
   var displayResources = function (resourceName, convert, callback) {
     var plural = `${resourceName}s`;
-    var $xhr = $.getJSON(`http://localhost:8000/${plural}`)
+    var $xhr = $.getJSON(`/${plural}`)
     $xhr.done(function (resources) {
       if($xhr.status !== 200) {
         return Materialize.toast(`Unable to retrieve ${plural}. Please try again.`, 2000);
