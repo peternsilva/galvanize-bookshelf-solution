@@ -17,14 +17,20 @@ initdb pg
 postgres -D
 ```
 
-Next, create a development and a test database.
+In a new Terminal tab, create a development and a test database.
 
 ```shell
 createdb bookshelf_dev
 createdb bookshelf_test
 ```
 
-Next, update the `knexfile.js` file with connection information for the development and test environments.
+Next, open the project in your text editor.
+
+```shell
+atom .
+```
+
+And, update the `knexfile.js` file with the connection information for the development and test environments.
 
 ```javascript
 'postgres://localhost/bookshelf_dev'
