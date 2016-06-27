@@ -59,7 +59,7 @@ Translate the following entity relationship diagram into Knex migration files.
 └─────────────┴─────────────────────────┴──────────────────────────────────────────┘
 ```
 
-More specifically, the Knex migrations should:
+More specifically, the Knex migration files should:
 
 - Live in the `migrations` directory.
 - Migrate one table per migration file.
@@ -67,7 +67,7 @@ More specifically, the Knex migrations should:
 
 ## Seeds
 
-Translate the following [JavaScript entities](https://gist.github.com/ryansobol/fb74ad1e3090b1ce5abdc0d30ae154e8) into Knex seed files. More specifically, the Knex seeds should:
+Translate the following [JavaScript entities](https://gist.github.com/ryansobol/fb74ad1e3090b1ce5abdc0d30ae154e8) into Knex seed files. More specifically, the Knex seed files should:
 
 - Live in the `seeds` directory.
 - Seed one table per seed file.
