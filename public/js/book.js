@@ -100,57 +100,43 @@
   });
 
   $('a.save').click(function(event) {
-    var $titleInput = $('.book-metadata .title');
-    var $authorSelect = $('.book-metadata div.author');
-    var $titleInput = $('.book-metadata .title');
-    var $genreInput = $('.book-metadata .genre');
-    var $summaryTextarea = $('.book-metadata textarea');
-    var $imgUrl = $('.book .img-url');
+    const title = $('.book-metadata .title').val().trim();
+    const authorId = Number.parseInt(
+      $('.book-metadata div.author').children('select').val());
+    const genre = $('.book-metadata .genre').val().trim();
+    const description = $('.book-metadata textarea').val().trim();
+    const coverUrl = $('.book .img-url').val().trim();
 
-    if(!$titleInput.val().trim()) {
+    if(!title) {
       return Materialize.toast('Please enter a title', 2000);
     }
 
-    if(!$authorSelect.children('select').val()) {
+    if(!authorId) {
       return Materialize.toast('Please add an author first', 2000);
     }
 
-    if(!$genreInput.val().trim()) {
+    if(!genre) {
       return Materialize.toast('Please enter a genre', 2000);
     }
 
-    if(!$summaryTextarea.text().trim()) {
+    if(!description) {
       return Materialize.toast('Please enter a summary', 2000);
     }
 
-    if(!$imgUrl.val().trim()) {
+    if(!coverUrl) {
       return Materialize.toast('Please enter an image url', 2000);
     }
 
-    var $xhr = $.ajax({
-      url: `/books/${window.QUERY_PARAMETERS.id}`,
-      type: 'PUT',
-      contentType: 'application/json',
-      data: JSON.stringify({
-        title: $titleInput.val().trim(),
-        genre: $genreInput.val().trim(),
-        coverUrl: $imgUrl.val().trim(),
-        authorId: Number.parseInt($authorSelect.find(':selected').attr('value')),
-        description: $summaryTextarea.text().trim()
-      })
-    });
-
-    $xhr.done(function(updatedBook) {
-      if($xhr.status !== 200) {
-        Materialize.toast('Save failed. Please try again.', 2000);
-      }
-
-      state.book = updatedBook;
+    updateResource('book', {
+      title, genre, coverUrl, description,
+      authorId: Number.parseInt(authorId)
+    }, function (book) {
+      state.book = book;
+      state.author = state.authors.filter(function(author) {
+        return author.id === state.book.author_id;
+      })[0];
+      
       toViewMode();
-    });
-
-    $xhr.fail(function(result) {
-      Materialize.toast('Save failed. Please try again.', 2000);
     });
   });
 
