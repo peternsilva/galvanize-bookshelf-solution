@@ -122,15 +122,15 @@ router.put('/authors/:id', (req, res, next) => {
           .send('portrait_url must not be blank');
       }
 
-      knex('authors')
+      return knex('authors')
         .update(author, '*')
         .where('id', id)
         .then((results) => {
           res.send(results[0]);
-        })
-        .catch((err) => {
-          next(err);
         });
+    })
+    .catch((err) => {
+      next(err);
     });
 });
 
