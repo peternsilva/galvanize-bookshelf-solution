@@ -9,15 +9,15 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('cookie-session');
 
-const userRoutes = require('./routes/users');
 const authorRoutes = require('./routes/authors');
 const bookRoutes = require('./routes/books');
+const userRoutes = require('./routes/users');
 
 const app = express();
 
 app.disable('x-powered-by');
 
-app.use(morgan('combined'));
+app.use(morgan('short'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
