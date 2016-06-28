@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const knex = require('../knex');
 
-router.get('/books', (req, res, next) => {
+router.get('/books', (_req, res, next) => {
   knex('books')
     .then((books) => {
       res.send(books);
@@ -13,7 +13,6 @@ router.get('/books', (req, res, next) => {
       next(err);
     });
 });
-
 
 router.get('/books/:id', (req, res, next) => {
   const id = Number.parseInt(req.params.id);
