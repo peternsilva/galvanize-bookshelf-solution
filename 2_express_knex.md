@@ -1,4 +1,4 @@
-## REST Interface for Books and Authors
+# Express and Knex
 
 Now that we have a database with data set up, we can now build some routes that access the books and authors table. In this assignment, you will implement a RESTful interface for books and authors. It should have the following routes as described below.
 
