@@ -18,6 +18,10 @@ router.get('/books', (req, res, next) => {
 router.get('/books/:id', (req, res, next) => {
   const id = Number.parseInt(req.params.id);
 
+  if (Number.isNaN(id)) {
+    return next();
+  }
+
   knex('books')
     .where('id', id)
     .first()
@@ -34,47 +38,61 @@ router.get('/books/:id', (req, res, next) => {
 });
 
 router.post('/books', (req, res, next) => {
-  const book = req.body;
+  const newBook = req.body;
 
-  if (!book.title || book.title.trim() === '') {
+  if (!newBook.title || newBook.title.trim() === '') {
     return res
       .status(400)
       .set('Content-Type', 'text/plain')
       .send('title must not be blank');
   }
 
-  if (!book.genre || book.genre.trim() === '') {
+  if (!newBook.genre || newBook.genre.trim() === '') {
     return res
       .status(400)
       .set('Content-Type', 'text/plain')
       .send('genre must not be blank');
   }
 
-  if (!book.description || book.description.trim() === '') {
+  if (!newBook.description || newBook.description.trim() === '') {
     return res
       .status(400)
       .set('Content-Type', 'text/plain')
       .send('description must not be blank');
   }
 
-  if (!book.cover_url || book.cover_url.trim() === '') {
+  if (!newBook.cover_url || newBook.cover_url.trim() === '') {
     return res
       .status(400)
       .set('Content-Type', 'text/plain')
       .send('cover_url must not be blank');
   }
 
-  if (Number.isNaN(Number.parseInt(book.author_id))) {
+  const authorId = Number.parseInt(newBook.author_id);
+
+  if (Number.isNaN(authorId)) {
     return res
       .status(400)
       .set('Content-Type', 'text/plain')
       .send('author_id must be an integer');
   }
 
-  knex('books')
-    .insert(book, '*')
-    .then((insertedBook) => {
-      res.send(insertedBook[0]);
+  knex('authors')
+    .where('id', authorId)
+    .first()
+    .then((author) => {
+      if (!author) {
+        return res
+          .status(400)
+          .set('Content-Type', 'text/plain')
+          .send('author_id does not exist');
+      }
+
+      return knex('books')
+        .insert(newBook, '*')
+        .then((results) => {
+          res.send(results[0]);
+        })
     })
     .catch((err) => {
       next(err);
@@ -82,54 +100,77 @@ router.post('/books', (req, res, next) => {
 });
 
 router.put('/books/:id', (req, res, next) => {
-  const book = req.body;
-
-  if (!book.title || book.title.trim() === '') {
-    return res
-      .status(400)
-      .set('Content-Type', 'text/plain')
-      .send('title must not be blank');
-  }
-
-  if (!book.genre || book.genre.trim() === '') {
-    return res
-      .status(400)
-      .set('Content-Type', 'text/plain')
-      .send('genre must not be blank');
-  }
-
-  if (!book.description || book.description.trim() === '') {
-    return res
-      .status(400)
-      .set('Content-Type', 'text/plain')
-      .send('description must not be blank');
-  }
-
-  if (!book.cover_url || book.cover_url.trim() === '') {
-    return res
-      .status(400)
-      .set('Content-Type', 'text/plain')
-      .send('cover_url must not be blank');
-  }
-
-  if (Number.isNaN(Number.parseInt(book.author_id))) {
-    return res
-      .status(400)
-      .set('Content-Type', 'text/plain')
-      .send('author_id must be an integer');
-  }
-
   const id = Number.parseInt(req.params.id);
 
+  if (Number.isNaN(id)) {
+    return next();
+  }
+
   knex('books')
-    .update(book, '*')
     .where('id', id)
-    .then((updatedBook) => {
-      if (!updatedBook[0]) {
+    .first()
+    .then((book) => {
+      if (!book) {
         return next();
       }
 
-      res.send(updatedBook[0]);
+      const newBook = req.body;
+
+      if (!newBook.title || newBook.title.trim() === '') {
+        return res
+          .status(400)
+          .set('Content-Type', 'text/plain')
+          .send('title must not be blank');
+      }
+
+      if (!newBook.genre || newBook.genre.trim() === '') {
+        return res
+          .status(400)
+          .set('Content-Type', 'text/plain')
+          .send('genre must not be blank');
+      }
+
+      if (!newBook.description || newBook.description.trim() === '') {
+        return res
+          .status(400)
+          .set('Content-Type', 'text/plain')
+          .send('description must not be blank');
+      }
+
+      if (!newBook.cover_url || newBook.cover_url.trim() === '') {
+        return res
+          .status(400)
+          .set('Content-Type', 'text/plain')
+          .send('cover_url must not be blank');
+      }
+
+      const authorId = Number.parseInt(newBook.author_id);
+
+      if (Number.isNaN(authorId)) {
+        return res
+          .status(400)
+          .set('Content-Type', 'text/plain')
+          .send('author_id must be an integer');
+      }
+
+      return knex('authors')
+        .where('id', authorId)
+        .first()
+        .then((author) => {
+          if (!author) {
+            return res
+              .status(400)
+              .set('Content-Type', 'text/plain')
+              .send('author_id does not exist');
+          }
+
+          return knex('books')
+            .update(newBook, '*')
+            .where('id', id)
+            .then((results) => {
+              res.send(results[0]);
+            });
+        });
     })
     .catch((err) => {
       next(err);
@@ -139,8 +180,12 @@ router.put('/books/:id', (req, res, next) => {
 router.delete('/books/:id', (req, res, next) => {
   const id = Number.parseInt(req.params.id);
 
+  if (Number.isNaN(id)) {
+    return next();
+  }
+
   knex('books')
-    .where('id', id)
+    .where('id', req.params.id)
     .first()
     .then((book) => {
       if (!book) {
