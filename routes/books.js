@@ -2,10 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-
-const environment = process.env.NODE_ENV || 'development';
-const knexConfig = require('../knexfile')[environment];
-const knex = require('knex')(knexConfig);
+const knex = require('../knex');
 
 const toCamelCase = function(book) {
   return {
@@ -28,16 +25,17 @@ const toSnakeCase = function(book) {
   };
 };
 
-router.get('/', (req, res, next) => {
-  knex('books').then((books) => {
-      res.send(books.map(toCamelCase));
+router.get('/books', (req, res, next) => {
+  knex('books')
+    .then((books) => {
+      res.send(books.map(Case.camel));
     })
     .catch((err) => {
-      return next(err);
+      next(err);
     });
 });
 
-router.post('/', (req, res, next) => {
+router.post('/books', (req, res, next) => {
   const book = toSnakeCase(req.body);
 
   if (book.title.trim() === '') {
@@ -52,30 +50,31 @@ router.post('/', (req, res, next) => {
     next(new Error('Please insert author id as a number.'));
   }
 
-  knex('books').returning('*')
-    .insert(book)
+  knex('books')
+    .insert(book, '*')
     .then((insertedBook) => {
       res.send(insertedBook[0]);
     })
     .catch((err) => {
-      return next(err);
+      next(err);
     });
 });
 
-router.get('/:id', (req, res, next) => {
+router.get('/books/:id', (req, res, next) => {
   const id = Number.parseInt(req.params.id);
 
-  knex('books').first()
+  knex('books')
     .where('id', id)
+    .first()
     .then((book) => {
       res.send(toCamelCase(book));
     })
     .catch((err) => {
-      return next(err);
+      next(err);
     });
 });
 
-router.put('/:id', (req, res, next) => {
+router.put('/books/:id', (req, res, next) => {
   const book = toSnakeCase(req.body);
 
   if (book.title.trim() === '') {
@@ -92,27 +91,28 @@ router.put('/:id', (req, res, next) => {
 
   const id = Number.parseInt(req.params.id);
 
-  knex('books').returning('*')
+  knex('books')
+    .update(book, '*')
     .where('id', id)
-    .update(book)
     .then((updatedBook) => {
       res.send(toCamelCase(updatedBook[0]));
     })
     .catch((err) => {
-      return next(err);
+      next(err);
     });
 });
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/books/:id', (req, res, next) => {
   const id = Number.parseInt(req.params.id);
 
-  knex('books').where('id', id)
+  knex('books')
     .del()
+    .where('id', id)
     .then(() => {
       res.send(`Deleted book ${id}`);
     })
     .catch((err) => {
-      return next(err);
+      next(err);
     });
 });
 

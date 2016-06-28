@@ -2,10 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-
-const environment = process.env.NODE_ENV || 'development';
-const knexConfig = require('../knexfile')[environment];
-const knex = require('knex')(knexConfig);
+const knex = require('../knex');
 
 const bookToCamelCase = function(book) {
   return {
@@ -37,16 +34,17 @@ const toSnakeCase = function(author) {
   };
 };
 
-router.get('/', (req, res, next) => {
-  knex('authors').then((authors) => {
+router.get('/authors', (req, res, next) => {
+  knex('authors')
+    .then((authors) => {
       res.send(authors.map(toCamelCase));
     })
     .catch((err) => {
-      return next(err);
+      next(err);
     });
 });
 
-router.post('/', (req, res, next) => {
+router.post('/authors', (req, res, next) => {
   let author = toSnakeCase(req.body);
 
   if (author.first_name.trim() === '') {
@@ -59,42 +57,44 @@ router.post('/', (req, res, next) => {
     next(new Error('Please insert portrait url.'));
   }
 
-  knex('authors').returning('*')
-    .insert(author)
+  knex('authors')
+    .insert(author, '*')
     .then((insertedAuthors) => {
       res.send(toCamelCase(insertedAuthors[0]));
     })
     .catch((err) => {
-      return next(err);
+      next(err);
     });
 });
 
-router.get('/:id', (req, res, next) => {
+router.get('/authors/:id', (req, res, next) => {
   const id = Number.parseInt(req.params.id);
 
-  knex('authors').first()
+  knex('authors')
     .where('id', id)
+    .first()
     .then((author) => {
       res.send(toCamelCase(author));
     })
     .catch((err) => {
-      return next(err);
+      next(err);
     });
 });
 
-router.get('/:id/books', (req, res, next) => {
+router.get('/authors/:id/books', (req, res, next) => {
   const id = Number.parseInt(req.params.id);
 
-  knex('books').where('author_id', id)
+  knex('books')
+    .where('author_id', id)
     .then((books) => {
       res.send(books.map(bookToCamelCase));
     })
     .catch((err) => {
-      return next(err);
+      next(err);
     });
 });
 
-router.put('/:id', (req, res, next) => {
+router.put('/authors/:id', (req, res, next) => {
   let author = toSnakeCase(req.body);
 
   if (author.first_name.trim() === '') {
@@ -109,27 +109,28 @@ router.put('/:id', (req, res, next) => {
 
   const id = Number.parseInt(req.params.id);
 
-  knex('authors').where('id', id)
-    .returning('*')
-    .update(author)
+  knex('authors')
+    .update(author, '*')
+    .where('id', id)
     .then((updatedAuthors) => {
       res.send(toCamelCase(updatedAuthors[0]));
     })
     .catch((err) => {
-      return next(err);
+      next(err);
     });
 });
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/authors/:id', (req, res, next) => {
   const id = Number.parseInt(req.params.id);
 
-  knex('authors').where('id', id)
+  knex('authors')
     .del()
+    .where('id', id)
     .then(() => {
       res.send(`Successfully deleted ${id}`);
     })
     .catch((err) => {
-      return next(err);
+      next(err);
     });
 });
 
