@@ -77,7 +77,7 @@ router.post('/authors', (req, res, next) => {
     });
 });
 
-router.put('/authors/:id', (req, res, next) => {
+router.patch('/authors/:id', (req, res, next) => {
   const id = Number.parseInt(req.params.id);
 
   if (Number.isNaN(id)) {
