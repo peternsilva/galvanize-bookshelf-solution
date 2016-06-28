@@ -9,7 +9,7 @@ const knex = require('knex')(knexConfig);
 process.env.NODE_ENV = env;
 const server = require('../server');
 
-suite('books REST interface', () => {
+suite('/books routes', () => {
   before(function(done) {
     knex.migrate.latest()
       .then(() => {
