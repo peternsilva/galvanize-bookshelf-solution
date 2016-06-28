@@ -30,9 +30,13 @@ Then, add the necessary middleware in the following modules to handle above REST
 - `routes/authors.js`
 - `routes/books.js`
 
-**NOTE:** The `GET /books`, `GET /authors`, and `GET /authors/:id/books` routes must order the data in their response bodies by `id`
+**TIP:** The middleware for the following HTTP requests must order the data in their response bodies by the `id` column.
 
-You can use the following test suites to verify the positive, `200` status case of each of the HTTP responses.
+- `GET /books`
+- `GET /authors`
+- `GET /authors/:id/books`
+
+You can use the following test suites to verify the positive case when each middleware responds with a `200` status code.
 
 ```shell
 npm test test/part2.authors.test.js
