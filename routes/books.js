@@ -91,7 +91,7 @@ router.post('/books', (req, res, next) => {
         .insert(newBook, '*')
         .then((results) => {
           res.send(results[0]);
-        })
+        });
     })
     .catch((err) => {
       next(err);
@@ -184,7 +184,7 @@ router.delete('/books/:id', (req, res, next) => {
   }
 
   knex('books')
-    .where('id', req.params.id)
+    .where('id', id)
     .first()
     .then((book) => {
       if (!book) {
@@ -195,6 +195,7 @@ router.delete('/books/:id', (req, res, next) => {
         .del()
         .where('id', id)
         .then(() => {
+          delete book.id;
           res.send(book);
         });
     })
