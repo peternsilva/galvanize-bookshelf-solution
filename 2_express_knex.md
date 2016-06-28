@@ -1,6 +1,6 @@
 # Express and Knex
 
-For this assignment, you'll build a RESTful, database-driven HTTP server, using Express and Knex, to manage your migrated and seeded database. Your server will handle the following HTTP requests and send the appropriate HTTP response.
+In this assignment, you'll build a RESTful, database-driven HTTP server, using Express and Knex, to manage your migrated and seeded database. Your server will handle the following HTTP requests and send the appropriate HTTP response.
 
 **NOTE:** Both the request body and the response body use the `application/json` content type.
 
@@ -25,16 +25,14 @@ cd galvanize-bookshelf
 npm install
 ```
 
-Then, add the necessary middleware to handle both the `authors` and the `books` RESTFUL routes from above.
+Then, add the necessary middleware in the following modules to handle above RESTful route table.
 
 - `routes/authors.js`
 - `routes/books.js`
 
-**NOTE:** The `GET` all requests (`/books`, `/authors`, `/authors/:id/books`) will need to be ordered by `id`
+**NOTE:** The `GET /books`, `GET /authors`, and `GET /authors/:id/books` routes must order the data in their response bodies by `id`
 
-This assignment can test you route specified above. To run the test suite, running the following shell command
-
-**NOTE:** For each route handler, the test suite only tests the _positive_ case where the server responds with a `200` status code.
+You can use the following test suites to verify the positive, `200` status case of each of the HTTP responses.
 
 ```shell
 npm test test/part2.authors.test.js
