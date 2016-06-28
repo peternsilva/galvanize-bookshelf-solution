@@ -33,16 +33,18 @@ app.use('/users', userRoutes);
 app.use('/authors', authorRoutes);
 app.use('/books', bookRoutes);
 
-app.use((_req, _res, next) => {
-  let err = new Error();
-  err.status = 404;
-  next(err);
+app.use((_req, res) => {
+  res.sendStatus(404);
 });
 
+// eslint-disable-next-line max-params
 app.use((err, _req, res, _next) => {
-  res.status(err.status || 500).send(err);
+  // eslint-disable-next-line no-console
+  console.error(err.stack);
+  res.sendStatus(500);
 });
 
 app.listen(port, () => {
+  // eslint-disable-next-line no-console
   console.log('Listening on port', port);
 });
