@@ -6,6 +6,7 @@ const knex = require('../knex');
 
 router.get('/authors', (_req, res, next) => {
   knex('authors')
+    .orderBy('id')
     .then((authors) => {
       res.send(authors);
     })
@@ -68,7 +69,7 @@ router.post('/authors', (req, res, next) => {
   }
 
   knex('authors')
-    .insert(author, '*')
+    .insert(newAuthor, '*')
     .then((results) => {
       res.send(results[0]);
     })
@@ -123,7 +124,7 @@ router.patch('/authors/:id', (req, res, next) => {
       }
 
       return knex('authors')
-        .update(author, '*')
+        .update(newAuthor, '*')
         .where('id', id)
         .then((results) => {
           res.send(results[0]);
@@ -149,7 +150,7 @@ router.delete('/authors/:id', (req, res, next) => {
         return next();
       }
 
-      return knex('author')
+      return knex('authors')
         .del()
         .where('id', id)
         .then(() => {
@@ -171,6 +172,7 @@ router.get('/authors/:id/books', (req, res, next) => {
 
   knex('books')
     .where('author_id', id)
+    .orderBy('id')
     .then((books) => {
       res.send(books);
     })

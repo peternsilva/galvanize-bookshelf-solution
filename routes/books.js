@@ -6,6 +6,7 @@ const knex = require('../knex');
 
 router.get('/books', (_req, res, next) => {
   knex('books')
+    .orderBy('id')
     .then((books) => {
       res.send(books);
     })
