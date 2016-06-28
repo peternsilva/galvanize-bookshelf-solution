@@ -25,25 +25,18 @@ cd galvanize-bookshelf
 npm install
 ```
 
-To run the test suite can test you route specified above. You can run the tests in the shell.
+Then, add the necessary middleware to handle both the `authors` and the `books` RESTFUL routes from above.
+
+- `routes/authors.js`
+- `routes/books.js`
+
+**NOTE:** The `GET` all requests (`/books`, `/authors`, `/authors/:id/books`) will need to be ordered by `id`
+
+This assignment can test you route specified above. To run the test suite, running the following shell command
 
 **NOTE:** For each route handler, the test suite only tests the _positive_ case where the server responds with a `200` status code.
 
 ```shell
-npm test
+npm test test/part2.authors.test.js
+npm test test/part2.books.test.js
 ```
-
-## Notes
-
-The tests require the `server.js` file to export the express server for the tests. At the bottom of your `server.js` file, add `module.exports = app;` (assuming app is the variable you used for your server). For example.
-
-```javascript
-express = require('express');
-app = express();
-
-// ...
-
-module.exports = app;
-```
-
-The `GET` all requests (`/books`, `/authors`, `/authors/:id/books`) produces an array. PostgreSQL does not ensure any particular order. For the tests to pass, ensure the order of the array is by the `id` value of the resource.
