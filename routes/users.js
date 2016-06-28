@@ -202,7 +202,7 @@ router.delete('/users/:userId/books/:bookId', (req, res, next) => {
     });
 });
 
-router.post('/users/authentication', (req, res, next) => {
+router.post('/session', (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
@@ -238,7 +238,7 @@ router.post('/users/authentication', (req, res, next) => {
     });
 });
 
-router.delete('/users/authentication', (req, res, next) => {
+router.delete('/session', (req, res, next) => {
   req.session = null;
   res.clearCookie('userId');
   res.sendStatus(200);
