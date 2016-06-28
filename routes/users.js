@@ -113,7 +113,7 @@ router.get('/users/:userId/books/:bookId', (req, res, next) => {
         return next();
       }
 
-      res.send(books);
+      res.send(book);
     })
     .catch((err) => {
       next(err);
@@ -227,7 +227,7 @@ router.post('/users/authentication', (req, res, next) => {
           return next(err);
         }
 
-        req.session.user = userToCamelCase(user);
+        req.session.user = user;
 
         res.cookie('userId', user.id);
         res.sendStatus(200);
