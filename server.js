@@ -4,7 +4,6 @@ const express = require('express');
 const path = require('path');
 const port = process.env.PORT || 8000;
 
-const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('cookie-session');
@@ -17,7 +16,11 @@ const app = express();
 
 app.disable('x-powered-by');
 
-app.use(morgan('short'));
+if (process.env.NODE_ENV !== 'test') {
+  const morgan = require('morgan');
+  app.use(morgan('short'));
+}
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
