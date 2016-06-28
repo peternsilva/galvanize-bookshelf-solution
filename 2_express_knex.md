@@ -30,7 +30,7 @@ Then, add the necessary middleware in the following modules to handle above REST
 - `routes/authors.js`
 - `routes/books.js`
 
-**TIP:** The middleware for the following HTTP requests must send their response data ordered by their resource's `id` column.
+**TIP:** The middleware for the following HTTP requests must respond with an array of entities ordered by their `id` attribute.
 
 - `GET /books`
 - `GET /authors`
