@@ -172,7 +172,7 @@ router.get('/authors/:id/books', (req, res, next) => {
   knex('books')
     .where('author_id', id)
     .then((books) => {
-      res.send(books));
+      res.send(books);
     })
     .catch((err) => {
       next(err);

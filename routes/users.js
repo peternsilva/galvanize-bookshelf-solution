@@ -6,39 +6,41 @@ const knex = require('../knex');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 
-const bookToCamelCase = function(book) {
-  return {
-    id: book.book_id,
-    title: book.title,
-    genre: book.genre,
-    description: book.description,
-    coverUrl: book.cover_url,
-    authorId: book.author_id
-  };
-};
-
-const userToCamelCase = function(user) {
-  return {
-    firstName: user.first_name,
-    lastName: user.last_name,
-    email: user.email
-  };
-};
-
 router.post('/users', (req, res, next) => {
-  let email = req.body.email;
-  let password = req.body.password;
+  const email = req.body.email;
+  const password = req.body.password;
+
+  if (!email) {
+    return res
+      .status(400)
+      .set('Content-Type', 'text/plain')
+      .send('email must not be blank');
+  }
+
+  if (!password) {
+    return res
+      .status(400)
+      .set('Content-Type', 'text/plain')
+      .send('password must not be blank');
+  }
 
   knex('users')
+    .select(knex.raw('1=1'))
     .where('email', email)
-    .then((data) => {
-      if (data.length) {
-        let err = new Error('Email already exists');
-        err.status = 409;
-        return next(err);
+    .first()
+    .then((exists) => {
+      if (exists) {
+        return res
+          .status(400)
+          .set('Content-Type', 'text/plain')
+          .send('Email already exists');
       }
 
-      bcrypt.hash(password, 10, (err, hash) => {
+      bcrypt.hash(password, 10, (hashErr, hash) => {
+        if (hashErr) {
+          return next(hashErr);
+        }
+
         knex('users')
           .insert({
             first_name: req.body.firstName,
@@ -46,8 +48,8 @@ router.post('/users', (req, res, next) => {
             email: email,
             password: hash
           }, '*')
-          .then((user) => {
-            res.status(200).send(userToCamelCase(user[0]));
+          .then((users) => {
+            res.send(users[0]);
             // login newly registered user
           })
           .catch((err) => {
@@ -63,11 +65,24 @@ router.post('/users', (req, res, next) => {
 router.get('/users/:id/books', (req, res, next) => {
   const id = Number.parseInt(req.params.id);
 
-  knex('books')
-    .innerJoin('users_books', 'users_books.book_id', 'books.id')
-    .where('users_books.user_id', id)
-    .then((books) => {
-      res.send(books.map(bookToCamelCase));
+  if (Number.isNaN(id)) {
+    return next();
+  }
+
+  knex('users')
+    .where('id', id)
+    .first()
+    .then((user) => {
+      if (!user) {
+        return next();
+      }
+
+      return knex('books')
+        .innerJoin('users_books', 'users_books.book_id', 'books.id')
+        .where('users_books.user_id', id)
+        .then((books) => {
+          res.send(books);
+        });
     })
     .catch((err) => {
       next(err);
@@ -78,18 +93,27 @@ router.get('/users/:userId/books/:bookId', (req, res, next) => {
   const userId = Number.parseInt(req.params.userId);
   const bookId = Number.parseInt(req.params.bookId);
 
+  if (Number.isNaN(userId)) {
+    return next();
+  }
+
+  if (Number.isNaN(bookId)) {
+    return next();
+  }
+
   knex('books')
     .innerJoin('users_books', 'users_books.book_id', 'books.id')
     .where({
       'books.id': bookId,
       'users_books.user_id': userId
     })
-    .then((books) => {
-      if (!books.length) {
-        return res.sendStatus(404);
+    .first()
+    .then((book) => {
+      if (!book) {
+        return next();
       }
 
-      res.send(bookToCamelCase(books[0]));
+      res.send(books);
     })
     .catch((err) => {
       next(err);
@@ -100,13 +124,39 @@ router.post('/users/:userId/books/:bookId', (req, res, next) => {
   const userId = Number.parseInt(req.params.userId);
   const bookId = Number.parseInt(req.params.bookId);
 
-  knex('users_books')
-    .insert({
-      book_id: bookId,
-      user_id: userId
-    }, '*')
-    .then((insertedUserBook) => {
-      res.send(bookToCamelCase(insertedUserBook[0]));
+  if (Number.isNaN(userId)) {
+    return next();
+  }
+
+  if (Number.isNaN(bookId)) {
+    return next();
+  }
+
+  knex('users')
+    .where('id', userId)
+    .first()
+    .then((user) => {
+      if (!user) {
+        return next();
+      }
+
+      return knex('books')
+        .where('id', bookId)
+        .first();
+    })
+    .then((book) => {
+      if (!book) {
+        return next();
+      }
+
+      return knex('users_books')
+        .insert({
+          book_id: bookId,
+          user_id: userId
+        }, '*');
+    })
+    .then((results) => {
+      res.send(results[0]);
     })
     .catch((err) => {
       next(err);
@@ -114,17 +164,38 @@ router.post('/users/:userId/books/:bookId', (req, res, next) => {
 });
 
 router.delete('/users/:userId/books/:bookId', (req, res, next) => {
-  const userId = req.params.userId;
-  const bookId = req.params.bookId;
+  const userId = Number.parseInt(req.params.userId);
+  const bookId = Number.parseInt(req.params.bookId);
+
+  if (Number.isNaN(userId)) {
+    return next();
+  }
+
+  if (Number.isNaN(bookId)) {
+    return next();
+  }
 
   knex('users_books')
-    .del()
     .where({
       user_id: userId,
       book_id: bookId
     })
-    .then(() => {
-      res.send(`Deleted book from your library.`);
+    .first()
+    .then((user_book) => {
+      if (!user_book) {
+        return next();
+      }
+
+      return knex('users_books')
+        .del()
+        .where({
+          user_id: userId,
+          book_id: bookId
+        })
+        .then(() => {
+          delete user_book.id;
+          res.send(user_book);
+        });
     })
     .catch((err) => {
       next(err);
