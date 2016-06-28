@@ -2,7 +2,6 @@ const chai = require('chai');
 const {assert} = chai;
 const {suite, test} = require('mocha');
 const request = require('supertest');
-const sinon = require('sinon');
 
 const env = 'test';
 const knexConfig = require('../knexfile')[env];
