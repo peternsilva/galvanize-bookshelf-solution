@@ -14,14 +14,14 @@ router.post('/users', (req, res, next) => {
     return res
       .status(400)
       .set('Content-Type', 'text/plain')
-      .send('email must not be blank');
+      .send('Email must not be blank');
   }
 
   if (!password || password.trim() === '') {
     return res
       .status(400)
       .set('Content-Type', 'text/plain')
-      .send('password must not be blank');
+      .send('Password must not be blank');
   }
 
   knex('users')
@@ -36,7 +36,7 @@ router.post('/users', (req, res, next) => {
           .send('Email already exists');
       }
 
-      bcrypt.hash(password, 10, (hashErr, hashed_password) => {
+      bcrypt.hash(password, 12, (hashErr, hashed_password) => {
         if (hashErr) {
           return next(hashErr);
         }
