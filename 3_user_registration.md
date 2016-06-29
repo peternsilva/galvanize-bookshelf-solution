@@ -32,7 +32,7 @@ Then, add the correct route to create a new user. Make sure to follow recommende
 
 | Request Method | Request URL        | Request Body                                                                                                           | Response Status | Response Content-Type | Response Body |
 |----------------|--------------------|------------------------------------------------------------------------------------------------------------------------|-----------------|-----------------------|---------------|
-| `POST`         | `/users`           | `{ "first_name": "John", "last_name": "Siracusa", "email": "john.siracusa@gmail.com", "password": "i like big cats" }` | `200`           | `text/plain`          | `OK`          |
+| `POST`         | `/users`           | `{ "first_name": "John", "last_name": "Siracusa", "email": "john.siracusa@gmail.com", "password": "ilikebigcats" }` | `200`           | `text/plain`          | `OK`          |
 
 - The password is stored as a cryptographic hash
 - The response body does not contain the newly created user's password or hash

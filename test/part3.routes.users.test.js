@@ -32,7 +32,7 @@ suite('part3 routes users', () => {
   });
 
   test('POST /users', (done) => {
-    const password = 'i like big cats';
+    const password = 'ilikebigcats';
 
     request(server)
       .post('/users')
