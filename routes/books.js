@@ -114,43 +114,28 @@ router.patch('/books/:id', (req, res, next) => {
         return next();
       }
 
-      const newBook = req.body;
+      const bookChanges = req.body;
 
-      if (!newBook.title || newBook.title.trim() === '') {
-        return res
-          .status(400)
-          .set('Content-Type', 'text/plain')
-          .send('title must not be blank');
+      if (bookChanges.title) {
+        book.title = bookChanges.title;
       }
 
-      if (!newBook.genre || newBook.genre.trim() === '') {
-        return res
-          .status(400)
-          .set('Content-Type', 'text/plain')
-          .send('genre must not be blank');
+      if (bookChanges.genre) {
+        book.genre = bookChanges.genre;
       }
 
-      if (!newBook.description || newBook.description.trim() === '') {
-        return res
-          .status(400)
-          .set('Content-Type', 'text/plain')
-          .send('description must not be blank');
+      if (bookChanges.description) {
+        book.description = bookChanges.description;
       }
 
-      if (!newBook.cover_url || newBook.cover_url.trim() === '') {
-        return res
-          .status(400)
-          .set('Content-Type', 'text/plain')
-          .send('cover_url must not be blank');
+      if (bookChanges.cover_url) {
+        book.cover_url = bookChanges.cover_url;
       }
 
-      const authorId = Number.parseInt(newBook.author_id);
+      const authorId = Number.parseInt(bookChanges.author_id);
 
-      if (Number.isNaN(authorId)) {
-        return res
-          .status(400)
-          .set('Content-Type', 'text/plain')
-          .send('author_id must be an integer');
+      if (!Number.isNaN(authorId)) {
+        book.author_id = authorId;
       }
 
       return knex('authors')
@@ -165,7 +150,7 @@ router.patch('/books/:id', (req, res, next) => {
           }
 
           return knex('books')
-            .update(newBook, '*')
+            .update(book, '*')
             .where('id', id)
             .then((results) => {
               res.send(results[0]);
