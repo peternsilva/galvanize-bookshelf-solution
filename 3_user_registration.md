@@ -30,9 +30,9 @@ More specifically, the migration file should:
 
 Then, add the correct route to create a new user. Make sure to follow recommended security practices for user registration.
 
-| Request Method | Request URL        | Request Body                                                                                                    | Response Status | Response Content-Type | Response Body                                                                                                                              |
-|----------------|--------------------|-----------------------------------------------------------------------------------------------------------------|-----------------|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| `POST`         | `/users`           | `{ "first_name": "Jim", "last_name": "Carrey", "email": "jim.carrey@themask.com", "password": "to_be_hashed" }` | `200`           | `application/json`    | `{ "id": 1, "first_name": "Jim", "last_name": "Carrey", "email": "jim.carrey@themask.com", "created_at": "now()", "updated_at": "now()" }` |                                      |
+| Request Method | Request URL        | Request Body                                                                                                    | Response Status | Response Content-Type | Response Body |
+|----------------|--------------------|-----------------------------------------------------------------------------------------------------------------|-----------------|-----------------------|---------------|
+| `POST`         | `/users`           | `{ "first_name": "Jim", "last_name": "Carrey", "email": "jim.carrey@themask.com", "password": "to_be_hashed" }` | `200`           | `text/plain`          | `OK`          |
 
 - The password is stored as a cryptographic hash
 - The response body does not contain the newly created user's password or hash
