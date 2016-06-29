@@ -36,7 +36,7 @@ router.post('/users', (req, res, next) => {
           .send('Email already exists');
       }
 
-      bcrypt.hash(password, 10, (hashErr, hash) => {
+      bcrypt.hash(password, 10, (hashErr, hashed_password) => {
         if (hashErr) {
           return next(hashErr);
         }
@@ -46,7 +46,7 @@ router.post('/users', (req, res, next) => {
             first_name: req.body.first_name,
             last_name: req.body.last_name,
             email: email,
-            password: hash
+            hashed_password: hashed_password
           }, '*')
           .then((users) => {
             res.sendStatus(200);
@@ -215,7 +215,7 @@ router.post('/session', (req, res, next) => {
         return next(err);
       }
 
-      bcrypt.compare(password, user.password, (err, isMatch) => {
+      bcrypt.compare(password, user.hashed_password, (err, isMatch) => {
         if(err) {
           return next(err);
         }
