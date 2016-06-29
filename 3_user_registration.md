@@ -40,5 +40,5 @@ Then, add the correct route to create a new user. Make sure to follow recommende
 You can run the following test suite to verify the positive case when each middleware responds with a `200` status code.
 
 ```shell
-npm test test/part3.users.test.js
+npm test test/part3.routes.users.test.js
 ```
