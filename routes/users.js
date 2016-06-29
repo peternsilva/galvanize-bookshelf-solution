@@ -10,14 +10,14 @@ router.post('/users', (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  if (!email) {
+  if (!email || email.trim() === '') {
     return res
       .status(400)
       .set('Content-Type', 'text/plain')
       .send('email must not be blank');
   }
 
-  if (!password) {
+  if (!password || password.trim() === '') {
     return res
       .status(400)
       .set('Content-Type', 'text/plain')
@@ -43,14 +43,13 @@ router.post('/users', (req, res, next) => {
 
         knex('users')
           .insert({
-            first_name: req.body.firstName,
-            last_name: req.body.lastName,
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
             email: email,
             password: hash
           }, '*')
           .then((users) => {
-            res.send(users[0]);
-            // login newly registered user
+            res.sendStatus(200);
           })
           .catch((err) => {
             next(err);
