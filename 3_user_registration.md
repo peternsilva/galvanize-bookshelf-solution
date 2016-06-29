@@ -49,7 +49,7 @@ npm test test/part3.routes.users.test.js
 
 ## Bonus
 
-Next, update your server to handle the following problem HTTP requests and sends the appropriate HTTP response.
+Next, update your server to handle the following problem HTTP requests and send the appropriate HTTP response.
 
 **NOTE:** The information in just the request body uses the `application/json` content type.
 
