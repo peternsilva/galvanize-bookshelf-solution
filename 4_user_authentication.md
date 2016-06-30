@@ -24,6 +24,14 @@ More specifically, the migration file should:
 - Migrate one table per migration file.
 - Pass all the tests when `npm test test/part4.migrations.test.js` is run.
 
+## Seeds
+
+Translate the following [JavaScript entities](https://gist.github.com/ryansobol/0bcc0058af3ce5823263ac005a34b050) into Knex seed files. More specifically, the seed files should:
+
+- Live in the `seeds` directory.
+- Seed one table per seed file.
+- Pass all the tests when `npm test test/part1.seeds.test.js` is run.
+
 ## `session` Routes
 
 Next, update your server to handle the following HTTP request and send the appropriate HTTP response.
