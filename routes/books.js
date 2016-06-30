@@ -133,13 +133,14 @@ router.patch('/books/:id', (req, res, next) => {
       }
 
       const authorId = Number.parseInt(bookChanges.author_id);
+      if (bookChanges.author_id )
 
       if (!Number.isNaN(authorId)) {
         book.author_id = authorId;
       }
 
       return knex('authors')
-        .where('id', authorId)
+        .where('id', book.author_id)
         .first()
         .then((author) => {
           if (!author) {

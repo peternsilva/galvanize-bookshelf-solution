@@ -61,44 +61,23 @@ router.post('/users', (req, res, next) => {
     });
 });
 
-router.get('/users/:id/books', (req, res, next) => {
-  const id = Number.parseInt(req.params.id);
+router.get('/users/books', (req, res, next) => {
+  const userId = req.session.user.id;
 
-  if (Number.isNaN(id)) {
-    return next();
-  }
-
-  knex('users')
-    .where('id', id)
-    .first()
-    .then((user) => {
-      if (!user) {
-        return next();
-      }
-
-      return knex('books')
-        .innerJoin('users_books', 'users_books.book_id', 'books.id')
-        .where('users_books.user_id', id)
-        .then((books) => {
-          res.send(books);
-        });
+  knex('books')
+    .innerJoin('users_books', 'users_books.book_id', 'books.id')
+    .where('users_books.user_id', userId)
+    .then((books) => {
+      res.send(books);
     })
     .catch((err) => {
       next(err);
     });
 });
 
-router.get('/users/:userId/books/:bookId', (req, res, next) => {
-  const userId = Number.parseInt(req.params.userId);
+router.get('/users/books/:bookId', (req, res, next) => {
+  const userId = req.session.user.id;
   const bookId = Number.parseInt(req.params.bookId);
-
-  if (Number.isNaN(userId)) {
-    return next();
-  }
-
-  if (Number.isNaN(bookId)) {
-    return next();
-  }
 
   knex('books')
     .innerJoin('users_books', 'users_books.book_id', 'books.id')
@@ -119,30 +98,17 @@ router.get('/users/:userId/books/:bookId', (req, res, next) => {
     });
 });
 
-router.post('/users/:userId/books/:bookId', (req, res, next) => {
-  const userId = Number.parseInt(req.params.userId);
+router.post('/users/books/:bookId', (req, res, next) => {
+  const userId = req.session.user.id;
   const bookId = Number.parseInt(req.params.bookId);
-
-  if (Number.isNaN(userId)) {
-    return next();
-  }
 
   if (Number.isNaN(bookId)) {
     return next();
   }
 
-  knex('users')
-    .where('id', userId)
+  knex('books')
+    .where('id', bookId)
     .first()
-    .then((user) => {
-      if (!user) {
-        return next();
-      }
-
-      return knex('books')
-        .where('id', bookId)
-        .first();
-    })
     .then((book) => {
       if (!book) {
         return next();
@@ -162,13 +128,9 @@ router.post('/users/:userId/books/:bookId', (req, res, next) => {
     });
 });
 
-router.delete('/users/:userId/books/:bookId', (req, res, next) => {
-  const userId = Number.parseInt(req.params.userId);
+router.delete('/users/books/:bookId', (req, res, next) => {
+  const userId = req.session.user.id;
   const bookId = Number.parseInt(req.params.bookId);
-
-  if (Number.isNaN(userId)) {
-    return next();
-  }
 
   if (Number.isNaN(bookId)) {
     return next();
@@ -228,9 +190,9 @@ router.post('/session', (req, res, next) => {
 
         req.session.user = user;
 
-        res.cookie('userId', user.id);
+        res.cookie('loggedIn', true);
         res.sendStatus(200);
-      });
+      })
     })
     .catch((err) => {
       next(err);
@@ -239,7 +201,7 @@ router.post('/session', (req, res, next) => {
 
 router.delete('/session', (req, res, next) => {
   req.session = null;
-  res.clearCookie('userId');
+  res.clearCookie('loggedIn');
   res.sendStatus(200);
 });
 

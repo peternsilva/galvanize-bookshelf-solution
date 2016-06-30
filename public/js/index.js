@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  if (window.COOKIES.userId) {
+  if (window.COOKIES.loggedIn) {
     const container = $('<div class="container">');
     const h1 = $('<h1>').text('My Library');
     const row = $('<div class="row">');
@@ -9,7 +9,7 @@
     container.append(h1);
     container.append(row);
 
-    const $xhr = $.getJSON(`/users/${window.COOKIES.userId}/books`);
+    const $xhr = $.getJSON(`/users/books`);
 
     $xhr.done((books) => {
       if ($xhr.status !== 200) {
