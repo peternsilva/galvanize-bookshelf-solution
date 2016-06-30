@@ -1,5 +1,5 @@
 {
-  "name": "galvanize-bookshelf-server",
+  "name": "galvanize-bookshelf-solution",
   "version": "1.0.0",
   "description": "Create a web application to manage your book collection",
   "main": "server.js",
