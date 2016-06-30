@@ -30,7 +30,7 @@ Translate the following [JavaScript entities](https://gist.github.com/ryansobol/
 
 - Live in the `seeds` directory.
 - Seed one table per seed file.
-- Pass all the tests when `npm test test/part1.seeds.test.js` is run.
+- Pass all the tests when `npm test test/part4.seeds.test.js` is run.
 
 ## `session` Routes
 
