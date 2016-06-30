@@ -30,24 +30,6 @@ Next, update your server to handle the following HTTP request and send the appro
 
 **NOTE:** The information in just the request body uses the `application/json` content type.
 
-| Request Method | Request URL        | Request Body                                                                                                        | Response Status | Response Content-Type | Response Body |
-|----------------|--------------------|---------------------------------------------------------------------------------------------------------------------|-----------------|-----------------------|---------------|
-| `POST`         | `/users`           | `{ "first_name": "John", "last_name": "Siracusa", "email": "john.siracusa@gmail.com", "password": "ilikebigcats" }` | `200`           | `text/plain`          | `OK`          |
-
-In the `routes/users.js` module, add the necessary middleware to handle above RESTful route table. Make sure the route handler securely registers new users using the following techniques.
-
-- Only store a cryptographic hash of the password in the database.
-- Do _not_ send the new user's password or hashed password in the response body.
-
-You can run the following test suite to verify the positive case when the middleware responds with a `200` status code.
-
-```shell
-npm test ## Routes
-
-Next, update your server to handle the following HTTP request and send the appropriate HTTP response.
-
-**NOTE:** The information in just the request body uses the `application/json` content type.
-
 | Request Method | Request URL        | Request Body                                                         | Response Status | Response Content-Type | Response Body  |
 |----------------|--------------------|----------------------------------------------------------------------|-----------------|-----------------------|----------------|
 | `POST`         | `/session`         | `{ "email": "john.siracusa@gmail.com", "password": "ilikebigcats" }` | `200`           | `text/plain`          | `OK`           |
