@@ -56,7 +56,7 @@ npm test test/part4.routes.session.test.js
 
 Next, update your server to handle the following HTTP request and send the appropriate HTTP response.
 
-**NOTE:** The following routes assume the user with an `id` of 1 is logged in.
+**NOTE:** The following routes assume a user where `id = 1` is authenticated.
 
 | Request Method | Request URL        | Response Status | Response Content-Type | Response Body                                                         |
 |----------------|--------------------|-----------------|-----------------------|-----------------------------------------------------------------------|

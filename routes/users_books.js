@@ -66,10 +66,10 @@ router.post('/users/books/:bookId', checkAuth, (req, res, next) => {
         .insert({
           book_id: bookId,
           user_id: req.session.userId
-        }, '*');
-    })
-    .then((results) => {
-      res.send(results[0]);
+        }, '*')
+        .then((results) => {
+          res.send(results[0]);
+        });
     })
     .catch((err) => {
       next(err);
