@@ -6,6 +6,14 @@ const knex = require('../knex');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 
+const isAuth = function(req, res, next) {
+  if (!req.session.user) {
+    return res.sendStatus(401);
+  }
+
+  next();
+}
+
 router.post('/users', (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -61,7 +69,7 @@ router.post('/users', (req, res, next) => {
     });
 });
 
-router.get('/users/books', (req, res, next) => {
+router.get('/users/books', isAuth, (req, res, next) => {
   const userId = req.session.user.id;
 
   knex('books')
@@ -75,7 +83,7 @@ router.get('/users/books', (req, res, next) => {
     });
 });
 
-router.get('/users/books/:bookId', (req, res, next) => {
+router.get('/users/books/:bookId', isAuth, (req, res, next) => {
   const userId = req.session.user.id;
   const bookId = Number.parseInt(req.params.bookId);
 
@@ -98,7 +106,7 @@ router.get('/users/books/:bookId', (req, res, next) => {
     });
 });
 
-router.post('/users/books/:bookId', (req, res, next) => {
+router.post('/users/books/:bookId', isAuth, (req, res, next) => {
   const userId = req.session.user.id;
   const bookId = Number.parseInt(req.params.bookId);
 
@@ -128,7 +136,7 @@ router.post('/users/books/:bookId', (req, res, next) => {
     });
 });
 
-router.delete('/users/books/:bookId', (req, res, next) => {
+router.delete('/users/books/:bookId', isAuth, (req, res, next) => {
   const userId = req.session.user.id;
   const bookId = Number.parseInt(req.params.bookId);
 
