@@ -6,7 +6,7 @@ const knex = require('../knex');
 const bcrypt = require('bcrypt');
 
 const isAuth = function(req, res, next) {
-  if (!req.session.user) {
+  if (!req.session.userId) {
     return res.sendStatus(401);
   }
 
@@ -14,11 +14,9 @@ const isAuth = function(req, res, next) {
 }
 
 router.get('/users/books', isAuth, (req, res, next) => {
-  const userId = req.session.user.id;
-
   knex('books')
     .innerJoin('users_books', 'users_books.book_id', 'books.id')
-    .where('users_books.user_id', userId)
+    .where('users_books.user_id', req.session.userId)
     .then((books) => {
       res.send(books);
     })
@@ -28,14 +26,13 @@ router.get('/users/books', isAuth, (req, res, next) => {
 });
 
 router.get('/users/books/:bookId', isAuth, (req, res, next) => {
-  const userId = req.session.user.id;
   const bookId = Number.parseInt(req.params.bookId);
 
   knex('books')
     .innerJoin('users_books', 'users_books.book_id', 'books.id')
     .where({
       'books.id': bookId,
-      'users_books.user_id': userId
+      'users_books.user_id': req.session.userId
     })
     .first()
     .then((book) => {
@@ -51,7 +48,7 @@ router.get('/users/books/:bookId', isAuth, (req, res, next) => {
 });
 
 router.post('/users/books/:bookId', isAuth, (req, res, next) => {
-  const userId = req.session.user.id;
+  const userId = req.session.userId;
   const bookId = Number.parseInt(req.params.bookId);
 
   if (Number.isNaN(bookId)) {
@@ -69,7 +66,7 @@ router.post('/users/books/:bookId', isAuth, (req, res, next) => {
       return knex('users_books')
         .insert({
           book_id: bookId,
-          user_id: userId
+          user_id: req.session.userId
         }, '*');
     })
     .then((results) => {
@@ -81,7 +78,7 @@ router.post('/users/books/:bookId', isAuth, (req, res, next) => {
 });
 
 router.delete('/users/books/:bookId', isAuth, (req, res, next) => {
-  const userId = req.session.user.id;
+  const userId = req.session.userId;
   const bookId = Number.parseInt(req.params.bookId);
 
   if (Number.isNaN(bookId)) {
@@ -90,8 +87,8 @@ router.delete('/users/books/:bookId', isAuth, (req, res, next) => {
 
   knex('users_books')
     .where({
-      user_id: userId,
-      book_id: bookId
+      book_id: bookId,
+      user_id: req.session.userId
     })
     .first()
     .then((user_book) => {
@@ -102,8 +99,8 @@ router.delete('/users/books/:bookId', isAuth, (req, res, next) => {
       return knex('users_books')
         .del()
         .where({
-          user_id: userId,
-          book_id: bookId
+          book_id: bookId,
+          user_id: req.session.userId
         })
         .then(() => {
           delete user_book.id;

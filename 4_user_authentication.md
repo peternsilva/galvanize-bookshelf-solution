@@ -52,7 +52,7 @@ Next, update your server to handle the following HTTP request and send the appro
 
 | Request Method | Request URL        | Request Body                                                         | Response Status | Response Content-Type | Response Body  |
 |----------------|--------------------|----------------------------------------------------------------------|-----------------|-----------------------|----------------|
-| `POST`         | `/session`         | `{ "email": "john.siracusa@gmail.com", "password": "ilikebigcats" }` | `200`           | `text/plain`          | `OK`           |
+| `GET`          | `/users/books`     | N/A                                                                  | `200`           | `text/plain`          | `OK`           |
 | `POST`         | `/session`         | `{ "email": "bad.email@gmail.com", "password": "ilikebigcats" }`     | `401`           | `text/plain`          | `Unauthorized` |
 | `POST`         | `/session`         | `{ "email": "john.siracusa@gmail.com", "password": "badpassword" }`  | `401`           | `text/plain`          | `Unauthorized` |
 
