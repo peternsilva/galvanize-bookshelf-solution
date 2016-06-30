@@ -38,11 +38,11 @@ Next, update your server to handle the following HTTP request and send the appro
 
 **NOTE:** The information in just the request body uses the `application/json` content type.
 
-| Request Method | Request URL        | Request Body                                                         | Response Status | Response Content-Type | Response Body  |
-|----------------|--------------------|----------------------------------------------------------------------|-----------------|-----------------------|----------------|
-| `POST`         | `/session`         | `{ "email": "john.siracusa@gmail.com", "password": "ilikebigcats" }` | `200`           | `text/plain`          | `OK`           |
-| `POST`         | `/session`         | `{ "email": "bad.email@gmail.com", "password": "ilikebigcats" }`     | `401`           | `text/plain`          | `Unauthorized` |
-| `POST`         | `/session`         | `{ "email": "john.siracusa@gmail.com", "password": "badpassword" }`  | `401`           | `text/plain`          | `Unauthorized` |
+| Request Method | Request URL        | Request Body                                                     | Response Status | Response Content-Type | Response Body  |
+|----------------|--------------------|------------------------------------------------------------------|-----------------|-----------------------|----------------|
+| `POST`         | `/session`         | `{ "email": "jkrowling@gmail.com", "password": "youreawizard" }` | `200`           | `text/plain`          | `OK`           |
+| `POST`         | `/session`         | `{ "email": "bad.email@gmail.com", "password": "youreawizard" }` | `401`           | `text/plain`          | `Unauthorized` |
+| `POST`         | `/session`         | `{ "email": "jkrowling@gmail.com", "password": "badpassword" }`  | `401`           | `text/plain`          | `Unauthorized` |
 
 In the `routes/session.js` module, add the necessary middleware to handle above RESTful route table.
 
