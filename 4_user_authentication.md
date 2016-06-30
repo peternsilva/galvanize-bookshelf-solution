@@ -48,14 +48,14 @@ npm test test/part4.routes.session.test.js
 
 Next, update your server to handle the following HTTP request and send the appropriate HTTP response.
 
-**NOTE:** The information in just the request body uses the `application/json` content type.
+**NOTE:** The information in just the response body uses the `application/json` content type.
 
-| Request Method | Request URL        | Request Body                                                         | Response Status | Response Content-Type | Response Body  |
-|----------------|--------------------|----------------------------------------------------------------------|-----------------|-----------------------|----------------|
-| `GET`          | `/users/books`     | N/A                                                                  | `200`           | `application/json`    | `[{ }]`        |
-| `GET`          | `/users/books/1`   | N/A                                                                  | `200`           | `application/json`    | `{}`           |
-| `POST`         | `/users/books/1`   | N/A                                                                  | `200`           | `application/json`    | `{}`           |
-| `DELETE`       | `/users/books/1`   | N/A                                                                  | `200`           | `application/json`    | `{}`           |
+| Request Method | Request URL        | Response Status | Response Content-Type | Response Body  |
+|----------------|--------------------|-----------------|-----------------------|----------------|
+| `GET`          | `/users/books`     | `200`           | `application/json`    | `[{ }]`        |
+| `GET`          | `/users/books/1`   | `200`           | `application/json`    | `{}`           |
+| `POST`         | `/users/books/1`   | `200`           | `application/json`    | `{}`           |
+| `DELETE`       | `/users/books/1`   | `200`           | `application/json`    | `{}`           |
 
 In the `routes/users_books.js` module, add the necessary middleware to handle above RESTful route table.
 
