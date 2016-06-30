@@ -8,7 +8,7 @@ Translate the following entity relationship diagram into a Knex migration file.
 
 ```text
 ┌───────────────────────────────────────────────────────────────────────────────────────────┐
-│                                     users_books                                           │
+│                                      users_books                                          │
 ├────────────────┬─────────────────────────┬────────────────────────────────────────────────┤
 │id              │serial                   │primary key                                     │
 │book_id         │integer                  │not null references books(id) on delete cascade │
