@@ -48,7 +48,6 @@ router.get('/users/books/:bookId', isAuth, (req, res, next) => {
 });
 
 router.post('/users/books/:bookId', isAuth, (req, res, next) => {
-  const userId = req.session.userId;
   const bookId = Number.parseInt(req.params.bookId);
 
   if (Number.isNaN(bookId)) {
@@ -78,7 +77,6 @@ router.post('/users/books/:bookId', isAuth, (req, res, next) => {
 });
 
 router.delete('/users/books/:bookId', isAuth, (req, res, next) => {
-  const userId = req.session.userId;
   const bookId = Number.parseInt(req.params.bookId);
 
   if (Number.isNaN(bookId)) {

@@ -52,9 +52,10 @@ Next, update your server to handle the following HTTP request and send the appro
 
 | Request Method | Request URL        | Request Body                                                         | Response Status | Response Content-Type | Response Body  |
 |----------------|--------------------|----------------------------------------------------------------------|-----------------|-----------------------|----------------|
-| `GET`          | `/users/books`     | N/A                                                                  | `200`           | `text/plain`          | `OK`           |
-| `POST`         | `/session`         | `{ "email": "bad.email@gmail.com", "password": "ilikebigcats" }`     | `401`           | `text/plain`          | `Unauthorized` |
-| `POST`         | `/session`         | `{ "email": "john.siracusa@gmail.com", "password": "badpassword" }`  | `401`           | `text/plain`          | `Unauthorized` |
+| `GET`          | `/users/books`     | N/A                                                                  | `200`           | `application/json`    | `[{ }]`        |
+| `GET`          | `/users/books/1`   | N/A                                                                  | `200`           | `application/json`    | `{}`           |
+| `POST`         | `/users/books/1`   | N/A                                                                  | `200`           | `application/json`    | `{}`           |
+| `DELETE`       | `/users/books/1`   | N/A                                                                  | `200`           | `application/json`    | `{}`           |
 
 In the `routes/users_books.js` module, add the necessary middleware to handle above RESTful route table.
 
