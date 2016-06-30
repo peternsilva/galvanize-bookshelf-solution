@@ -58,12 +58,12 @@ Next, update your server to handle the following HTTP request and send the appro
 
 **NOTE:** The information in just the response body uses the `application/json` content type.
 
-| Request Method | Request URL        | Response Status | Response Content-Type | Response Body  |
-|----------------|--------------------|-----------------|-----------------------|----------------|
-| `GET`          | `/users/books`     | `200`           | `application/json`    | `[{ }]`        |
-| `GET`          | `/users/books/1`   | `200`           | `application/json`    | `{}`           |
-| `POST`         | `/users/books/1`   | `200`           | `application/json`    | `{}`           |
-| `DELETE`       | `/users/books/1`   | `200`           | `application/json`    | `{}`           |
+| Request Method | Request URL        | Response Status | Response Content-Type | Response Body                                                         |
+|----------------|--------------------|-----------------|-----------------------|-----------------------------------------------------------------------|
+| `GET`          | `/users/books`     | `200`           | `application/json`    | `[{ "id": 1, "author_id": 2, "title": "Python In A Nutshell", ... }]` |
+| `GET`          | `/users/books/1`   | `200`           | `application/json`    | `{ "id": 1, "author_id": 2, "title": "Python In A Nutshell", ... }`   |
+| `POST`         | `/users/books/2`   | `200`           | `application/json`    | `{ "id": 2, "book_id": 2, "user_id": 1 }`                             |
+| `DELETE`       | `/users/books/2`   | `200`           | `application/json`    | `{ "book_id": 2, "user_id": 1 }`                                      |
 
 In the `routes/users_books.js` module, add the necessary middleware to handle above RESTful route table.
 
