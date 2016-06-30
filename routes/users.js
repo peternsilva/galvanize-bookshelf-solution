@@ -163,46 +163,4 @@ router.delete('/users/books/:bookId', (req, res, next) => {
     });
 });
 
-router.post('/session', (req, res, next) => {
-  const email = req.body.email;
-  const password = req.body.password;
-
-  knex('users')
-    .where('email', email)
-    .first()
-    .then((user) => {
-      if (!user) {
-        let err = new Error('User does not exist');
-        err.status = 400;
-        return next(err);
-      }
-
-      bcrypt.compare(password, user.hashed_password, (err, isMatch) => {
-        if(err) {
-          return next(err);
-        }
-
-        if (!isMatch) {
-          const err = new Error('User email or password is not correct');
-          err.status = 400;
-          return next(err);
-        }
-
-        req.session.user = user;
-
-        res.cookie('loggedIn', true);
-        res.sendStatus(200);
-      })
-    })
-    .catch((err) => {
-      next(err);
-    });
-});
-
-router.delete('/session', (req, res, next) => {
-  req.session = null;
-  res.clearCookie('loggedIn');
-  res.sendStatus(200);
-});
-
 module.exports = router;
