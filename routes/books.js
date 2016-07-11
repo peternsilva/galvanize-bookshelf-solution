@@ -38,37 +38,37 @@ router.get('/books/:id', (req, res, next) => {
 });
 
 router.post('/books', (req, res, next) => {
-  const newBook = req.body;
+  const { title, genre, description, cover_url, author_id } = req.body;
 
-  if (!newBook.title || newBook.title.trim() === '') {
+  if (!title || title.trim() === '') {
     return res
       .status(400)
       .set('Content-Type', 'text/plain')
       .send('title must not be blank');
   }
 
-  if (!newBook.genre || newBook.genre.trim() === '') {
+  if (!genre || genre.trim() === '') {
     return res
       .status(400)
       .set('Content-Type', 'text/plain')
       .send('genre must not be blank');
   }
 
-  if (!newBook.description || newBook.description.trim() === '') {
+  if (!description || description.trim() === '') {
     return res
       .status(400)
       .set('Content-Type', 'text/plain')
       .send('description must not be blank');
   }
 
-  if (!newBook.cover_url || newBook.cover_url.trim() === '') {
+  if (!cover_url || cover_url.trim() === '') {
     return res
       .status(400)
       .set('Content-Type', 'text/plain')
       .send('cover_url must not be blank');
   }
 
-  const authorId = Number.parseInt(newBook.author_id);
+  const authorId = Number.parseInt(author_id);
 
   if (Number.isNaN(authorId)) {
     return res
@@ -89,7 +89,13 @@ router.post('/books', (req, res, next) => {
       }
 
       return knex('books')
-        .insert(newBook, '*')
+        .insert({
+          title,
+          genre,
+          description,
+          cover_url,
+          author_id
+        }, '*')
         .then((results) => {
           res.send(results[0]);
         });
@@ -115,28 +121,32 @@ router.patch('/books/:id', (req, res, next) => {
       }
 
       const bookChanges = req.body;
+      const updatedBook = {};
 
       if (bookChanges.title) {
-        book.title = bookChanges.title;
+        updatedBook.title = bookChanges.title;
       }
 
       if (bookChanges.genre) {
-        book.genre = bookChanges.genre;
+        updatedBook.genre = bookChanges.genre;
       }
 
       if (bookChanges.description) {
-        book.description = bookChanges.description;
+        updatedBook.description = bookChanges.description;
       }
 
       if (bookChanges.cover_url) {
-        book.cover_url = bookChanges.cover_url;
+        updatedBook.cover_url = bookChanges.cover_url;
       }
 
       const authorId = Number.parseInt(bookChanges.author_id);
-      if (bookChanges.author_id )
 
       if (!Number.isNaN(authorId)) {
-        book.author_id = authorId;
+        updatedBook.author_id = authorId;
+      }
+
+      if (bookChanges.author_id ) {
+        updatedBook.author_id = bookChanges.author_id;
       }
 
       return knex('authors')
@@ -151,7 +161,7 @@ router.patch('/books/:id', (req, res, next) => {
           }
 
           return knex('books')
-            .update(book, '*')
+            .update(updatedBook, '*')
             .where('id', id)
             .then((results) => {
               res.send(results[0]);

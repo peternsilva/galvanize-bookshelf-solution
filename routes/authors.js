@@ -38,30 +38,30 @@ router.get('/authors/:id', (req, res, next) => {
 });
 
 router.post('/authors', (req, res, next) => {
-  const newAuthor = req.body;
+  const { first_name, last_name, biography, portrait_url } = req.body;
 
-  if (!newAuthor.first_name || newAuthor.first_name.trim() === '') {
+  if (!first_name || first_name.trim() === '') {
     return res
       .status(400)
       .set('Content-Type', 'text/plain')
       .send('first_name must not be blank');
   }
 
-  if (!newAuthor.last_name || newAuthor.last_name.trim() === '') {
+  if (!last_name || last_name.trim() === '') {
     return res
       .status(400)
       .set('Content-Type', 'text/plain')
       .send('last_name must not be blank');
   }
 
-  if (!newAuthor.biography || newAuthor.biography.trim() === '') {
+  if (!biography || biography.trim() === '') {
     return res
       .status(400)
       .set('Content-Type', 'text/plain')
       .send('biography must not be blank');
   }
 
-  if (!newAuthor.portrait_url || newAuthor.portrait_url.trim() === '') {
+  if (!portrait_url || portrait_url.trim() === '') {
     return res
       .status(400)
       .set('Content-Type', 'text/plain')
@@ -69,7 +69,12 @@ router.post('/authors', (req, res, next) => {
   }
 
   knex('authors')
-    .insert(newAuthor, '*')
+    .insert({
+      first_name,
+      last_name,
+      biography,
+      portrait_url
+    }, '*')
     .then((results) => {
       res.send(results[0]);
     })
@@ -94,25 +99,26 @@ router.patch('/authors/:id', (req, res, next) => {
       }
 
       const authorChanges = req.body;
+      const updatedAuthor = {};
 
       if (authorChanges.first_name) {
-        author.first_name = authorChanges.first_name;
+        updatedAuthor.first_name = authorChanges.first_name;
       }
 
       if (authorChanges.last_name) {
-        author.last_name = authorChanges.last_name;
+        updatedAuthor.last_name = authorChanges.last_name;
       }
 
       if (authorChanges.biography) {
-        author.biography = authorChanges.biography;
+        updatedAuthor.biography = authorChanges.biography;
       }
 
       if (authorChanges.portrait_url) {
-        author.portrait_url = authorChanges.portrait_url;
+        updatedAuthor.portrait_url = authorChanges.portrait_url;
       }
 
       return knex('authors')
-        .update(author, '*')
+        .update(updatedAuthor, '*')
         .where('id', id)
         .then((results) => {
           res.send(results[0]);
