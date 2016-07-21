@@ -6,7 +6,10 @@ const knex = require('../knex');
 
 const checkAuth = function(req, res, next) {
   if (!req.session.userId) {
-    return res.sendStatus(401);
+    const err = new Error('Unauthorized')
+    err.status = 401;
+
+    return next(err);
   }
 
   next();

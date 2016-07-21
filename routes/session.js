@@ -11,7 +11,10 @@ router.post('/session', (req, res, next) => {
     .first()
     .then((user) => {
       if (!user) {
-        return res.sendStatus(401);
+        const err = new Error('Unauthorized')
+        err.status = 401;
+
+        throw err;
       }
 
       const hashed_password = user.hashed_password;
@@ -22,7 +25,10 @@ router.post('/session', (req, res, next) => {
         }
 
         if (!isMatch) {
-          return res.sendStatus(401);
+          const err = new Error('Unauthorized')
+          err.status = 401;
+
+          return next(err);
         }
 
         req.session.userId = user.id;

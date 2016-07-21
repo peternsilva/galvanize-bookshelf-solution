@@ -41,31 +41,31 @@ router.post('/authors', (req, res, next) => {
   const { first_name, last_name, biography, portrait_url } = req.body;
 
   if (!first_name || first_name.trim() === '') {
-    return res
-      .status(400)
-      .set('Content-Type', 'text/plain')
-      .send('first_name must not be blank');
+    const err = new Error('first_name must not be blank')
+    err.status = 400;
+
+    return next(err);
   }
 
   if (!last_name || last_name.trim() === '') {
-    return res
-      .status(400)
-      .set('Content-Type', 'text/plain')
-      .send('last_name must not be blank');
+    const err = new Error('last_name must not be blank')
+    err.status = 400;
+
+    return next(err);
   }
 
   if (!biography || biography.trim() === '') {
-    return res
-      .status(400)
-      .set('Content-Type', 'text/plain')
-      .send('biography must not be blank');
+    const err = new Error('biography must not be blank')
+    err.status = 400;
+
+    return next(err);
   }
 
   if (!portrait_url || portrait_url.trim() === '') {
-    return res
-      .status(400)
-      .set('Content-Type', 'text/plain')
-      .send('portrait_url must not be blank');
+    const err = new Error('portrait_url must not be blank')
+    err.status = 400;
+
+    return next(err);
   }
 
   knex('authors')

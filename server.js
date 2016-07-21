@@ -48,6 +48,13 @@ app.use((_req, res) => {
 
 // eslint-disable-next-line max-params
 app.use((err, _req, res, _next) => {
+  if (err.status) {
+    return res
+      .status(err.status)
+      .set('Content-Type', 'text/plain')
+      .send(err.message);
+  }
+
   // eslint-disable-next-line no-console
   console.error(err.stack);
   res.sendStatus(500);

@@ -41,40 +41,40 @@ router.post('/books', (req, res, next) => {
   const { title, genre, description, cover_url, author_id } = req.body;
 
   if (!title || title.trim() === '') {
-    return res
-      .status(400)
-      .set('Content-Type', 'text/plain')
-      .send('title must not be blank');
+    const err = new Error('title must not be blank')
+    err.status = 400;
+
+    return next(err);
   }
 
   if (!genre || genre.trim() === '') {
-    return res
-      .status(400)
-      .set('Content-Type', 'text/plain')
-      .send('genre must not be blank');
+    const err = new Error('genre must not be blank')
+    err.status = 400;
+
+    return next(err);
   }
 
   if (!description || description.trim() === '') {
-    return res
-      .status(400)
-      .set('Content-Type', 'text/plain')
-      .send('description must not be blank');
+    const err = new Error('description must not be blank')
+    err.status = 400;
+
+    return next(err);
   }
 
   if (!cover_url || cover_url.trim() === '') {
-    return res
-      .status(400)
-      .set('Content-Type', 'text/plain')
-      .send('cover_url must not be blank');
+    const err = new Error('cover_url must not be blank')
+    err.status = 400;
+
+    return next(err);
   }
 
   const authorId = Number.parseInt(author_id);
 
   if (Number.isNaN(authorId)) {
-    return res
-      .status(400)
-      .set('Content-Type', 'text/plain')
-      .send('author_id must be an integer');
+    const err = new Error('author_id must not be blank')
+    err.status = 400;
+
+    return next(err);
   }
 
   knex('authors')
@@ -82,10 +82,10 @@ router.post('/books', (req, res, next) => {
     .first()
     .then((author) => {
       if (!author) {
-        return res
-          .status(400)
-          .set('Content-Type', 'text/plain')
-          .send('author_id does not exist');
+        const err = new Error('author_id does not exist')
+        err.status = 400;
+
+        throw err;
       }
 
       return knex('books')
@@ -154,10 +154,10 @@ router.patch('/books/:id', (req, res, next) => {
         .first()
         .then((author) => {
           if (!author) {
-            return res
-              .status(400)
-              .set('Content-Type', 'text/plain')
-              .send('author_id does not exist');
+            const err = new Error('author_id does not exist')
+            err.status = 400;
+
+            throw err;
           }
 
           return knex('books')
