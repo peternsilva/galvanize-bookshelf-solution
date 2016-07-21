@@ -2,14 +2,13 @@
 
 process.env.NODE_ENV = 'test';
 
-const assert = require('chai').assert;
-const {suite, test} = require('mocha');
+const { suite, test } = require('mocha');
 const request = require('supertest');
 const knex = require('../knex');
 const server = require('../server');
 
 suite('part2 routes books', () => {
-  before(function(done) {
+  before((done) => {
     knex.migrate.latest()
       .then(() => {
         done();
@@ -19,7 +18,7 @@ suite('part2 routes books', () => {
       });
   });
 
-  beforeEach(function(done) {
+  beforeEach((done) => {
     knex.seed.run()
       .then(() => {
         done();
@@ -30,6 +29,7 @@ suite('part2 routes books', () => {
   });
 
   test('GET /books', (done) => {
+    /* eslint-disable max-len */
     request(server)
       .get('/books')
       .expect('Content-Type', /json/)
@@ -133,9 +133,12 @@ suite('part2 routes books', () => {
         created_at: new Date('2016-06-26 14:26:16 UTC').toISOString(),
         updated_at: new Date('2016-06-26 14:26:16 UTC').toISOString()
       }], done);
+
+      /* eslint-enable max-len */
   });
 
   test('GET /books/:id', (done) => {
+    /* eslint-disable max-len */
     request(server)
       .get('/books/2')
       .expect('Content-Type', /json/)
@@ -149,9 +152,12 @@ suite('part2 routes books', () => {
         created_at: new Date('2016-06-26 14:26:16 UTC').toISOString(),
         updated_at: new Date('2016-06-26 14:26:16 UTC').toISOString()
       }, done);
+
+      /* eslint-enable max-len */
   });
 
   test('POST /books', (done) => {
+    /* eslint-disable max-len */
     request(server)
       .post('/books')
       .send({
@@ -174,9 +180,12 @@ suite('part2 routes books', () => {
         description: 'If you want to learn how to program, working with Python is an excellent way to start. This hands-on guide takes you through the language a step at a time, beginning with basic programming concepts before moving on to functions, recursion, data structures, and object-oriented design. This second edition and its supporting code have been updated for Python 3.',
         cover_url: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/think_python.jpg'
       }, done);
+
+      /* eslint-enable max-len */
   });
 
   test('PATCH /books/:id', (done) => {
+    /* eslint-disable max-len */
     request(server)
       .patch('/books/2')
       .send({
@@ -199,9 +208,12 @@ suite('part2 routes books', () => {
         description: 'More Python',
         cover_url: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/think_python.jpg'
       }, done);
+
+      /* eslint-enable max-len */
   });
 
   test('DELETE /books/:id', (done) => {
+    /* eslint-disable max-len */
     request(server)
       .del('/books/2')
       .expect('Content-Type', /json/)
@@ -216,5 +228,7 @@ suite('part2 routes books', () => {
         description: 'If you want to learn how to program, working with Python is an excellent way to start. This hands-on guide takes you through the language a step at a time, beginning with basic programming concepts before moving on to functions, recursion, data structures, and object-oriented design. This second edition and its supporting code have been updated for Python 3.',
         cover_url: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/think_python.jpg'
       }, done);
+
+      /* eslint-enable max-len */
   });
 });

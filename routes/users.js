@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-const router = express.Router();
+const router = express.Router(); // eslint-disable-line new-cap
 const knex = require('../knex');
 const bcrypt = require('bcrypt');
 
@@ -44,10 +44,10 @@ router.post('/users', (req, res, next) => {
           .insert({
             first_name: req.body.first_name,
             last_name: req.body.last_name,
-            email: email,
-            hashed_password: hashed_password
-          }, '*')
-          .then((users) => {
+            email,
+            hashed_password
+          })
+          .then(() => {
             res.sendStatus(200);
           })
           .catch((err) => {

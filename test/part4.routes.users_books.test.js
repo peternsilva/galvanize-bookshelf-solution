@@ -2,9 +2,7 @@
 
 process.env.NODE_ENV = 'test';
 
-const assert = require('chai').assert;
-const bcrypt = require('bcrypt');
-const {suite, test} = require('mocha');
+const { suite, test } = require('mocha');
 const request = require('supertest');
 const knex = require('../knex');
 const server = require('../server');
@@ -12,7 +10,7 @@ const server = require('../server');
 suite('part4 routes users_books', () => {
   const agent = request.agent(server);
 
-  before(function(done) {
+  before((done) => {
     knex.migrate.latest()
       .then(() => {
         done();
@@ -22,7 +20,7 @@ suite('part4 routes users_books', () => {
       });
   });
 
-  beforeEach(function(done) {
+  beforeEach((done) => {
     knex.seed.run()
       .then(() => {
         request(server)
@@ -32,7 +30,7 @@ suite('part4 routes users_books', () => {
             email: 'jkrowling@gmail.com',
             password: 'youreawizard'
           })
-          .end(function (err, res) {
+          .end((err, res) => {
             if (err) {
               return done(err);
             }
@@ -47,6 +45,7 @@ suite('part4 routes users_books', () => {
   });
 
   test('GET /users/books', (done) => {
+    /* eslint-disable max-len */
     agent
       .get('/users/books')
       .expect('Content-Type', /json/)
@@ -66,9 +65,12 @@ suite('part4 routes users_books', () => {
         cover_url: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/python_in_a_nutshell.jpg',
         user_id: 1
       }], done);
+
+      /* eslint-enable max-len */
   });
 
   test('GET /users/books/1', (done) => {
+    /* eslint-disable max-len */
     agent
       .get('/users/books/1')
       .expect('Content-Type', /json/)
@@ -86,6 +88,8 @@ suite('part4 routes users_books', () => {
         cover_url: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/python_in_a_nutshell.jpg',
         user_id: 1
       }, done);
+
+      /* eslint-enable max-len */
   });
 
   test('GET /users/books/2', (done) => {

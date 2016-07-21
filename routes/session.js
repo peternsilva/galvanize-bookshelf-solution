@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-const router = express.Router();
+const router = express.Router(); // eslint-disable-line new-cap
 const knex = require('../knex');
 const bcrypt = require('bcrypt');
 
@@ -11,7 +11,8 @@ router.post('/session', (req, res, next) => {
     .first()
     .then((user) => {
       if (!user) {
-        const err = new Error('Unauthorized')
+        const err = new Error('Unauthorized');
+
         err.status = 401;
 
         throw err;
@@ -25,16 +26,17 @@ router.post('/session', (req, res, next) => {
         }
 
         if (!isMatch) {
-          const err = new Error('Unauthorized')
-          err.status = 401;
+          const authErr = new Error('Unauthorized');
 
-          return next(err);
+          authErr.status = 401;
+
+          return next(authErr);
         }
 
         req.session.userId = user.id;
         res.cookie('loggedIn', true);
         res.sendStatus(200);
-      })
+      });
     })
     .catch((err) => {
       next(err);

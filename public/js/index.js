@@ -9,7 +9,7 @@
     container.append(h1);
     container.append(row);
 
-    const $xhr = $.getJSON(`/users/books`);
+    const $xhr = $.getJSON('/users/books');
 
     $xhr.done((books) => {
       if ($xhr.status !== 200) {
@@ -40,7 +40,7 @@
     });
   }
 
-  $('.register').click((event) => {
+  $('.register').click(() => {
     const first_name = $('#fname').val().trim();
     const last_name = $('#lname').val().trim();
     const email = $('#email').val().trim();
@@ -91,7 +91,8 @@
       }
 
       if ($xhr.status !== 200) {
-        const message = 'User could not be created. Please try again.'
+        const message = 'User could not be created. Please try again.';
+
         return Materialize.toast(message);
       }
 

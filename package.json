@@ -6,7 +6,7 @@
   "scripts": {
     "heroku-postbuild": "knex migrate:latest",
     "knex": "knex",
-    "lint": "eslint  --ignore-pattern public/js/vendor",
+      "lint": "eslint  --ignore-pattern public/js/vendor",
     "nf": "nf start",
     "nodemon": "nodemon server.js",
     "test": "mocha"
@@ -38,6 +38,8 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "dotenv": "^2.0.0",
+    "eslint": "^3.1.1",
+    "eslint-config-ryansobol": "^7.7.0",
     "foreman": "^1.4.1",
     "mocha": "^2.5.3",
     "nodemon": "^1.9.2",

@@ -3,11 +3,11 @@
 process.env.NODE_ENV = 'test';
 
 const assert = require('chai').assert;
-const {suite, test} = require('mocha');
+const { suite, test } = require('mocha');
 const knex = require('../knex');
 
 suite('part4 seeds', () => {
-  before(function(done) {
+  before((done) => {
     knex.migrate.latest()
       .then(() => {
         done();
@@ -17,7 +17,7 @@ suite('part4 seeds', () => {
       });
   });
 
-  beforeEach(function(done) {
+  beforeEach((done) => {
     knex.seed.run()
       .then(() => {
         done();
@@ -28,6 +28,7 @@ suite('part4 seeds', () => {
   });
 
   test('users', (done) => {
+    /* eslint-disable max-len */
     knex('users').orderBy('id', 'ASC')
       .then((actual) => {
         const expected = [{
@@ -52,6 +53,8 @@ suite('part4 seeds', () => {
       .catch((err) => {
         done(err);
       });
+
+      /* eslint-enable max-len */
   });
 
   test('users_books', (done) => {

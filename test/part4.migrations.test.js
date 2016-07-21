@@ -3,11 +3,11 @@
 process.env.NODE_ENV = 'test';
 
 const assert = require('chai').assert;
-const {suite, test} = require('mocha');
+const { suite, test } = require('mocha');
 const knex = require('../knex');
 
 suite('part4 migrations', () => {
-  before(function(done) {
+  before((done) => {
     knex.migrate.latest()
       .then(() => {
         done();

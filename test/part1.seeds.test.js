@@ -3,11 +3,11 @@
 process.env.NODE_ENV = 'test';
 
 const assert = require('chai').assert;
-const {suite, test} = require('mocha');
+const { suite, test } = require('mocha');
 const knex = require('../knex');
 
 suite('part1 seeds', () => {
-  before(function(done) {
+  before((done) => {
     knex.migrate.latest()
       .then(() => {
         done();
@@ -17,7 +17,7 @@ suite('part1 seeds', () => {
       });
   });
 
-  beforeEach(function(done) {
+  beforeEach((done) => {
     knex.seed.run()
       .then(() => {
         done();
@@ -30,6 +30,7 @@ suite('part1 seeds', () => {
   test('authors', (done) => {
     knex('authors').orderBy('id', 'ASC')
       .then((actual) => {
+        /* eslint-disable max-len */
         const expected = [{
           id: 1,
           first_name: 'Alex',
@@ -128,6 +129,8 @@ suite('part1 seeds', () => {
           updated_at: new Date('2016-06-26 14:26:16 UTC')
         }];
 
+        /* eslint-enable max-len */
+
         for (let i = 0; i < expected.length; i++) {
           assert.deepEqual(
             actual[i],
@@ -145,6 +148,7 @@ suite('part1 seeds', () => {
   test('books', (done) => {
     knex('books').orderBy('id', 'ASC')
       .then((actual) => {
+        /* eslint-disable max-len */
         const expected = [{
           id: 1,
           author_id: 2,
@@ -245,6 +249,8 @@ suite('part1 seeds', () => {
           created_at: new Date('2016-06-26 14:26:16 UTC'),
           updated_at: new Date('2016-06-26 14:26:16 UTC')
         }];
+
+        /* eslint-enable max-len */
 
         for (let i = 0; i < expected.length; i++) {
           assert.deepEqual(

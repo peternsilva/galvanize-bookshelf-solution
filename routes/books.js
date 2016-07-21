@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-const router = express.Router();
+const router = express.Router(); // eslint-disable-line new-cap
 const knex = require('../knex');
 
 router.get('/books', (_req, res, next) => {
@@ -41,28 +41,32 @@ router.post('/books', (req, res, next) => {
   const { title, genre, description, cover_url, author_id } = req.body;
 
   if (!title || title.trim() === '') {
-    const err = new Error('title must not be blank')
+    const err = new Error('title must not be blank');
+
     err.status = 400;
 
     return next(err);
   }
 
   if (!genre || genre.trim() === '') {
-    const err = new Error('genre must not be blank')
+    const err = new Error('genre must not be blank');
+
     err.status = 400;
 
     return next(err);
   }
 
   if (!description || description.trim() === '') {
-    const err = new Error('description must not be blank')
+    const err = new Error('description must not be blank');
+
     err.status = 400;
 
     return next(err);
   }
 
   if (!cover_url || cover_url.trim() === '') {
-    const err = new Error('cover_url must not be blank')
+    const err = new Error('cover_url must not be blank');
+
     err.status = 400;
 
     return next(err);
@@ -71,7 +75,8 @@ router.post('/books', (req, res, next) => {
   const authorId = Number.parseInt(author_id);
 
   if (Number.isNaN(authorId)) {
-    const err = new Error('author_id must not be blank')
+    const err = new Error('author_id must not be blank');
+
     err.status = 400;
 
     return next(err);
@@ -82,7 +87,8 @@ router.post('/books', (req, res, next) => {
     .first()
     .then((author) => {
       if (!author) {
-        const err = new Error('author_id does not exist')
+        const err = new Error('author_id does not exist');
+
         err.status = 400;
 
         throw err;
@@ -145,7 +151,7 @@ router.patch('/books/:id', (req, res, next) => {
         updatedBook.author_id = authorId;
       }
 
-      if (bookChanges.author_id ) {
+      if (bookChanges.author_id) {
         updatedBook.author_id = bookChanges.author_id;
       }
 
@@ -154,7 +160,8 @@ router.patch('/books/:id', (req, res, next) => {
         .first()
         .then((author) => {
           if (!author) {
-            const err = new Error('author_id does not exist')
+            const err = new Error('author_id does not exist');
+
             err.status = 400;
 
             throw err;

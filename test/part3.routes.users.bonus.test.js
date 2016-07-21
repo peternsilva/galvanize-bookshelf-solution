@@ -2,15 +2,14 @@
 
 process.env.NODE_ENV = 'test';
 
-const assert = require('chai').assert;
-const {suite, test} = require('mocha');
+const { suite, test } = require('mocha');
 const bcrypt = require('bcrypt');
 const request = require('supertest');
 const knex = require('../knex');
 const server = require('../server');
 
 suite('part3 routes users bonus', () => {
-  before(function(done) {
+  before((done) => {
     knex.migrate.latest()
       .then(() => {
         done();
@@ -20,7 +19,7 @@ suite('part3 routes users bonus', () => {
       });
   });
 
-  beforeEach(function(done) {
+  beforeEach((done) => {
     knex('users')
       .del()
       .then(() => {
@@ -58,6 +57,7 @@ suite('part3 routes users bonus', () => {
   });
 
   test('POST /users with existing email', (done) => {
+    /* eslint-disable no-sync */
     knex('users')
       .insert({
         first_name: 'John',
@@ -81,5 +81,7 @@ suite('part3 routes users bonus', () => {
       .catch((err) => {
         done(err);
       });
+
+      /* eslint-enable no-sync */
   });
 });

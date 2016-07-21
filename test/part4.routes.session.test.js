@@ -2,15 +2,14 @@
 
 process.env.NODE_ENV = 'test';
 
-const assert = require('chai').assert;
-const {suite, test} = require('mocha');
+const { suite, test } = require('mocha');
 const bcrypt = require('bcrypt');
 const request = require('supertest');
 const knex = require('../knex');
 const server = require('../server');
 
 suite('part4 routes session', () => {
-  before(function(done) {
+  before((done) => {
     knex.migrate.latest()
       .then(() => {
         done();
@@ -20,7 +19,7 @@ suite('part4 routes session', () => {
       });
   });
 
-  beforeEach(function(done) {
+  beforeEach((done) => {
     knex('users')
       .del()
       .then(() => {
@@ -34,6 +33,7 @@ suite('part4 routes session', () => {
   test('POST /session', (done) => {
     const password = 'ilikebigcats';
 
+    /* eslint-disable no-sync */
     knex('users')
       .insert({
         first_name: 'John',
@@ -47,7 +47,7 @@ suite('part4 routes session', () => {
           .set('Content-Type', 'application/json')
           .send({
             email: 'john.siracusa@gmail.com',
-            password: password
+            password
           })
           .expect('set-cookie', /loggedIn=true; Path=\//)
           .expect('set-cookie', /bookshelf=[a-zA-Z0-9=]*; path=\//)
@@ -58,11 +58,14 @@ suite('part4 routes session', () => {
       .catch((err) => {
         done(err);
       });
+
+      /* eslint-enable no-sync */
   });
 
   test('POST /session with bad email', (done) => {
     const password = 'ilikebigcats';
 
+    /* eslint-disable no-sync */
     knex('users')
       .insert({
         first_name: 'John',
@@ -76,7 +79,7 @@ suite('part4 routes session', () => {
           .set('Content-Type', 'application/json')
           .send({
             email: 'bad.email@gmail.com',
-            password: password
+            password
           })
           .expect('Content-Type', /plain/)
           .expect(401, 'Unauthorized', done);
@@ -84,9 +87,12 @@ suite('part4 routes session', () => {
       .catch((err) => {
         done(err);
       });
+
+      /* eslint-enable no-sync */
   });
 
   test('POST /session with bad password', (done) => {
+    /* eslint-disable no-sync */
     knex('users')
       .insert({
         first_name: 'John',
@@ -108,6 +114,8 @@ suite('part4 routes session', () => {
       .catch((err) => {
         done(err);
       });
+
+      /* eslint-enable no-sync */
   });
 
   test('DELETE /session', (done) => {

@@ -1,19 +1,20 @@
 'use strict';
 
 const express = require('express');
-const router = express.Router();
+const router = express.Router(); // eslint-disable-line new-cap
 const knex = require('../knex');
 
 const checkAuth = function(req, res, next) {
   if (!req.session.userId) {
-    const err = new Error('Unauthorized')
+    const err = new Error('Unauthorized');
+
     err.status = 401;
 
     return next(err);
   }
 
   next();
-}
+};
 
 router.get('/users/books', checkAuth, (req, res, next) => {
   knex('books')

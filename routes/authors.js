@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-const router = express.Router();
+const router = express.Router(); // eslint-disable-line new-cap
 const knex = require('../knex');
 
 router.get('/authors', (_req, res, next) => {
@@ -41,28 +41,32 @@ router.post('/authors', (req, res, next) => {
   const { first_name, last_name, biography, portrait_url } = req.body;
 
   if (!first_name || first_name.trim() === '') {
-    const err = new Error('first_name must not be blank')
+    const err = new Error('first_name must not be blank');
+
     err.status = 400;
 
     return next(err);
   }
 
   if (!last_name || last_name.trim() === '') {
-    const err = new Error('last_name must not be blank')
+    const err = new Error('last_name must not be blank');
+
     err.status = 400;
 
     return next(err);
   }
 
   if (!biography || biography.trim() === '') {
-    const err = new Error('biography must not be blank')
+    const err = new Error('biography must not be blank');
+
     err.status = 400;
 
     return next(err);
   }
 
   if (!portrait_url || portrait_url.trim() === '') {
-    const err = new Error('portrait_url must not be blank')
+    const err = new Error('portrait_url must not be blank');
+
     err.status = 400;
 
     return next(err);
