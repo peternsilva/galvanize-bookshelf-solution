@@ -6,6 +6,7 @@
     deleteResource,
     updateResource
   } = window.HELPERS;
+
   const loggedIn = window.COOKIES.loggedIn;
   const bookId = window.QUERY_PARAMETERS.id;
   const inputHTML = $('.book-metadata').html();
