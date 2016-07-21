@@ -67,11 +67,11 @@
     });
   }
 
-  $('a.edit').click((_event) => {
+  $('a.edit').click(() => {
     toEditMode();
   });
 
-  $('a.save').click((_event) => {
+  $('a.save').click(() => {
     const firstName = $('.author-metadata .first-name').val().trim();
     const lastName = $('.author-metadata .last-name').val().trim();
     const biography = $('.author-metadata textarea').val().trim();
@@ -103,7 +103,7 @@
   $('.modal a.confirm-delete')
     .click(deleteResource('author'));
 
-  $('a.delete').click((_event) => {
+  $('a.delete').click(() => {
     if ($('.book').length > 0) {
       return Materialize.toast('Please remove all books for this author', 2000);
     }
