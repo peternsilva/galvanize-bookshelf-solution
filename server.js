@@ -16,16 +16,21 @@ const authors = require('./routes/authors');
 const books = require('./routes/books');
 const session = require('./routes/session');
 const users = require('./routes/users');
-const users_books = require('./routes/users_books');
+const usersBooks = require('./routes/users_books');
 
 const app = express();
 
 app.disable('x-powered-by');
 
-if (process.env.NODE_ENV !== 'test') {
-  const morgan = require('morgan');
+// eslint-disable-next-line default-case
+switch (process.env.NODE_ENV) {
+  case 'development':
+    app.use(require('morgan')('dev'));
+    break;
 
-  app.use(morgan('short'));
+  case 'production':
+    app.use(require('morgan')('short'));
+    break;
 }
 
 app.use(bodyParser.json());
@@ -41,7 +46,7 @@ app.use(authors);
 app.use(books);
 app.use(session);
 app.use(users);
-app.use(users_books);
+app.use(usersBooks);
 
 app.use((_req, res) => {
   res.sendStatus(404);
