@@ -22,14 +22,14 @@ const app = express();
 
 app.disable('x-powered-by');
 
-// eslint-disable-next-line default-case
 switch (process.env.NODE_ENV) {
-  case 'development':
-    app.use(require('morgan')('dev'));
+  case 'test':
     break;
-
   case 'production':
     app.use(require('morgan')('short'));
+    break;
+  default:
+    app.use(require('morgan')('dev'));
     break;
 }
 
