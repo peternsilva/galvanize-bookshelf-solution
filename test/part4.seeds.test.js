@@ -57,8 +57,8 @@ suite('part4 seeds', () => {
       /* eslint-enable max-len */
   });
 
-  test('users_books', (done) => {
-    knex('users_books').orderBy('id', 'ASC')
+  test('favorites', (done) => {
+    knex('favorites').orderBy('id', 'ASC')
       .then((actual) => {
         const expected = [{
           id: 1,

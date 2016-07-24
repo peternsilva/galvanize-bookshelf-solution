@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Galvanize Bookshelf - Books</title>
+    <title>Galvanize Bookshelf - Book</title>
     <!--Import Google Icon Font-->
     <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -24,85 +24,84 @@
         <div class="nav-wrapper">
           <a href="/" class="brand-logo">
             <span>
-              <img class="logo-png" src="images/galvanize_logo.png" />
+              <img class="logo-png" src="/images/galvanize_logo.png" />
             </span>
             <span class="logo-text">bookshelf</span>
           </a>
-          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+          <a class="button-collapse" data-activates="mobileNav">
+            <i class="material-icons">menu</i>
+          </a>
+
           <ul class="right hide-on-med-and-down">
-            <li><a href="books.html">Books</a></li>
-            <li><a href="authors.html">Authors</a></li>
-            <li><a class="session" href="login.html">Login</a></li>
+            <li><a href="/index.html">Books</a></li>
+            <li><a href="/authors.html">Authors</a></li>
+            <li class="firstNavItem"></li>
+            <li class="secondNavItem"></li>
           </ul>
-          <ul class="side-nav" id="mobile-demo">
-            <li><a href="books.html">Books</a></li>
-            <li><a href="authors.html">Authors</a></li>
-            <li><a class="session" href="login.html">Login</a></li>
+
+          <ul id="mobileNav" class="side-nav">
+            <li><a href="/index.html">Books</a></li>
+            <li><a href="/authors.html">Authors</a></li>
+            <li class="firstNavItem"></li>
+            <li class="secondNavItem"></li>
           </ul>
         </div>
       </nav>
     </div>
+
     <main>
       <div class="container">
         <div class="row">
           <div class="col s12 m5 center-align book">
-            <div>
-              <img src="#" alt="Book Cover Image">
-            </div>
-            <div class="input-field cover-field">
-              <input type="url" id="cover-url" class="img-url">
-              <label for="cover-url">Cover Url</label>
-            </div>
-            <div class="actions hide">
+            <img id="cover">
+
+            <div class="actions">
               <div>
-                <a class="waves-effect waves-light btn-large add-remove hide">Add to Library</a>
+                <a id="addFavorite" class="waves-effect waves-light btn hide">
+                  Add Favorite
+                </a>
+
+                <a id="removeFavorite" class="waves-effect waves-light btn hide">
+                  Remove Favorite
+                </a>
               </div>
-              <div>
-                <a class="waves-effect waves-light btn edit">Edit</a>
-                <a class="waves-effect waves-light btn delete modal-trigger" href="#confirm">Delete</a>
-              </div>
-            </div>
-            <div class="save-action">
-              <a class="waves-effect waves-light btn-large save">Save</a>
+
+              <a id="editBook" class="waves-effect waves-light btn">
+                Edit
+              </a>
+
+              <a id="deleteBook" class="waves-effect waves-light btn">
+                Delete
+              </a>
             </div>
           </div>
-          <div class="col s12 m7 book-metadata">
+
+          <div id="book" class="col s12 m7">
             <div class="row">
-              <div class="col s12 input-field">
-                <input type="text" id="title" class="title">
-                <label for="title">Title</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col s12 input-field">
-                <select id="author" class="author">
-                </select>
-                <label for="author">Author</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col s12 input-field">
-                <input type="text" id="genre" class="genre">
-                <label for="genre">Genre</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col s12 input-field">
-                <textarea id="description" class=" description flow-text materialize-textarea"></textarea>
-                <label for="description">Description</label>
-              </div>
+              <h1 id="title"></h1>
+              <h2 id="author"></h2>
+              <h3 id="genre"></h3>
+              <p id="description" class="flow-text"></p>
             </div>
           </div>
         </div>
       </div>
-      <div id="confirm" class="modal">
+
+      <div id="deleteModal" class="modal">
         <div class="modal-content">
-          <h4>Are you sure you want to delete?</h4>
-          <p>You will be unable to undo this operation</p>
+          <h4>Delete this book?</h4>
+          <p>You won't be able to undo this operation.</p>
         </div>
+
         <div class="modal-footer">
-          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat confirm-delete"><strong>Yes, Delete</strong></a>
-          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat reject-delete">No, Do Not Delete</a>
+          <a id="confirmDelete" class="modal-action modal-close waves-effect waves-green btn-flat">
+            <strong>Delete</strong>
+          </a>
+
+          <a id="cancelDelete" class=" modal-action modal-close waves-effect waves-green btn-flat">
+            Cancel
+          </a>
         </div>
       </div>
     </main>
@@ -116,9 +115,7 @@
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="js/vendor/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="js/vendor/materialize.min.js"></script>
-    <script src="js/bonuses.js"></script>
     <script src="js/nav.js"></script>
-    <script src="js/helpers.js"></script>
     <script src="js/book.js"></script>
   </body>
 </html>

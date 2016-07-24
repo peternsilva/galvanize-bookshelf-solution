@@ -1,106 +1,25 @@
 (function() {
   'use strict';
 
-  if (window.COOKIES.loggedIn) {
-    const container = $('<div class="container">');
-    const h1 = $('<h1>').text('My Library');
-    const row = $('<div class="row">');
+  $('.parallax').parallax();
 
-    container.append(h1);
-    container.append(row);
-
-    const $xhr = $.getJSON('/users/books');
-
-    $xhr.done((books) => {
-      if ($xhr.status !== 200) {
-        Materialize.toast('Unable to retrieve books. Please try again.', 2000);
-
-        return;
-      }
-      if (!window.BONUS_CONFIG.CAMEL_CASE) {
-        books = books.map(window.HELPERS.toCamelCase);
-      }
-
-      let $book;
-      let $img;
-      let $a;
-      let $link;
+  $.getJSON('/books')
+    .done((books) => {
+      const $books = $('#books');
 
       for (const book of books) {
-        $book = $('<div class="col s12 m4 l3 center-align book">');
-        $a = $(`<a href="book.html?id=${book.bookId}">`);
-        $link = $('<div>').append($a.clone().text(book.title));
-        $img = $('<img>').attr('src', book.coverUrl).attr('alt', book.title);
-        $book.append($('<div>').append($a.append($img)));
-        $book.append($link);
-        row.append($book);
+        const $anchor = $('<a>').attr('href', `/book.html?id=${book.id}`);
+        const $book = $('<div>').addClass('col s12 m4 l3 center-align book');
+        const $img = $('<img>').attr({ src: book.coverUrl, alt: book.title });
+        const $title = $('<div>').text(book.title);
+
+        $anchor.append($img);
+        $anchor.append($title);
+        $book.append($anchor);
+        $books.append($book);
       }
-
-      $('main .container').replaceWith(container);
+    })
+    .fail(() => {
+      Materialize.toast('Unable to retrieve books', 3000);
     });
-  }
-
-  $('.register').click(() => {
-    const first_name = $('#fname').val().trim();
-    const last_name = $('#lname').val().trim();
-    const email = $('#email').val().trim();
-    const password = $('#password').val();
-    const password2 = $('#password2').val();
-
-    // Validation
-    if (!first_name) {
-      return Materialize.toast('Please enter a first name.', 2000);
-    }
-
-    if (!last_name) {
-      return Materialize.toast('Please enter a last name.', 2000);
-    }
-
-    if (!email) {
-      return Materialize.toast('Please enter an email.', 2000);
-    }
-
-    if (email.indexOf('@') < 0) {
-      return Materialize.toast('Please enter a valid email.', 2000);
-    }
-
-    if (!password) {
-      return Materialize.toast('Please enter a password.', 2000);
-    }
-
-    if (password !== password2) {
-      return Materialize.toast('Passwords do not match.', 2000);
-    }
-
-    let json = { first_name, last_name, email, password };
-
-    if (!window.BONUS_CONFIG.CAMEL_CASE) {
-      json = window.HELPERS.toSnakeCase(json);
-    }
-
-    const $xhr = $.ajax({
-      url: '/users',
-      type: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify(json)
-    });
-
-    $xhr.done(() => {
-      if ($xhr.status === 409) {
-        return Materialize.toast('User already exists. Please login.');
-      }
-
-      if ($xhr.status !== 200) {
-        const message = 'User could not be created. Please try again.';
-
-        return Materialize.toast(message);
-      }
-
-      window.location.href = '/login.html';
-    });
-
-    $xhr.fail(() => {
-      Materialize.toast('User could not be created. Please try again.');
-    });
-  });
 })();

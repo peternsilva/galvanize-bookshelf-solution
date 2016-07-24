@@ -26,12 +26,14 @@
   },
   "homepage": "https://github.com/gschool/galvanize-bookshelf-solution#readme",
   "dependencies": {
-    "bcrypt": "^0.8.7",
+    "bcrypt-as-promised": "^1.1.0",
     "body-parser": "^1.15.2",
+    "boom": "^3.2.2",
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-alpha.1",
     "express": "^4.14.0",
     "knex": "^0.11.7",
+    "lodash": "^4.13.1",
     "morgan": "^1.7.0",
     "pg": "^6.0.0"
   },

@@ -5,48 +5,48 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express');
-const path = require('path');
-const port = process.env.PORT || 8000;
-
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const cookieSession = require('cookie-session');
-
-const authors = require('./routes/authors');
-const books = require('./routes/books');
-const session = require('./routes/session');
-const users = require('./routes/users');
-const usersBooks = require('./routes/users_books');
-
 const app = express();
 
 app.disable('x-powered-by');
 
-switch (process.env.NODE_ENV) {
-  case 'test':
+const bodyParser = require('body-parser');
+const cookieSession = require('cookie-session');
+const morgan = require('morgan');
+
+switch (app.get('env')) {
+  case 'development':
+    app.use(morgan('dev'));
     break;
+
   case 'production':
-    app.use(require('morgan')('short'));
+    app.use(morgan('short'));
     break;
+
   default:
-    app.use(require('morgan')('dev'));
-    break;
 }
 
 app.use(bodyParser.json());
-app.use(cookieParser());
 app.use(cookieSession({
   name: 'bookshelf',
-  secret: process.env.SESSION_SECRET
+  secret: process.env.SESSION_SECRET,
+  secure: app.get('env') === 'production'
 }));
+
+const path = require('path');
 
 app.use(express.static(path.join('public')));
 
+const authors = require('./routes/authors');
+const books = require('./routes/books');
+const favorites = require('./routes/favorites');
+const session = require('./routes/session');
+const users = require('./routes/users');
+
 app.use(authors);
 app.use(books);
+app.use(favorites);
 app.use(session);
 app.use(users);
-app.use(usersBooks);
 
 app.use((_req, res) => {
   res.sendStatus(404);
@@ -54,9 +54,9 @@ app.use((_req, res) => {
 
 // eslint-disable-next-line max-params
 app.use((err, _req, res, _next) => {
-  if (err.status) {
+  if (err.status || err.statusCode) {
     return res
-      .status(err.status)
+      .status(err.status || err.statusCode)
       .set('Content-Type', 'text/plain')
       .send(err.message);
   }
@@ -66,8 +66,10 @@ app.use((err, _req, res, _next) => {
   res.sendStatus(500);
 });
 
+const port = process.env.PORT || 8000;
+
 app.listen(port, () => {
-  if (process.env.NODE_ENV !== 'test') {
+  if (app.get('env') !== 'test') {
     // eslint-disable-next-line no-console
     console.log('Listening on port', port);
   }

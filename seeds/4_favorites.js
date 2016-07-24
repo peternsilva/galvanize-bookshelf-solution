@@ -3,9 +3,9 @@
 'use strict';
 
 exports.seed = function(knex) {
-  return knex('users_books').del()
+  return knex('favorites').del()
     .then(() => {
-      return knex('users_books').insert([{
+      return knex('favorites').insert([{
         id: 1,
         book_id: 1,
         user_id: 1,
@@ -15,7 +15,7 @@ exports.seed = function(knex) {
     })
     .then(() => {
       return knex.raw(
-        "SELECT setval('users_books_id_seq', (SELECT MAX(id) FROM users_books));"
+        "SELECT setval('favorites_id_seq', (SELECT MAX(id) FROM favorites));"
       );
     });
 };

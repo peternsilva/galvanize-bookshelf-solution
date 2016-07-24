@@ -1,26 +1,28 @@
 'use strict';
 
+const _ = require('lodash');
 const express = require('express');
 const router = express.Router(); // eslint-disable-line new-cap
 const knex = require('../knex');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt-as-promised');
 
 router.post('/users', (req, res, next) => {
-  const email = req.body.email;
-  const password = req.body.password;
+  const { email, password } = req.body;
 
-  if (!email || email.trim() === '') {
-    return res
-      .status(400)
-      .set('Content-Type', 'text/plain')
-      .send('Email must not be blank');
+  if (!email || !email.trim()) {
+    const err = new Error('Email must not be blank');
+
+    err.status = 400;
+
+    return next(err);
   }
 
-  if (!password || password.trim() === '') {
-    return res
-      .status(400)
-      .set('Content-Type', 'text/plain')
-      .send('Password must not be blank');
+  if (!password || password.length < 8) {
+    const err = new Error('Password must be at least 8 characters long');
+
+    err.status = 400;
+
+    return next(err);
   }
 
   knex('users')
@@ -29,31 +31,32 @@ router.post('/users', (req, res, next) => {
     .first()
     .then((exists) => {
       if (exists) {
-        return res
-          .status(400)
-          .set('Content-Type', 'text/plain')
-          .send('Email already exists');
+        const err = new Error('Email already exists');
+
+        err.status = 400;
+
+        throw err;
       }
 
-      bcrypt.hash(password, 12, (hashErr, hashed_password) => {
-        if (hashErr) {
-          return next(hashErr);
-        }
+      return bcrypt.hash(password, 12);
+    })
+    .then((hashedPassword) => {
+      const user = _.omit(req.body, ['password']);
 
-        knex('users')
-          .insert({
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            email,
-            hashed_password
-          })
-          .then(() => {
-            res.sendStatus(200);
-          })
-          .catch((err) => {
-            next(err);
-          });
-      });
+      user.hashedPassword = hashedPassword;
+
+      const row = _.mapKeys(user, (v, k) => _.snakeCase(k));
+
+      return knex('users').insert(row, '*');
+    })
+    .then((rows) => {
+      const user = _.mapKeys(rows[0], (v, k) => _.camelCase(k));
+
+      delete user.hashedPassword;
+
+      req.session.userId = user.id;
+
+      res.send(user);
     })
     .catch((err) => {
       next(err);

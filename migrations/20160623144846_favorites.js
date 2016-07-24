@@ -1,7 +1,7 @@
 'use strict';
 
 exports.up = function(knex) {
-  return knex.schema.createTable('users_books', (table) => {
+  return knex.schema.createTable('favorites', (table) => {
     table.increments();
     table.integer('book_id')
       .notNullable()
@@ -20,5 +20,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTable('users_books');
+  return knex.schema.dropTable('favorites');
 };

@@ -17,15 +17,15 @@ suite('part4 migrations', () => {
       });
   });
 
-  test('users_books table', (done) => {
-    knex('users_books').columnInfo()
+  test('favorites table', (done) => {
+    knex('favorites').columnInfo()
       .then((actual) => {
         const expected = {
           id: {
             type: 'integer',
             maxLength: null,
             nullable: false,
-            defaultValue: 'nextval(\'users_books_id_seq\'::regclass)'
+            defaultValue: 'nextval(\'favorites_id_seq\'::regclass)'
           },
 
           book_id: {

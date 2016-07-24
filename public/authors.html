@@ -24,20 +24,27 @@
         <div class="nav-wrapper">
           <a href="/" class="brand-logo">
             <span>
-              <img class="logo-png" src="images/galvanize_logo.png" />
+              <img class="logo-png" src="/images/galvanize_logo.png" />
             </span>
             <span class="logo-text">bookshelf</span>
           </a>
-          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+          <a class="button-collapse" data-activates="mobileNav">
+            <i class="material-icons">menu</i>
+          </a>
+
           <ul class="right hide-on-med-and-down">
-            <li><a href="books.html">Books</a></li>
-            <li class="active"><a href="authors.html">Authors</a></li>
-            <li><a class="session" href="login.html">Login</a></li>
+            <li><a href="/index.html">Books</a></li>
+            <li><a href="/authors.html">Authors</a></li>
+            <li class="firstNavItem"></li>
+            <li class="secondNavItem"></li>
           </ul>
-          <ul class="side-nav" id="mobile-demo">
-            <li><a href="books.html">Books</a></li>
-            <li class="active"><a href="authors.html">Authors</a></li>
-            <li><a class="session" href="login.html">Login</a></li>
+
+          <ul id="mobileNav" class="side-nav">
+            <li><a href="/index.html">Books</a></li>
+            <li><a href="/authors.html">Authors</a></li>
+            <li class="firstNavItem"></li>
+            <li class="secondNavItem"></li>
           </ul>
         </div>
       </nav>
@@ -45,16 +52,17 @@
 
     <main>
       <div class="parallax-container">
-        <div class="parallax"><img src="images/type.jpeg"></div>
+        <div class="parallax"><img src="/images/type.jpeg"></div>
       </div>
+
       <div class="section white">
         <div class="row container">
           <h2 class="header">Authors</h2>
         </div>
       </div>
+
       <div class="container authors">
-        <div class="row">
-        </div>
+        <div id="authors" class="row"></div>
       </div>
     </main>
 
@@ -67,9 +75,7 @@
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="js/vendor/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="js/vendor/materialize.min.js"></script>
-    <script src="js/bonuses.js"></script>
     <script src="js/nav.js"></script>
-    <script src="js/helpers.js"></script>
     <script src="js/authors.js"></script>
   </body>
 </html>

@@ -1,14 +1,20 @@
 'use strict';
 
+const _ = require('lodash');
+const boom = require('boom');
 const express = require('express');
-const router = express.Router(); // eslint-disable-line new-cap
 const knex = require('../knex');
+
+const router = express.Router(); // eslint-disable-line new-cap
 
 router.get('/authors', (_req, res, next) => {
   knex('authors')
-    .orderBy('id')
-    .then((authors) => {
-      res.send(authors);
+    .orderBy('first_name')
+    .orderBy('last_name')
+    .then((rows) => {
+      const authrs = _.map(rows, (r) => _.mapKeys(r, (v, k) => _.camelCase(k)));
+
+      res.send(authrs);
     })
     .catch((err) => {
       next(err);
@@ -25,10 +31,12 @@ router.get('/authors/:id', (req, res, next) => {
   knex('authors')
     .where('id', id)
     .first()
-    .then((author) => {
-      if (!author) {
-        return next();
+    .then((row) => {
+      if (!row) {
+        throw boom.create(404, 'Not Found');
       }
+
+      const author = _.mapKeys(row, (v, k) => _.camelCase(k));
 
       res.send(author);
     })
@@ -38,49 +46,33 @@ router.get('/authors/:id', (req, res, next) => {
 });
 
 router.post('/authors', (req, res, next) => {
-  const { first_name, last_name, biography, portrait_url } = req.body;
+  const { firstName, lastName, biography, portraitUrl } = req.body;
 
-  if (!first_name || first_name.trim() === '') {
-    const err = new Error('first_name must not be blank');
-
-    err.status = 400;
-
-    return next(err);
+  if (!firstName || !firstName.trim()) {
+    return next(boom.create(400, 'First name must not be blank'));
   }
 
-  if (!last_name || last_name.trim() === '') {
-    const err = new Error('last_name must not be blank');
-
-    err.status = 400;
-
-    return next(err);
+  if (!lastName || !lastName.trim()) {
+    return next(boom.create(400, 'Last name must not be blank'));
   }
 
-  if (!biography || biography.trim() === '') {
-    const err = new Error('biography must not be blank');
-
-    err.status = 400;
-
-    return next(err);
+  if (!biography || !biography.trim()) {
+    return next(boom.create(400, 'Biography must not be blank'));
   }
 
-  if (!portrait_url || portrait_url.trim() === '') {
-    const err = new Error('portrait_url must not be blank');
-
-    err.status = 400;
-
-    return next(err);
+  if (!portraitUrl || !portraitUrl.trim()) {
+    return next(boom.create(400, 'Portrait must not be blank'));
   }
+
+  const author = { firstName, lastName, biography, portraitUrl };
+  const row = _.mapKeys(author, (v, k) => _.snakeCase(k));
 
   knex('authors')
-    .insert({
-      first_name,
-      last_name,
-      biography,
-      portrait_url
-    }, '*')
-    .then((results) => {
-      res.send(results[0]);
+    .insert(row, '*')
+    .then((rows) => {
+      const author = _.mapKeys(rows[0], (v, k) => _.camelCase(k));
+
+      res.send(author);
     })
     .catch((err) => {
       next(err);
@@ -94,39 +86,44 @@ router.patch('/authors/:id', (req, res, next) => {
     return next();
   }
 
+  const updatedAuthor = {};
+
   knex('authors')
     .where('id', id)
     .first()
     .then((author) => {
       if (!author) {
-        return next();
+        throw boom.create(404, 'Not Found');
       }
 
-      const authorChanges = req.body;
-      const updatedAuthor = {};
+      const { firstName, lastName, biography, portraitUrl } = req.body;
 
-      if (authorChanges.first_name) {
-        updatedAuthor.first_name = authorChanges.first_name;
+      if (firstName) {
+        updatedAuthor.firstName = firstName;
       }
 
-      if (authorChanges.last_name) {
-        updatedAuthor.last_name = authorChanges.last_name;
+      if (lastName) {
+        updatedAuthor.lastName = lastName;
       }
 
-      if (authorChanges.biography) {
-        updatedAuthor.biography = authorChanges.biography;
+      if (biography) {
+        updatedAuthor.biography = biography;
       }
 
-      if (authorChanges.portrait_url) {
-        updatedAuthor.portrait_url = authorChanges.portrait_url;
+      if (portraitUrl) {
+        updatedAuthor.portraitUrl = portraitUrl;
       }
+
+      const row = _.mapKeys(updatedAuthor, (v, k) => _.snakeCase(k));
 
       return knex('authors')
-        .update(updatedAuthor, '*')
-        .where('id', id)
-        .then((results) => {
-          res.send(results[0]);
-        });
+        .update(row, '*')
+        .where('id', id);
+    })
+    .then((rows) => {
+      const author = _.mapKeys(rows[0], (v, k) => _.camelCase(k));
+
+      res.send(author);
     })
     .catch((err) => {
       next(err);
@@ -140,21 +137,26 @@ router.delete('/authors/:id', (req, res, next) => {
     return next();
   }
 
+  let author;
+
   knex('authors')
     .where('id', id)
     .first()
-    .then((author) => {
-      if (!author) {
-        return next();
+    .then((row) => {
+      if (!row) {
+        throw boom.create(404, 'Not Found');
       }
+
+      author = _.mapKeys(row, (v, k) => _.camelCase(k));;
 
       return knex('authors')
         .del()
-        .where('id', id)
-        .then(() => {
-          delete author.id;
-          res.send(author);
-        });
+        .where('id', id);
+    })
+    .then(() => {
+      delete author.id;
+
+      res.send(author);
     })
     .catch((err) => {
       next(err);
@@ -171,7 +173,9 @@ router.get('/authors/:id/books', (req, res, next) => {
   knex('books')
     .where('author_id', id)
     .orderBy('id')
-    .then((books) => {
+    .then((rows) => {
+      const books = _.map(rows, (r) => _.mapKeys(r, (v, k) => _.camelCase(k)));
+
       res.send(books);
     })
     .catch((err) => {

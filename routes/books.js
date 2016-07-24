@@ -1,13 +1,18 @@
 'use strict';
 
+const _ = require('lodash');
+const boom = require('boom');
 const express = require('express');
-const router = express.Router(); // eslint-disable-line new-cap
 const knex = require('../knex');
+
+const router = express.Router(); // eslint-disable-line new-cap
 
 router.get('/books', (_req, res, next) => {
   knex('books')
-    .orderBy('id')
-    .then((books) => {
+    .orderBy('title')
+    .then((rows) => {
+      const books = _.map(rows, (r) => _.mapKeys(r, (v, k) => _.camelCase(k)));
+
       res.send(books);
     })
     .catch((err) => {
@@ -25,10 +30,12 @@ router.get('/books/:id', (req, res, next) => {
   knex('books')
     .where('id', id)
     .first()
-    .then((book) => {
-      if (!book) {
-        return next();
+    .then((row) => {
+      if (!row) {
+        throw boom.create(404, 'Not Found');
       }
+
+      const book = _.mapKeys(row, (v, k) => _.camelCase(k));
 
       res.send(book);
     })
@@ -38,48 +45,28 @@ router.get('/books/:id', (req, res, next) => {
 });
 
 router.post('/books', (req, res, next) => {
-  const { title, genre, description, cover_url, author_id } = req.body;
+  const { title, genre, description, coverUrl } = req.body;
 
-  if (!title || title.trim() === '') {
-    const err = new Error('title must not be blank');
-
-    err.status = 400;
-
-    return next(err);
+  if (!title || !title.trim()) {
+    return next(boom.create(400, 'Title must not be blank'));
   }
 
-  if (!genre || genre.trim() === '') {
-    const err = new Error('genre must not be blank');
-
-    err.status = 400;
-
-    return next(err);
+  if (!genre || !genre.trim()) {
+    return next(boom.create(400, 'Genre must not be blank'));
   }
 
-  if (!description || description.trim() === '') {
-    const err = new Error('description must not be blank');
-
-    err.status = 400;
-
-    return next(err);
+  if (!description || !description.trim()) {
+    return next(boom.create(400, 'Description must not be blank'));
   }
 
-  if (!cover_url || cover_url.trim() === '') {
-    const err = new Error('cover_url must not be blank');
-
-    err.status = 400;
-
-    return next(err);
+  if (!coverUrl || !coverUrl.trim()) {
+    return next(boom.create(400, 'Cover must not be blank'));
   }
 
-  const authorId = Number.parseInt(author_id);
+  const authorId = Number.parseInt(req.body.authorId);
 
   if (Number.isNaN(authorId)) {
-    const err = new Error('author_id must not be blank');
-
-    err.status = 400;
-
-    return next(err);
+    return next(boom.create(400, 'Author must be selected'));
   }
 
   knex('authors')
@@ -87,24 +74,18 @@ router.post('/books', (req, res, next) => {
     .first()
     .then((author) => {
       if (!author) {
-        const err = new Error('author_id does not exist');
-
-        err.status = 400;
-
-        throw err;
+        throw boom.create(400, 'Author does not exist');
       }
 
-      return knex('books')
-        .insert({
-          title,
-          genre,
-          description,
-          cover_url,
-          author_id
-        }, '*')
-        .then((results) => {
-          res.send(results[0]);
-        });
+      const book = { title, genre, description, coverUrl, authorId };
+      const row = _.mapKeys(book, (v, k) => _.snakeCase(k));
+
+      return knex('books').insert(row, '*');
+    })
+    .then((rows) => {
+      const book = _.mapKeys(rows[0], (v, k) => _.camelCase(k));
+
+      res.send(book);
     })
     .catch((err) => {
       next(err);
@@ -118,62 +99,59 @@ router.patch('/books/:id', (req, res, next) => {
     return next();
   }
 
+  const updatedBook = {};
+
   knex('books')
     .where('id', id)
     .first()
     .then((book) => {
       if (!book) {
-        return next();
+        throw boom.create(404, 'Not Found');
       }
 
-      const bookChanges = req.body;
-      const updatedBook = {};
+      const { title, genre, description, coverUrl } = req.body;
 
-      if (bookChanges.title) {
-        updatedBook.title = bookChanges.title;
+      if (title) {
+        updatedBook.title = title;
       }
 
-      if (bookChanges.genre) {
-        updatedBook.genre = bookChanges.genre;
+      if (genre) {
+        updatedBook.genre = genre;
       }
 
-      if (bookChanges.description) {
-        updatedBook.description = bookChanges.description;
+      if (description) {
+        updatedBook.description = description;
       }
 
-      if (bookChanges.cover_url) {
-        updatedBook.cover_url = bookChanges.cover_url;
+      if (coverUrl) {
+        updatedBook.coverUrl = coverUrl;
       }
 
-      const authorId = Number.parseInt(bookChanges.author_id);
+      const authorId = Number.parseInt(req.body.authorId);
 
       if (!Number.isNaN(authorId)) {
-        updatedBook.author_id = authorId;
-      }
-
-      if (bookChanges.author_id) {
-        updatedBook.author_id = bookChanges.author_id;
+        updatedBook.authorId = authorId;
       }
 
       return knex('authors')
-        .where('id', book.author_id)
-        .first()
-        .then((author) => {
-          if (!author) {
-            const err = new Error('author_id does not exist');
+        .where('id', authorId)
+        .first();
+    })
+    .then((author) => {
+      if (!author) {
+        throw boom.create(400, 'Author does not exist');
+      }
 
-            err.status = 400;
+      const row = _.mapKeys(updatedBook, (v, k) => _.snakeCase(k));
 
-            throw err;
-          }
+      return knex('books')
+        .update(row, '*')
+        .where('id', id);
+    })
+    .then((rows) => {
+      const book = _.mapKeys(rows[0], (v, k) => _.camelCase(k));
 
-          return knex('books')
-            .update(updatedBook, '*')
-            .where('id', id)
-            .then((results) => {
-              res.send(results[0]);
-            });
-        });
+      res.send(book);
     })
     .catch((err) => {
       next(err);
@@ -187,21 +165,26 @@ router.delete('/books/:id', (req, res, next) => {
     return next();
   }
 
+  let book;
+
   knex('books')
     .where('id', id)
     .first()
-    .then((book) => {
-      if (!book) {
-        return next();
+    .then((row) => {
+      if (!row) {
+        throw boom.create(404, 'Not Found');
       }
+
+      book = _.mapKeys(row, (v, k) => _.camelCase(k));
 
       return knex('books')
         .del()
-        .where('id', id)
-        .then(() => {
-          delete book.id;
-          res.send(book);
-        });
+        .where('id', id);
+    })
+    .then(() => {
+      delete book.id;
+
+      res.send(book);
     })
     .catch((err) => {
       next(err);

@@ -8,7 +8,7 @@ Translate the following entity relationship diagram into a Knex migration file.
 
 ```text
 ┌───────────────────────────────────────────────────────────────────────────────────────────┐
-│                                        users_books                                        │
+│                                         favorites                                         │
 ├────────────────┬─────────────────────────┬────────────────────────────────────────────────┤
 │id              │serial                   │primary key                                     │
 │book_id         │integer                  │not null references books(id) on delete cascade │
@@ -52,23 +52,23 @@ You can run the following test suite to verify both the positive and the negativ
 npm test test/part4.routes.session.test.js
 ```
 
-## `users_books` routes
+## `favorites` routes
 
 Next, update your server to handle the following HTTP request and send the appropriate HTTP response.
 
 **NOTE:** The following routes assume a user where `id = 1` is authenticated.
 
-| Request Method | Request URL        | Response Status | Response Content-Type | Response Body                                                         |
-|----------------|--------------------|-----------------|-----------------------|-----------------------------------------------------------------------|
-| `GET`          | `/users/books`     | `200`           | `application/json`    | `[{ "id": 1, "author_id": 2, "title": "Python In A Nutshell", ... }]` |
-| `GET`          | `/users/books/1`   | `200`           | `application/json`    | `{ "id": 1, "author_id": 2, "title": "Python In A Nutshell", ... }`   |
-| `POST`         | `/users/books/2`   | `200`           | `application/json`    | `{ "id": 2, "book_id": 2, "user_id": 1 }`                             |
-| `DELETE`       | `/users/books/2`   | `200`           | `application/json`    | `{ "book_id": 2, "user_id": 1 }`                                      |
+| Request Method | Request URL      | Response Status | Response Content-Type | Response Body                                                         |
+|----------------|------------------|-----------------|-----------------------|-----------------------------------------------------------------------|
+| `GET`          | `/favorites`     | `200`           | `application/json`    | `[{ "id": 1, "author_id": 2, "title": "Python In A Nutshell", ... }]` |
+| `GET`          | `/favorites/1`   | `200`           | `application/json`    | `{ "id": 1, "author_id": 2, "title": "Python In A Nutshell", ... }`   |
+| `POST`         | `/favorites/2`   | `200`           | `application/json`    | `{ "id": 2, "book_id": 2, "user_id": 1 }`                             |
+| `DELETE`       | `/favorites/2`   | `200`           | `application/json`    | `{ "book_id": 2, "user_id": 1 }`                                      |
 
-In the `routes/users_books.js` module, add the necessary middleware to handle above RESTful route table.
+In the `routes/favorites.js` module, add the necessary middleware to handle above RESTful route table.
 
 You can run the following test suite to verify both the positive and the negative cases when the middleware responds with a `200` or `401` status code.
 
 ```shell
-npm test test/part4.routes.users_books.test.js
+npm test test/part4.routes.favorites.test.js
 ```

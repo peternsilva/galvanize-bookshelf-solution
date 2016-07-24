@@ -49,7 +49,6 @@ suite('part4 routes session', () => {
             email: 'john.siracusa@gmail.com',
             password
           })
-          .expect('set-cookie', /loggedIn=true; Path=\//)
           .expect('set-cookie', /bookshelf=[a-zA-Z0-9=]*; path=\//)
           .expect('set-cookie', /bookshelf.sig=[a-zA-Z0-9=\-_]*; path=\//)
           .expect('Content-Type', /plain/)
@@ -82,7 +81,7 @@ suite('part4 routes session', () => {
             password
           })
           .expect('Content-Type', /plain/)
-          .expect(401, 'Unauthorized', done);
+          .expect(401, 'User could not be logged in', done);
       })
       .catch((err) => {
         done(err);
@@ -109,7 +108,7 @@ suite('part4 routes session', () => {
             password: 'badpassword'
           })
           .expect('Content-Type', /plain/)
-          .expect(401, 'Unauthorized', done);
+          .expect(401, 'User could not be logged in', done);
       })
       .catch((err) => {
         done(err);
@@ -121,7 +120,6 @@ suite('part4 routes session', () => {
   test('DELETE /session', (done) => {
     request(server)
       .delete('/session')
-      .expect('set-cookie', /loggedIn=; Path=\//)
       .expect('set-cookie', /bookshelf=; path=\//)
       .expect('set-cookie', /bookshelf.sig=[a-zA-Z0-9=\-_]*; path=\//)
       .expect('Content-Type', /plain/)

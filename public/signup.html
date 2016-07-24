@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Galvanize Bookshelf - Author</title>
+    <title>Galvanize Bookshelf</title>
     <!--Import Google Icon Font-->
     <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -10,7 +10,7 @@
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
 
     <!--Import index.css-->
-    <link type="text/css" rel="stylesheet" href="css/author.css"/>
+    <link type="text/css" rel="stylesheet" href="css/index.css"/>
 
     <!-- Import styles.css -->
     <link type="text/css" rel="stylesheet" href="css/styles.css"/>
@@ -51,50 +51,42 @@
     </div>
 
     <main>
-      <div class="container">
+      <div id="container" class="container">
         <div class="row">
-          <div class="col s12 m5 center-align author">
-            <img id="portrait">
-
-            <div class="actions">
-              <a id="editAuthor" class="waves-effect waves-light btn">
-                Edit
-              </a>
-
-              <a id="deleteAuthor" class="waves-effect waves-light btn">
-                Delete
-              </a>
+          <form id="signUpForm" class="col offset-s2 s8">
+            <div class="card">
+              <div class="card-content">
+                <p class="card-title">Sign up</p>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input placeholder="First Name" id="firstName" type="text" class="validate">
+                    <label for="fname">First Name</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input placeholder="Last Name" id="lastName" type="text" class="validate">
+                    <label for="lname">Last Name</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input placeholder="Email" id="email" type="text" class="validate">
+                    <label for="email">Email</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input placeholder="Password" id="password" type="password" class="validate">
+                    <label for="password">Password</label>
+                  </div>
+                </div>
+              </div>
+              <div class="card-action">
+                <button class="waves-effect waves-light btn-large" type="submit" name="action">Sign up</button>
+              </div>
             </div>
-          </div>
-
-          <div id="book" class="col s12 m7">
-            <div class="row">
-              <h1 id="name"></h1>
-              <p id="biography" class="flow-text"></p>
-            </div>
-
-            <div class="row">
-              <h2>Books</h2>
-              <div id="books"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="deleteModal" class="modal">
-        <div class="modal-content">
-          <h4>Delete this author?</h4>
-          <p>You won't be able to undo this operation.</p>
-        </div>
-
-        <div class="modal-footer">
-          <a id="confirmDelete" class="modal-action modal-close waves-effect waves-green btn-flat">
-            <strong>Delete</strong>
-          </a>
-
-          <a id="cancelDelete" class=" modal-action modal-close waves-effect waves-green btn-flat">
-            Cancel
-          </a>
+          </form>
         </div>
       </div>
     </main>
@@ -109,6 +101,6 @@
     <script type="text/javascript" src="js/vendor/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="js/vendor/materialize.min.js"></script>
     <script src="js/nav.js"></script>
-    <script src="js/author.js"></script>
+    <script src="js/signup.js"></script>
   </body>
 </html>

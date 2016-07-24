@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Galvanize Bookshelf - Author</title>
+    <title>Galvanize Bookshelf - Edit Author</title>
     <!--Import Google Icon Font-->
     <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -10,7 +10,7 @@
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
 
     <!--Import index.css-->
-    <link type="text/css" rel="stylesheet" href="css/author.css"/>
+    <link type="text/css" rel="stylesheet" href="css/edit_author.css"/>
 
     <!-- Import styles.css -->
     <link type="text/css" rel="stylesheet" href="css/styles.css"/>
@@ -50,52 +50,53 @@
       </nav>
     </div>
 
-    <main>
-      <div class="container">
-        <div class="row">
-          <div class="col s12 m5 center-align author">
-            <img id="portrait">
+    <main class="container">
+      <div class="row">
+        <form id="editAuthorForm" class="col offset-s2 s8">
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">Edit Author</span>
 
-            <div class="actions">
-              <a id="editAuthor" class="waves-effect waves-light btn">
-                Edit
+              <div class="row">
+                <div class="input-field col s12">
+                  <input type="text" id="firstName">
+                  <label for="firstName" class="active">First name</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <input type="text" id="lastName">
+                  <label for="lastName" class="active">Last name</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="biography" class="materialize-textarea"></textarea>
+                  <label for="biography" class="active">Biography<label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <input type="url" id="portrait">
+                  <label for="portrait" class="active">Portrait URL</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-action">
+              <a id="cancel" class="waves-effect waves-light btn-large">
+                Cancel
               </a>
 
-              <a id="deleteAuthor" class="waves-effect waves-light btn">
-                Delete
-              </a>
+              <button class="waves-effect waves-light btn-large" type="submit" name="action">
+                Save
+              </button>
             </div>
           </div>
-
-          <div id="book" class="col s12 m7">
-            <div class="row">
-              <h1 id="name"></h1>
-              <p id="biography" class="flow-text"></p>
-            </div>
-
-            <div class="row">
-              <h2>Books</h2>
-              <div id="books"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="deleteModal" class="modal">
-        <div class="modal-content">
-          <h4>Delete this author?</h4>
-          <p>You won't be able to undo this operation.</p>
-        </div>
-
-        <div class="modal-footer">
-          <a id="confirmDelete" class="modal-action modal-close waves-effect waves-green btn-flat">
-            <strong>Delete</strong>
-          </a>
-
-          <a id="cancelDelete" class=" modal-action modal-close waves-effect waves-green btn-flat">
-            Cancel
-          </a>
-        </div>
+        </form>
       </div>
     </main>
 
@@ -109,6 +110,6 @@
     <script type="text/javascript" src="js/vendor/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="js/vendor/materialize.min.js"></script>
     <script src="js/nav.js"></script>
-    <script src="js/author.js"></script>
+    <script src="js/edit_author.js"></script>
   </body>
 </html>

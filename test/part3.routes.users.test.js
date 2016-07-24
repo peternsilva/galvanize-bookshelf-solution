@@ -2,6 +2,7 @@
 
 process.env.NODE_ENV = 'test';
 
+const _ = require('lodash');
 const assert = require('chai').assert;
 const { suite, test } = require('mocha');
 const bcrypt = require('bcrypt');
@@ -21,8 +22,7 @@ suite('part3 routes users', () => {
   });
 
   beforeEach((done) => {
-    knex('users')
-      .del()
+    knex.seed.run()
       .then(() => {
         done();
       })
@@ -38,36 +38,47 @@ suite('part3 routes users', () => {
       .post('/users')
       .set('Content-Type', 'application/json')
       .send({
-        first_name: 'John',
-        last_name: 'Siracusa',
+        firstName: 'John',
+        lastName: 'Siracusa',
         email: 'john.siracusa@gmail.com',
         password
       })
-      .expect('Content-Type', /plain/)
-      .expect(200, 'OK')
+      .expect('Content-Type', /json/)
+      .expect((res) => {
+        delete res.body.createdAt;
+        delete res.body.updatedAt;
+      })
+      .expect(200, {
+        id: 2,
+        firstName: 'John',
+        lastName: 'Siracusa',
+        email: 'john.siracusa@gmail.com'
+      })
       .end((httpErr, _res) => {
         if (httpErr) {
           return done(httpErr);
         }
 
         knex('users')
+          .where('id', 2)
           .first()
-          .then((user) => {
-            const hashed_password = user.hashed_password;
+          .then((row) => {
+            const user = _.mapKeys(row, (v, k) => _.camelCase(k));
+            const hashedPassword = user.hashedPassword;
 
-            delete user.id;
-            delete user.hashed_password;
-            delete user.created_at;
-            delete user.updated_at;
+            delete user.hashedPassword;
+            delete user.createdAt;
+            delete user.updatedAt;
 
             assert.deepEqual(user, {
-              first_name: 'John',
-              last_name: 'Siracusa',
+              id: 2,
+              firstName: 'John',
+              lastName: 'Siracusa',
               email: 'john.siracusa@gmail.com'
             });
 
             // eslint-disable-next-line no-sync
-            const isMatch = bcrypt.compareSync(password, hashed_password);
+            const isMatch = bcrypt.compareSync(password, hashedPassword);
 
             assert.isTrue(isMatch, "passwords don't match");
             done();

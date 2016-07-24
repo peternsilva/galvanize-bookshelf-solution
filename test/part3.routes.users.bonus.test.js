@@ -20,8 +20,7 @@ suite('part3 routes users bonus', () => {
   });
 
   beforeEach((done) => {
-    knex('users')
-      .del()
+    knex.seed.run()
       .then(() => {
         done();
       })
@@ -35,8 +34,8 @@ suite('part3 routes users bonus', () => {
       .post('/users')
       .set('Content-Type', 'application/json')
       .send({
-        first_name: 'John',
-        last_name: 'Siracusa',
+        firstName: 'John',
+        lastName: 'Siracusa',
         password: 'ilikebigcats'
       })
       .expect('Content-Type', /plain/)
@@ -48,12 +47,12 @@ suite('part3 routes users bonus', () => {
       .post('/users')
       .set('Content-Type', 'application/json')
       .send({
-        first_name: 'John',
-        last_name: 'Siracusa',
+        firstName: 'John',
+        lastName: 'Siracusa',
         email: 'john.siracusa@gmail.com'
       })
       .expect('Content-Type', /plain/)
-      .expect(400, 'Password must not be blank', done);
+      .expect(400, 'Password must be at least 8 characters long', done);
   });
 
   test('POST /users with existing email', (done) => {
@@ -70,8 +69,8 @@ suite('part3 routes users bonus', () => {
           .post('/users')
           .set('Content-Type', 'application/json')
           .send({
-            first_name: 'John',
-            last_name: 'Siracusa',
+            firstName: 'John',
+            lastName: 'Siracusa',
             email: 'john.siracusa@gmail.com',
             password: 'ilikebigcats'
           })
