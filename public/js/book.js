@@ -126,7 +126,7 @@
         })
         .fail(($xhr) => {
           Materialize.toast($xhr.responseText, 3000);
-        })
+        });
     })
     .fail(($xhr) => {
       Materialize.toast($xhr.responseText, 3000);

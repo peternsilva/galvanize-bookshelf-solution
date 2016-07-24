@@ -102,7 +102,7 @@ router.delete('/favorites', checkAuth, (req, res, next) => {
         throw boom.create(404, 'Not Found');
       }
 
-      favorite = _.mapKeys(row, (v, k) => _.camelCase(k));;
+      favorite = _.mapKeys(row, (v, k) => _.camelCase(k));
 
       return knex('favorites')
         .del()

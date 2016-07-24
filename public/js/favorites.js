@@ -9,7 +9,7 @@
 
       for (const favs of favorites) {
         const $anchor = $('<a>').attr('href', `/book.html?id=${favs.bookId}`);
-        const $fav = $('<div>').addClass("col s12 m4 l3 center-align fav");
+        const $fav = $('<div>').addClass('col s12 m4 l3 center-align fav');
         const $img = $('<img>').attr({ src: favs.coverUrl, alt: favs.title });
         const $title = $('<div>').text(favs.title);
 

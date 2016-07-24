@@ -64,8 +64,8 @@ router.post('/authors', (req, res, next) => {
     return next(boom.create(400, 'Portrait must not be blank'));
   }
 
-  const author = { firstName, lastName, biography, portraitUrl };
-  const row = _.mapKeys(author, (v, k) => _.snakeCase(k));
+  const newAuthor = { firstName, lastName, biography, portraitUrl };
+  const row = _.mapKeys(newAuthor, (v, k) => _.snakeCase(k));
 
   knex('authors')
     .insert(row, '*')
@@ -147,7 +147,7 @@ router.delete('/authors/:id', (req, res, next) => {
         throw boom.create(404, 'Not Found');
       }
 
-      author = _.mapKeys(row, (v, k) => _.camelCase(k));;
+      author = _.mapKeys(row, (v, k) => _.camelCase(k));
 
       return knex('authors')
         .del()

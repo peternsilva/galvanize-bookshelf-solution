@@ -81,7 +81,7 @@
     .done((book) => {
       renderBook(book);
 
-      $.getJSON(`/authors`)
+      $.getJSON('/authors')
         .done((authors) => {
           renderAuthors(authors, book);
 

@@ -1,8 +1,9 @@
+/* eslint-disable camelcase */
+
 'use strict';
 
 process.env.NODE_ENV = 'test';
 
-const _ = require('lodash');
 const assert = require('chai').assert;
 const { suite, test } = require('mocha');
 const bcrypt = require('bcrypt');
@@ -62,18 +63,17 @@ suite('part3 routes users', () => {
         knex('users')
           .where('id', 2)
           .first()
-          .then((row) => {
-            const user = _.mapKeys(row, (v, k) => _.camelCase(k));
-            const hashedPassword = user.hashedPassword;
+          .then((user) => {
+            const hashedPassword = user.hashed_password;
 
-            delete user.hashedPassword;
-            delete user.createdAt;
-            delete user.updatedAt;
+            delete user.hashed_password;
+            delete user.created_at;
+            delete user.updated_at;
 
             assert.deepEqual(user, {
               id: 2,
-              firstName: 'John',
-              lastName: 'Siracusa',
+              first_name: 'John',
+              last_name: 'Siracusa',
               email: 'john.siracusa@gmail.com'
             });
 
