@@ -1,9 +1,9 @@
 'use strict';
 
-const _ = require('lodash');
 const boom = require('boom');
 const express = require('express');
 const knex = require('../knex');
+const { camelizeKeys, decamelizeKeys } = require('humps');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -12,9 +12,9 @@ router.get('/authors', (_req, res, next) => {
     .orderBy('first_name')
     .orderBy('last_name')
     .then((rows) => {
-      const authrs = _.map(rows, (r) => _.mapKeys(r, (v, k) => _.camelCase(k)));
+      const authors = camelizeKeys(rows);
 
-      res.send(authrs);
+      res.send(authors);
     })
     .catch((err) => {
       next(err);
@@ -36,7 +36,7 @@ router.get('/authors/:id', (req, res, next) => {
         throw boom.create(404, 'Not Found');
       }
 
-      const author = _.mapKeys(row, (v, k) => _.camelCase(k));
+      const author = camelizeKeys(row);
 
       res.send(author);
     })
@@ -65,12 +65,12 @@ router.post('/authors', (req, res, next) => {
   }
 
   const newAuthor = { firstName, lastName, biography, portraitUrl };
-  const row = _.mapKeys(newAuthor, (v, k) => _.snakeCase(k));
+  const row = decamelizeKeys(newAuthor);
 
   knex('authors')
     .insert(row, '*')
     .then((rows) => {
-      const author = _.mapKeys(rows[0], (v, k) => _.camelCase(k));
+      const author = camelizeKeys(rows[0]);
 
       res.send(author);
     })
@@ -114,14 +114,14 @@ router.patch('/authors/:id', (req, res, next) => {
         updatedAuthor.portraitUrl = portraitUrl;
       }
 
-      const row = _.mapKeys(updatedAuthor, (v, k) => _.snakeCase(k));
+      const row = decamelizeKeys(updatedAuthor);
 
       return knex('authors')
         .update(row, '*')
         .where('id', id);
     })
     .then((rows) => {
-      const author = _.mapKeys(rows[0], (v, k) => _.camelCase(k));
+      const author = camelizeKeys(rows[0]);
 
       res.send(author);
     })
@@ -147,7 +147,7 @@ router.delete('/authors/:id', (req, res, next) => {
         throw boom.create(404, 'Not Found');
       }
 
-      author = _.mapKeys(row, (v, k) => _.camelCase(k));
+      author = camelizeKeys(row);
 
       return knex('authors')
         .del()
@@ -174,7 +174,7 @@ router.get('/authors/:id/books', (req, res, next) => {
     .where('author_id', id)
     .orderBy('id')
     .then((rows) => {
-      const books = _.map(rows, (r) => _.mapKeys(r, (v, k) => _.camelCase(k)));
+      const books = camelizeKeys(rows);
 
       res.send(books);
     })

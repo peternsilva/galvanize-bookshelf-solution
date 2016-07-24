@@ -1,9 +1,9 @@
 'use strict';
 
-const _ = require('lodash');
 const boom = require('boom');
 const express = require('express');
 const knex = require('../knex');
+const { camelizeKeys, decamelizeKeys } = require('humps');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -21,7 +21,7 @@ router.get('/favorites', (req, res, next) => {
     .where('favorites.user_id', req.session.userId)
     .orderBy('books.title', 'ASC')
     .then((rows) => {
-      const favs = _.map(rows, (r) => _.mapKeys(r, (v, k) => _.camelCase(k)));
+      const favs = camelizeKeys(rows);
 
       res.send(favs);
     })
@@ -68,12 +68,12 @@ router.post('/favorites', checkAuth, (req, res, next) => {
       }
 
       const favorite = { bookId, userId: req.session.userId };
-      const row = _.mapKeys(favorite, (v, k) => _.snakeCase(k));
+      const row = decamelizeKeys(favorite);
 
       return knex('favorites').insert(row, '*');
     })
     .then((rows) => {
-      const favorite = _.mapKeys(rows[0], (v, k) => _.camelCase(k));
+      const favorite = camelizeKeys(rows[0]);
 
       res.send(favorite);
     })
@@ -102,7 +102,7 @@ router.delete('/favorites', checkAuth, (req, res, next) => {
         throw boom.create(404, 'Not Found');
       }
 
-      favorite = _.mapKeys(row, (v, k) => _.camelCase(k));
+      favorite = camelizeKeys(row);
 
       return knex('favorites')
         .del()

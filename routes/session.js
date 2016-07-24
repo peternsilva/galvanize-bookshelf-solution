@@ -1,10 +1,11 @@
 'use strict';
 
-const _ = require('lodash');
-const express = require('express');
-const router = express.Router(); // eslint-disable-line new-cap
-const knex = require('../knex');
 const bcrypt = require('bcrypt-as-promised');
+const express = require('express');
+const knex = require('../knex');
+const { camelizeKeys } = require('humps');
+
+const router = express.Router(); // eslint-disable-line new-cap
 
 router.get('/session', (req, res) => {
   if (req.session.userId) {
@@ -29,7 +30,7 @@ router.post('/session', (req, res, next) => {
         throw err;
       }
 
-      user = _.mapKeys(row, (v, k) => _.camelCase(k));
+      user = camelizeKeys(row);
 
       return bcrypt.compare(req.body.password, user.hashedPassword);
     })

@@ -1,9 +1,9 @@
 'use strict';
 
-const _ = require('lodash');
 const boom = require('boom');
 const express = require('express');
 const knex = require('../knex');
+const { camelizeKeys, decamelizeKeys } = require('humps');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -11,7 +11,7 @@ router.get('/books', (_req, res, next) => {
   knex('books')
     .orderBy('title')
     .then((rows) => {
-      const books = _.map(rows, (r) => _.mapKeys(r, (v, k) => _.camelCase(k)));
+      const books = camelizeKeys(rows);
 
       res.send(books);
     })
@@ -35,7 +35,7 @@ router.get('/books/:id', (req, res, next) => {
         throw boom.create(404, 'Not Found');
       }
 
-      const book = _.mapKeys(row, (v, k) => _.camelCase(k));
+      const book = camelizeKeys(row);
 
       res.send(book);
     })
@@ -78,12 +78,12 @@ router.post('/books', (req, res, next) => {
       }
 
       const book = { title, genre, description, coverUrl, authorId };
-      const row = _.mapKeys(book, (v, k) => _.snakeCase(k));
+      const row = decamelizeKeys(book);
 
       return knex('books').insert(row, '*');
     })
     .then((rows) => {
-      const book = _.mapKeys(rows[0], (v, k) => _.camelCase(k));
+      const book = camelizeKeys(rows[0]);
 
       res.send(book);
     })
@@ -142,14 +142,14 @@ router.patch('/books/:id', (req, res, next) => {
         throw boom.create(400, 'Author does not exist');
       }
 
-      const row = _.mapKeys(updatedBook, (v, k) => _.snakeCase(k));
+      const row = decamelizeKeys(updatedBook);
 
       return knex('books')
         .update(row, '*')
         .where('id', id);
     })
     .then((rows) => {
-      const book = _.mapKeys(rows[0], (v, k) => _.camelCase(k));
+      const book = camelizeKeys(rows[0]);
 
       res.send(book);
     })
@@ -175,7 +175,7 @@ router.delete('/books/:id', (req, res, next) => {
         throw boom.create(404, 'Not Found');
       }
 
-      book = _.mapKeys(row, (v, k) => _.camelCase(k));
+      book = camelizeKeys(row);
 
       return knex('books')
         .del()

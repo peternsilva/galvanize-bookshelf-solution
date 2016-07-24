@@ -1,10 +1,11 @@
 'use strict';
 
-const _ = require('lodash');
-const express = require('express');
-const router = express.Router(); // eslint-disable-line new-cap
-const knex = require('../knex');
 const bcrypt = require('bcrypt-as-promised');
+const express = require('express');
+const knex = require('../knex');
+const { camelizeKeys, decamelizeKeys } = require('humps');
+
+const router = express.Router(); // eslint-disable-line new-cap
 
 router.post('/users', (req, res, next) => {
   const { email, password } = req.body;
@@ -41,16 +42,14 @@ router.post('/users', (req, res, next) => {
       return bcrypt.hash(password, 12);
     })
     .then((hashedPassword) => {
-      const user = _.omit(req.body, ['password']);
-
-      user.hashedPassword = hashedPassword;
-
-      const row = _.mapKeys(user, (v, k) => _.snakeCase(k));
+      const { firstName, lastName } = req.body;
+      const user = { firstName, lastName, email, hashedPassword };
+      const row = decamelizeKeys(user);
 
       return knex('users').insert(row, '*');
     })
     .then((rows) => {
-      const user = _.mapKeys(rows[0], (v, k) => _.camelCase(k));
+      const user = camelizeKeys(rows[0]);
 
       delete user.hashedPassword;
 
