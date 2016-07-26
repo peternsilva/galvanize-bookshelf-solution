@@ -96,6 +96,10 @@ Using the [Knex documentation](http://knexjs.org/), chain an index onto the `boo
 
 ## Bonus
 
-Linting
+Using your preferred ESLint rules, lint your project with the `npm run lint .` command.
+
+**TIP:** If you use the builtin `eslint-config-ryansobol` shareable rules, you may want to disable the `camelcase` and `max-len` rules with [inline comments](http://eslint.org/docs/user-guide/configuring#disabling-rules-with-inline-comments) where appropriate.
+
+## Bonus
 
 Once you're satisfied, find a classmate and see if he or she would like some help.
