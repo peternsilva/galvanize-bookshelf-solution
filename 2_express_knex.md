@@ -45,3 +45,7 @@ You can run the following test suite to verify the positive case when each middl
 ```shell
 npm test test/part2.routes.books.test.js
 ```
+
+## Bonus
+
+Linting

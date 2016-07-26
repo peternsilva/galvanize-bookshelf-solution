@@ -94,4 +94,8 @@ Translate the following author and book [JavaScript entities](https://gist.githu
 
 Using the [Knex documentation](http://knexjs.org/), chain an index onto the `books.author_id` foreign key column.
 
+## Bonus
+
+Linting
+
 Once you're satisfied, find a classmate and see if he or she would like some help.
