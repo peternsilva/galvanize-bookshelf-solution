@@ -1,7 +1,7 @@
 'use strict';
 
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config({ silent: true });
+  require('dotenv').config();
 }
 
 const express = require('express');
