@@ -57,7 +57,7 @@ app.use((err, _req, res, _next) => {
   if (err.status) {
     return res
       .status(err.status)
-      .set('Content-Type', 'text/plain')
+      .set('Content-Type', 'application/json')
       .send(err);
   }
 
