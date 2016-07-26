@@ -89,13 +89,13 @@ router.delete('/favorites', checkAuth, (req, res, next) => {
     return next();
   }
 
+  // eslint-disable-next-line camelcase
+  const clause = { book_id: bookId, user_id: req.session.userId };
+
   let favorite;
 
   knex('favorites')
-    .where({
-      book_id: bookId,
-      user_id: req.session.userId
-    })
+    .where(clause)
     .first()
     .then((row) => {
       if (!row) {

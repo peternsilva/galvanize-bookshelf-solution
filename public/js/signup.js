@@ -3,6 +3,7 @@
 
   $('.button-collapse').sideNav();
 
+  // eslint-disable-next-line max-statements
   $('#signUpForm').submit((event) => {
     event.preventDefault();
 
