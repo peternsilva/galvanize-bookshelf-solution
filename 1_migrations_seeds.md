@@ -84,7 +84,7 @@ More specifically, the migration files should:
 
 ## Seeds
 
-Translate the following [JavaScript entities](https://gist.github.com/ryansobol/fb74ad1e3090b1ce5abdc0d30ae154e8) into Knex seed files. More specifically, the seed files should:
+Translate the following author and book [JavaScript entities](https://gist.github.com/ryansobol/fb74ad1e3090b1ce5abdc0d30ae154e8) into Knex seed files. More specifically, the seed files should:
 
 - Live in the `seeds` directory.
 - Seed one table per seed file.
@@ -92,6 +92,6 @@ Translate the following [JavaScript entities](https://gist.github.com/ryansobol/
 
 ## Bonus
 
-Using the [Knex documentation](http://knexjs.org/), chain an index to the `books.author_id` foreign key column.
+Using the [Knex documentation](http://knexjs.org/), chain an index onto the `books.author_id` foreign key column.
 
-Once you're satisfied, find a fellow student and see if he or she would like some help.
+Once you're satisfied, find a classmate and see if he or she would like some help.
