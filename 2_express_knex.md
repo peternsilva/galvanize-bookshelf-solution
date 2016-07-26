@@ -15,12 +15,12 @@ Add route handlers for the following HTTP requests and send back the associated 
 | `DELETE`       | `/authors/6`       | N/A                                                                   | `200`           | `{ "firstName": "Shelley", "lastName": "Powers", ... }`                     |
 | `GET`          | `/authors/1/books` | N/A                                                                   | `200`           | `[{ id: 1, authorId: 1, "title": "JavaScript, The Good Parts", ... }, ...]` |
 
-(books that the author wrote)
-
 In the `routes/authors.js` module, add the necessary middleware to handle above RESTful route table. Note that the middleware for the following HTTP requests must respond with an array of entities ordered by their `id` attribute.
 
 - `GET /authors`
 - `GET /authors/:id/books`
+
+**NOTE:** The `GET /authors/:id/books` response must contain all the books for a specific author.
 
 You can run the following test suite to verify the positive case when each middleware responds with a `200` status code.
 
