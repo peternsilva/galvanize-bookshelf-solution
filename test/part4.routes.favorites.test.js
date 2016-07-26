@@ -53,13 +53,13 @@ suite('part4 routes favorites', () => {
         id: 1,
         bookId: 1,
         userId: 1,
-        authorId: 2,
-        title: 'Python In A Nutshell',
-        genre: 'Python',
-        description: 'This book offers Python programmers one place to look when they need help remembering or deciphering the syntax of this open source language and its many powerful but scantily documented modules. This comprehensive reference guide makes it easy to look up the most frequently needed information--not just about the Python language itself, but also the most frequently used parts of the standard library and the most important third-party extensions.',
-        coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/python_in_a_nutshell.jpg',
         createdAt: '2016-06-26T14:26:16.000Z',
-        updatedAt: '2016-06-26T14:26:16.000Z'
+        updatedAt: '2016-06-26T14:26:16.000Z',
+        authorId: 1,
+        title: 'JavaScript, The Good Parts',
+        genre: 'JavaScript',
+        description: 'Most programming languages contain good and bad parts, but JavaScript has more than its share of the bad, having been developed and released in a hurry before it could be refined. This authoritative book scrapes away these bad features to reveal a subset of JavaScript that\'s more reliable, readable, and maintainable than the language as a whole—a subset you can use to create truly extensible and efficient code.',
+        coverUrl: 'https://students-gschool-production.s3.amazonaws.com/uploads/asset/file/284/javascript_the_good_parts.jpg'
       }], done);
 
       /* eslint-enable max-len */

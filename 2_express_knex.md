@@ -4,14 +4,16 @@ In this assignment, you'll build a RESTful, database-driven HTTP server, using E
 
 **NOTE:** The information in both the request body and the response body use the `application/json` content type.
 
-| Request Method | Request URL        | Request Body                                                                                             | Response Status | Response Body                                                                                                                                |
-|----------------|--------------------|----------------------------------------------------------------------------------------------------------|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------|
-| `GET`          | `/authors`         | N/A                                                                                                      | `200`           | `[{ "first_name": "Bonnie", "last_name": "Eisenman", "biography": "...", "portrait_url": "https://..." }, ...]`                              |
-| `GET`          | `/authors/3`       | N/A                                                                                                      | `200`           | `{ "first_name": "Bonnie", "last_name": "Eisenman", "biography": "...", "portrait_url": "https://..." }`                                     |
-| `POST`         | `/authors`         | `{ "first_name": "Bonnie", "last_name": "Eisenman", "biography": "...", "portrait_url": "https://..." }` | `200`           | `{ "first_name": "Bonnie", "last_name": "Eisenman", "biography": "...", "portrait_url": "https://..." }`                                     |
-| `PATCH`        | `/authors/3`       | `{ "first_name": "Bonnie", "last_name": "Eisenman", "biography": "...", "portrait_url": "https://..." }` | `200`           | `{ "first_name": "Bonnie", "last_name": "Eisenman", "biography": "...", "portrait_url": "https://..." }`                                     |
-| `DELETE`       | `/authors/3`       | N/A                                                                                                      | `200`           | `{ "first_name": "Bonnie", "last_name": "Eisenman", "biography": "...", "portrait_url": "https://..." }`                                     |
-| `GET`          | `/authors/3/books` | N/A                                                                                                      | `200`           | `[{ "title": "Python In A Nutshell", "author_id": 2, "genre": "Python", "description": "This book..." }, ...]` (books that the author wrote) |
+| Request Method | Request URL        | Request Body                                           | Response Status | Response Body                                                        |
+|----------------|--------------------|--------------------------------------------------------|-----------------|----------------------------------------------------------------------|
+| `GET`          | `/authors`         | N/A                                                    | `200`           | `[{ id: 1, "firstName": "Alex", "lastName": "Martelli", ... }, ...]` |
+| `GET`          | `/authors/3`       | N/A                                                    | `200`           | `{ id: 1, "firstName": "Alex", "lastName": "Martelli", ... }`        |
+| `POST`         | `/authors`         | `{ "firstName": "Alex", "lastName": "Martelli", ... }` | `200`           | `{ id: 1, "firstName": "Alex", "lastName": "Martelli", ... }`        |
+| `PATCH`        | `/authors/3`       | `{ "biography": "An Italian computer engineer." }`     | `200`           | `{ id: 1, "firstName": "Alex", "lastName": "Martelli", ... }`        |
+| `DELETE`       | `/authors/3`       | N/A                                                    | `200`           | `{ "firstName": "Alex", "lastName": "Martelli", ... }`               |
+| `GET`          | `/authors/3/books` | N/A                                                    | `200`           | `[{ "title": "Python In A Nutshell", "authorId": 2, ... }, ...]`     |
+
+(books that the author wrote)
 
 In the `routes/authors.js` module, add the necessary middleware to handle above RESTful route table. Note that the middleware for the following HTTP requests must respond with an array of entities ordered by their `id` attribute.
 

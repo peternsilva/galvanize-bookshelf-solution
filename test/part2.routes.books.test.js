@@ -34,102 +34,75 @@ suite('part2 routes books', () => {
       .get('/books')
       .expect('Content-Type', /json/)
       .expect(200, [{
-        id: 5,
-        authorId: 6,
-        title: 'Algorithms in a Nutshell',
-        genre: 'Computer Science',
-        description: 'Creating robust software requires the use of efficient algorithms, but programmers seldom think about them until a problem occurs. This updated edition of Algorithms in a Nutshell describes a large number of existing algorithms for solving a variety of problems, and helps you select and implement the right algorithm for your needs—with just enough math to let you understand and analyze algorithm performance.',
-        coverUrl: 'http://akamaicovers.oreilly.com/images/0636920032885/lrg.jpg',
-        createdAt: '2016-06-26T14:26:16.000Z',
-        updatedAt: '2016-06-26T14:26:16.000Z'
-      }, {
-        id: 8,
-        authorId: 9,
+        id: 7,
+        authorId: 4,
         title: 'AngularJS: Up and Running',
         genre: 'JavaScript',
-        description: 'If you want to get started with AngularJS, either as a side project, an additional tool, or for your main work, this practical guide teaches you how to use this meta-framework step-by-step, from the basics to advanced concepts. By the end of the book, you’ll understand how to develop a large, maintainable, and performant application with AngularJS.',
+        description: 'If you want to get started with AngularJS, either as a side project, an additional tool, or for your main work, this practical guide teaches you how to use this meta-framework step-by-step, from the basics to advanced concepts. By the end of the book, you\'ll understand how to develop a large, maintainable, and performant application with AngularJS.',
         coverUrl: 'http://akamaicovers.oreilly.com/images/0636920033486/lrg.jpg',
         createdAt: '2016-06-26T14:26:16.000Z',
         updatedAt: '2016-06-26T14:26:16.000Z'
       }, {
-        id: 7,
-        authorId: 8,
-        title: 'Head First Ruby',
-        genre: 'Ruby',
-        description: 'What’s all the buzz about this Ruby language? Is it right for you? Well, ask yourself: are you tired of all those extra declarations, keywords, and compilation steps in your other language? Do you want to be a more productive programmer? Then you’ll love Ruby. With this unique hands-on learning experience, you’ll discover how Ruby takes care of all the details for you, so you can simply have fun and get more done with less code.',
-        coverUrl: 'http://akamaicovers.oreilly.com/images/9780596803995/lrg.jpg',
-        createdAt: '2016-06-26T14:26:16.000Z',
-        updatedAt: '2016-06-26T14:26:16.000Z'
-      }, {
-        id: 3,
-        authorId: 4,
-        title: 'Learning React Native',
-        genre: 'JavaScript',
-        description: 'Get a practical introduction to React Native, the JavaScript framework for writing and deploying fully featured mobile apps that look and feel native. With this hands-on guide, you’ll learn how to build applications that target iOS, Android, and other mobile platforms instead of browsers. You’ll also discover how to access platform features such as the camera, user location, and local storage.',
-        coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/learning_react_native.jpg',
-        createdAt: '2016-06-26T14:26:16.000Z',
-        updatedAt: '2016-06-26T14:26:16.000Z'
-      }, {
-        id: 11,
-        authorId: 12,
-        title: 'Lightweight Django',
-        genre: 'Python',
-        description: 'How can you take advantage of the Django framework to integrate complex client-side interactions and real-time features into your web applications? Through a series of rapid application development projects, this hands-on book shows experienced Django developers how to include REST APIs, WebSockets, and client-side MVC frameworks such as Backbone.js into new or existing projects.',
-        coverUrl: 'http://akamaicovers.oreilly.com/images/0636920032502/lrg.jpg',
-        createdAt: '2016-06-26T14:26:16.000Z',
-        updatedAt: '2016-06-26T14:26:16.000Z'
-      }, {
         id: 1,
-        authorId: 2,
-        title: 'Python In A Nutshell',
-        genre: 'Python',
-        description: 'This book offers Python programmers one place to look when they need help remembering or deciphering the syntax of this open source language and its many powerful but scantily documented modules. This comprehensive reference guide makes it easy to look up the most frequently needed information--not just about the Python language itself, but also the most frequently used parts of the standard library and the most important third-party extensions.',
-        coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/python_in_a_nutshell.jpg',
-        createdAt: '2016-06-26T14:26:16.000Z',
-        updatedAt: '2016-06-26T14:26:16.000Z'
-      }, {
-        id: 6,
-        authorId: 7,
-        title: 'The Ruby Programming Language',
-        genre: 'Ruby',
-        description: 'The Ruby Programming Language documents the Ruby language definitively but without the formality of a language specification. It is written for experienced programmers who are new to Ruby, and for current Ruby programmers who want to challenge their understanding and increase their mastery of the language.',
-        coverUrl: 'http://akamaicovers.oreilly.com/images/9780596516178/lrg.jpg',
-        createdAt: '2016-06-26T14:26:16.000Z',
-        updatedAt: '2016-06-26T14:26:16.000Z'
-      }, {
-        id: 10,
-        authorId: 11,
-        title: 'Think Java',
-        genre: 'Java',
-        description: 'Think Java is appropriate as a textbook in an introductory college or high school class. The book is currently in use at several colleges, universities, and high schools. It’s appropriate for people learning Java as a first language, including students learning on their own and professionals who are retraining.',
-        coverUrl: 'http://akamaicovers.oreilly.com/images/0636920041610/rc_lrg.jpg',
+        authorId: 1,
+        title: 'JavaScript, The Good Parts',
+        genre: 'JavaScript',
+        description: 'Most programming languages contain good and bad parts, but JavaScript has more than its share of the bad, having been developed and released in a hurry before it could be refined. This authoritative book scrapes away these bad features to reveal a subset of JavaScript that\'s more reliable, readable, and maintainable than the language as a whole—a subset you can use to create truly extensible and efficient code.',
+        coverUrl: 'https://students-gschool-production.s3.amazonaws.com/uploads/asset/file/284/javascript_the_good_parts.jpg',
         createdAt: '2016-06-26T14:26:16.000Z',
         updatedAt: '2016-06-26T14:26:16.000Z'
       }, {
         id: 2,
         authorId: 2,
-        title: 'Think Python',
-        genre: 'Python',
-        description: 'If you want to learn how to program, working with Python is an excellent way to start. This hands-on guide takes you through the language a step at a time, beginning with basic programming concepts before moving on to functions, recursion, data structures, and object-oriented design. This second edition and its supporting code have been updated for Python 3.',
-        coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/think_python.jpg',
+        title: 'Learning React Native',
+        genre: 'JavaScript',
+        description: 'Get a practical introduction to React Native, the JavaScript framework for writing and deploying fully featured mobile apps that look and feel native. With this hands-on guide, you\'ll learn how to build applications that target iOS, Android, and other mobile platforms instead of browsers. You\'ll also discover how to access platform features such as the camera, user location, and local storage.',
+        coverUrl: 'https://students-gschool-production.s3.amazonaws.com/uploads/asset/file/287/learning_react_native.jpg',
         createdAt: '2016-06-26T14:26:16.000Z',
         updatedAt: '2016-06-26T14:26:16.000Z'
       }, {
-        id: 9,
-        authorId: 10,
+        id: 8,
+        authorId: 5,
         title: 'Web Development with Node and Express',
         genre: 'JavaScript',
-        description: 'Learn how to build dynamic web applications with Express, a key component of the Node/JavaScript development stack. In this hands-on guide, author Ethan Brown teaches you the fundamentals through the development of a fictional application that exposes a public website and a RESTful API. You’ll also learn web architecture best practices to help you build single-page, multi-page, and hybrid web apps with Express.',
+        description: 'Learn how to build dynamic web applications with Express, a key component of the Node/JavaScript development stack. In this hands-on guide, author Ethan Brown teaches you the fundamentals through the development of a fictional application that exposes a public website and a RESTful API. You\'ll also learn web architecture best practices to help you build single-page, multi-page, and hybrid web apps with Express.',
         coverUrl: 'http://akamaicovers.oreilly.com/images/0636920032977/lrg.jpg',
         createdAt: '2016-06-26T14:26:16.000Z',
         updatedAt: '2016-06-26T14:26:16.000Z'
       }, {
-        id: 4,
-        authorId: 5,
-        title: 'You Don\'t Know JS',
+        id: 5,
+        authorId: 3,
+        title: 'You Don\'t Know JS: Async & Performance',
         genre: 'JavaScript',
-        description: 'No matter how much experience you have with JavaScript, odds are you don’t fully understand the language. As part of the ""You Don’t Know JS"" series, this compact guide focuses on new features available in ECMAScript 6 (ES6), the latest version of the standard upon which JavaScript is built.',
+        description: 'No matter how much experience you have with JavaScript, odds are you don\'t fully understand the language. As part of the "You Don\'t Know JS" series, this concise yet in-depth guide focuses on new asynchronous features and performance techniques—including Promises, generators, and Web Workers—that let you create sophisticated single-page web applications and escape callback hell in the process.',
+        coverUrl: 'https://students-gschool-production.s3.amazonaws.com/uploads/asset/file/288/you_dont_know_js_async_and_performance.jpg',
+        createdAt: '2016-06-26T14:26:16.000Z',
+        updatedAt: '2016-06-26T14:26:16.000Z'
+      }, {
+        id: 4,
+        authorId: 3,
+        title: 'You Don\'t Know JS: ES6 & Beyond',
+        genre: 'JavaScript',
+        description: 'No matter how much experience you have with JavaScript, odds are you don\'t fully understand the language. As part of the "You Don\'t Know JS" series, this compact guide focuses on new features available in ECMAScript 6 (ES6), the latest version of the standard upon which JavaScript is built.',
         coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/es6_and_beyond.jpg',
+        createdAt: '2016-06-26T14:26:16.000Z',
+        updatedAt: '2016-06-26T14:26:16.000Z'
+      }, {
+        id: 6,
+        authorId: 3,
+        title: 'You Don\'t Know JS: Scope & Closures',
+        genre: 'JavaScript',
+        description: 'No matter how much experience you have with JavaScript, odds are you don\'t fully understand the language. This concise yet in-depth guide takes you inside scope and closures, two core concepts you need to know to become a more efficient and effective JavaScript programmer. You\'ll learn how and why they work, and how an understanding of closures can be a powerful part of your development skillset.',
+        coverUrl: 'https://students-gschool-production.s3.amazonaws.com/uploads/asset/file/289/you_dont_know_js_scopes_and_closures.jpg',
+        createdAt: '2016-06-26T14:26:16.000Z',
+        updatedAt: '2016-06-26T14:26:16.000Z'
+      }, {
+        id: 3,
+        authorId: 3,
+        title: 'You Don\'t Know JS: Up & Going',
+        genre: 'JavaScript',
+        description: 'It\'s easy to learn parts of JavaScript, but much harder to learn it completely—or even sufficiently—whether you\'re new to the language or have used it for years. With the "You Don\'t Know JS" book series, you\'ll get a more complete understanding of JavaScript, including trickier parts of the language that many experienced JavaScript programmers simply avoid.',
+        coverUrl: 'https://students-gschool-production.s3.amazonaws.com/uploads/asset/file/286/you_dont_know_js_up_and_going.jpg',
         createdAt: '2016-06-26T14:26:16.000Z',
         updatedAt: '2016-06-26T14:26:16.000Z'
       }], done);
@@ -140,17 +113,17 @@ suite('part2 routes books', () => {
   test('GET /books/:id', (done) => {
     /* eslint-disable max-len */
     request(server)
-      .get('/books/2')
+      .get('/books/1')
       .expect('Content-Type', /json/)
       .expect(200, {
-        id: 2,
-        authorId: 2,
-        title: 'Think Python',
-        genre: 'Python',
-        description: 'If you want to learn how to program, working with Python is an excellent way to start. This hands-on guide takes you through the language a step at a time, beginning with basic programming concepts before moving on to functions, recursion, data structures, and object-oriented design. This second edition and its supporting code have been updated for Python 3.',
-        coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/think_python.jpg',
-        createdAt: new Date('2016-06-26 14:26:16 UTC').toISOString(),
-        updatedAt: new Date('2016-06-26 14:26:16 UTC').toISOString()
+        id: 1,
+        authorId: 1,
+        title: 'JavaScript, The Good Parts',
+        genre: 'JavaScript',
+        description: 'Most programming languages contain good and bad parts, but JavaScript has more than its share of the bad, having been developed and released in a hurry before it could be refined. This authoritative book scrapes away these bad features to reveal a subset of JavaScript that\'s more reliable, readable, and maintainable than the language as a whole—a subset you can use to create truly extensible and efficient code.',
+        coverUrl: 'https://students-gschool-production.s3.amazonaws.com/uploads/asset/file/284/javascript_the_good_parts.jpg',
+        createdAt: '2016-06-26T14:26:16.000Z',
+        updatedAt: '2016-06-26T14:26:16.000Z'
       }, done);
 
       /* eslint-enable max-len */
@@ -173,7 +146,7 @@ suite('part2 routes books', () => {
         delete res.body.updatedAt;
       })
       .expect(200, {
-        id: 12,
+        id: 9,
         authorId: 2,
         title: 'Think Python',
         genre: 'Python',
@@ -187,7 +160,7 @@ suite('part2 routes books', () => {
   test('PATCH /books/:id', (done) => {
     /* eslint-disable max-len */
     request(server)
-      .patch('/books/2')
+      .patch('/books/1')
       .send({
         authorId: 2,
         title: 'Think like Python',
@@ -201,7 +174,7 @@ suite('part2 routes books', () => {
         delete res.body.updatedAt;
       })
       .expect(200, {
-        id: 2,
+        id: 1,
         authorId: 2,
         title: 'Think like Python',
         genre: 'Python stuff',
@@ -215,18 +188,18 @@ suite('part2 routes books', () => {
   test('DELETE /books/:id', (done) => {
     /* eslint-disable max-len */
     request(server)
-      .del('/books/2')
+      .del('/books/1')
       .expect('Content-Type', /json/)
       .expect((res) => {
         delete res.body.createdAt;
         delete res.body.updatedAt;
       })
       .expect(200, {
-        authorId: 2,
-        title: 'Think Python',
-        genre: 'Python',
-        description: 'If you want to learn how to program, working with Python is an excellent way to start. This hands-on guide takes you through the language a step at a time, beginning with basic programming concepts before moving on to functions, recursion, data structures, and object-oriented design. This second edition and its supporting code have been updated for Python 3.',
-        coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/think_python.jpg'
+        authorId: 1,
+        title: 'JavaScript, The Good Parts',
+        genre: 'JavaScript',
+        description: 'Most programming languages contain good and bad parts, but JavaScript has more than its share of the bad, having been developed and released in a hurry before it could be refined. This authoritative book scrapes away these bad features to reveal a subset of JavaScript that\'s more reliable, readable, and maintainable than the language as a whole—a subset you can use to create truly extensible and efficient code.',
+        coverUrl: 'https://students-gschool-production.s3.amazonaws.com/uploads/asset/file/284/javascript_the_good_parts.jpg'
       }, done);
 
       /* eslint-enable max-len */
