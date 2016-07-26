@@ -1,6 +1,10 @@
 # Express and Knex
 
-In this assignment, you'll build a RESTful, database-driven HTTP server, using Express and Knex, to manage your migrated and seeded database. Your server will handle the following HTTP requests and send the appropriate HTTP response.
+In this assignment, you'll build a RESTful, database-driven HTTP server, using Express and Knex, to manage your migrated and seeded database.
+
+## Authors
+
+Your server will handle the following HTTP requests and send the appropriate HTTP response.
 
 **NOTE:** The information in both the request body and the response body use the `application/json` content type.
 
@@ -26,7 +30,7 @@ You can run the following test suite to verify the positive case when each middl
 npm test test/part2.routes.authors.test.js
 ```
 
-## Bonus
+## Books
 
 | Request Method | Request URL        | Request Body                                                          | Response Status | Response Body                                                                |
 |----------------|--------------------|-----------------------------------------------------------------------|-----------------|------------------------------------------------------------------------------|
@@ -48,4 +52,10 @@ npm test test/part2.routes.books.test.js
 
 ## Bonus
 
-Linting
+Using your preferred ESLint rules, lint your project with the `npm run lint .` command.
+
+**TIP:** If you use the builtin `eslint-config-ryansobol` shareable rules, you may want to disable the `camelcase` and `max-len` rules with [inline comments](http://eslint.org/docs/user-guide/configuring#disabling-rules-with-inline-comments) where appropriate.
+
+## Bonus
+
+Once you're satisfied, find a classmate and see if he or she would like some help.
