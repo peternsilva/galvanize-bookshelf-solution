@@ -4,7 +4,7 @@ In this assignment, you'll build a RESTful, database-driven HTTP server, using E
 
 ## Authors
 
-Your server will handle the following HTTP requests and send the appropriate HTTP response.
+Add route handling middleware to handle the following HTTP requests by sending back the associated HTTP response.
 
 **NOTE:** The information in both the request body and the response body use the `application/json` content type.
 
@@ -31,6 +31,10 @@ npm test test/part2.routes.authors.test.js
 ```
 
 ## Books
+
+Add route handling middleware to handle the following HTTP requests by sending back the associated HTTP response.
+
+**NOTE:** The information in both the request body and the response body use the `application/json` content type.
 
 | Request Method | Request URL        | Request Body                                                          | Response Status | Response Body                                                                |
 |----------------|--------------------|-----------------------------------------------------------------------|-----------------|------------------------------------------------------------------------------|
