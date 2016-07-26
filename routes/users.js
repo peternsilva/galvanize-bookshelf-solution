@@ -1,6 +1,7 @@
 'use strict';
 
 const bcrypt = require('bcrypt-as-promised');
+const boom = require('boom');
 const express = require('express');
 const knex = require('../knex');
 const { camelizeKeys, decamelizeKeys } = require('humps');
@@ -11,19 +12,14 @@ router.post('/users', (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !email.trim()) {
-    const err = new Error('Email must not be blank');
-
-    err.status = 400;
-
-    return next(err);
+    return next(boom.create(400, 'Email must not be blank'));
   }
 
   if (!password || password.length < 8) {
-    const err = new Error('Password must be at least 8 characters long');
-
-    err.status = 400;
-
-    return next(err);
+    return next(boom.create(
+      400,
+      'Password must be at least 8 characters long'
+    ));
   }
 
   knex('users')
@@ -32,11 +28,7 @@ router.post('/users', (req, res, next) => {
     .first()
     .then((exists) => {
       if (exists) {
-        const err = new Error('Email already exists');
-
-        err.status = 400;
-
-        throw err;
+        throw boom.create(400, 'Email already exists');
       }
 
       return bcrypt.hash(password, 12);

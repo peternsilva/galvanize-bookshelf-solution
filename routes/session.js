@@ -1,6 +1,7 @@
 'use strict';
 
 const bcrypt = require('bcrypt-as-promised');
+const boom = require('boom');
 const express = require('express');
 const knex = require('../knex');
 const { camelizeKeys } = require('humps');
@@ -23,11 +24,7 @@ router.post('/session', (req, res, next) => {
     .first()
     .then((row) => {
       if (!row) {
-        const err = new Error('User could not be logged in');
-
-        err.status = 401;
-
-        throw err;
+        throw boom.create(401, 'User could not be logged in');
       }
 
       user = camelizeKeys(row);
@@ -39,11 +36,7 @@ router.post('/session', (req, res, next) => {
       res.sendStatus(200);
     })
     .catch(bcrypt.MISMATCH_ERROR, () => {
-      const err = new Error('User could not be logged in');
-
-      err.status = 401;
-
-      throw err;
+      throw boom.create(401, 'User could not be logged in');
     })
     .catch((err) => {
       next(err);
