@@ -28,13 +28,13 @@ npm test test/part2.routes.authors.test.js
 
 ## Bonus
 
-| Request Method | Request URL        | Request Body                                                                          | Response Status | Response Body                                                                |
-|----------------|--------------------|---------------------------------------------------------------------------------------|-----------------|------------------------------------------------------------------------------|
-| `GET`          | `/books`           | N/A                                                                                   | `200`           | `[{ id: 1, authorId: 1, "title": "JavaScript, The Good Parts", ... }, ...]`  |
-| `GET`          | `/books/1`         | N/A                                                                                   | `200`           | `{ id: 1, authorId: 1, "title": "JavaScript, The Good Parts", ... }`         |
-| `POST`         | `/books`           | `{ authorId: 3, "title": "You Don't Know JS: Types & Grammar", ... }`                 | `200`           | `{ id: 9, authorId: 3, "title": "You Don't Know JS: Types & Grammar", ... }` |
-| `PATCH`        | `/books/9`         | `{ description: "Looks at type coercion problems and demonstrates why types work" }`  | `200`           | `{ id: 9, authorId: 3, "title": "You Don't Know JS: Types & Grammar", ... }` |
-| `DELETE`       | `/books/9`         | N/A                                                                                   | `200`           | `{ authorId: 3, "title": "You Don't Know JS: Types & Grammar", ... }`        |
+| Request Method | Request URL        | Request Body                                                          | Response Status | Response Body                                                                |
+|----------------|--------------------|-----------------------------------------------------------------------|-----------------|------------------------------------------------------------------------------|
+| `GET`          | `/books`           | N/A                                                                   | `200`           | `[{ id: 1, authorId: 1, "title": "JavaScript, The Good Parts", ... }, ...]`  |
+| `GET`          | `/books/1`         | N/A                                                                   | `200`           | `{ id: 1, authorId: 1, "title": "JavaScript, The Good Parts", ... }`         |
+| `POST`         | `/books`           | `{ authorId: 3, "title": "You Don't Know JS: Types & Grammar", ... }` | `200`           | `{ id: 9, authorId: 3, "title": "You Don't Know JS: Types & Grammar", ... }` |
+| `PATCH`        | `/books/9`         | `{ description: "Looks at type coercion problems." }`                 | `200`           | `{ id: 9, authorId: 3, "title": "You Don't Know JS: Types & Grammar", ... }` |
+| `DELETE`       | `/books/9`         | N/A                                                                   | `200`           | `{ authorId: 3, "title": "You Don't Know JS: Types & Grammar", ... }`        |
 
 In the `routes/books.js` module, add the necessary middleware to handle above RESTful route table. Note that the middleware for the following HTTP requests must respond with an array of entities ordered by their `id` attribute.
 
