@@ -17,7 +17,7 @@ Add route handlers for the following HTTP requests and send back the associated 
 
 In the `routes/authors.js` module, add the necessary middleware to handle above RESTful route table.
 
-- The response for a `GET /authors` request must contain an array of author entities ordered by their `first_name` and `last_name` attribute.
+- The response for a `GET /authors` request must contain an array of author entities ordered by their `first_name` and `last_name` attributes.
 
 - The response for a `GET /authors/:id/books` request must contain an array of books entities for a specific author ordered by their `title` attribute.
 
