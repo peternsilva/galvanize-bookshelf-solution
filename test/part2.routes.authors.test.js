@@ -101,7 +101,7 @@ suite('part2 routes authors', () => {
     request(server)
       .post('/authors')
       .send({
-        firstName: 'Allen B.',
+        firstName: 'Allen',
         lastName: 'Downey',
         biography: 'Allen Downey is a Professor of Computer Science at Olin College of Engineering. He has taught at Wellesley College, Colby College and U.C. Berkeley. He has a Ph.D. in Computer Science from U.C. Berkeley and Master\'s and Bachelor\'s degrees from MIT.',
         portraitUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/allen_downey.jpg'
@@ -113,7 +113,7 @@ suite('part2 routes authors', () => {
       })
       .expect(200, {
         id: 6,
-        firstName: 'Allen B.',
+        firstName: 'Allen',
         lastName: 'Downey',
         biography: 'Allen Downey is a Professor of Computer Science at Olin College of Engineering. He has taught at Wellesley College, Colby College and U.C. Berkeley. He has a Ph.D. in Computer Science from U.C. Berkeley and Master\'s and Bachelor\'s degrees from MIT.',
         portraitUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/allen_downey.jpg'
