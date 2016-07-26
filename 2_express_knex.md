@@ -4,14 +4,14 @@ In this assignment, you'll build a RESTful, database-driven HTTP server, using E
 
 **NOTE:** The information in both the request body and the response body use the `application/json` content type.
 
-| Request Method | Request URL        | Request Body                                           | Response Status | Response Body                                                        |
-|----------------|--------------------|--------------------------------------------------------|-----------------|----------------------------------------------------------------------|
-| `GET`          | `/authors`         | N/A                                                    | `200`           | `[{ id: 1, "firstName": "Alex", "lastName": "Martelli", ... }, ...]` |
-| `GET`          | `/authors/3`       | N/A                                                    | `200`           | `{ id: 1, "firstName": "Alex", "lastName": "Martelli", ... }`        |
-| `POST`         | `/authors`         | `{ "firstName": "Alex", "lastName": "Martelli", ... }` | `200`           | `{ id: 1, "firstName": "Alex", "lastName": "Martelli", ... }`        |
-| `PATCH`        | `/authors/3`       | `{ "biography": "An Italian computer engineer." }`     | `200`           | `{ id: 1, "firstName": "Alex", "lastName": "Martelli", ... }`        |
-| `DELETE`       | `/authors/3`       | N/A                                                    | `200`           | `{ "firstName": "Alex", "lastName": "Martelli", ... }`               |
-| `GET`          | `/authors/3/books` | N/A                                                    | `200`           | `[{ "title": "Python In A Nutshell", "authorId": 2, ... }, ...]`     |
+| Request Method | Request URL        | Request Body                                               | Response Status | Response Body                                                                |
+|----------------|--------------------|------------------------------------------------------------|-----------------|------------------------------------------------------------------------------|
+| `GET`          | `/authors`         | N/A                                                        | `200`           | `[{ id: 1, "firstName": "Douglas", "lastName": "Crockford", ... }, ...]`     |
+| `GET`          | `/authors/1`       | N/A                                                        | `200`           | `{ id: 1, "firstName": "Douglas", "lastName": "Crockford", ... }`            |
+| `POST`         | `/authors`         | `{ "firstName": "Douglas", "lastName": "Crockford", ... }` | `200`           | `{ id: 1, "firstName": "Douglas", "lastName": "Crockford", ... }`            |
+| `PATCH`        | `/authors/1`       | `{ "biography": "Serves on the ECMAScript committee." }`   | `200`           | `{ id: 1, "firstName": "Douglas", "lastName": "Crockford", ... }`            |
+| `DELETE`       | `/authors/1`       | N/A                                                        | `200`           | `{ "firstName": "Douglas", "lastName": "Crockford", ... }`                   |
+| `GET`          | `/authors/1/books` | N/A                                                        | `200`           | `[{ id: 1, author_id: 1, "title": "JavaScript, The Good Parts", ... }, ...]` |
 
 (books that the author wrote)
 
