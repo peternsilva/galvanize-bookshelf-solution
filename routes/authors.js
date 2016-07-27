@@ -170,9 +170,18 @@ router.get('/authors/:id/books', (req, res, next) => {
     return next();
   }
 
-  knex('books')
-    .where('author_id', id)
-    .orderBy('id')
+  knex('authors')
+    .where('id', id)
+    .first()
+    .then((row) => {
+      if (!row) {
+        throw boom.create(404, 'Not Found');
+      }
+
+      return knex('books')
+        .where('author_id', id)
+        .orderBy('id');
+    })
     .then((rows) => {
       const books = camelizeKeys(rows);
 
