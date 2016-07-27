@@ -55,10 +55,6 @@ npm test test/part2.routes.books.test.js
 
 ## Bonus
 
-Using your preferred ESLint rules, lint your project with the `npm run lint .` command.
-
-## Bonus
-
 Update the route middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body use the `text/plain` content type.
 
 | Request Method | Request URL           | Request Body                 | Response Status | Response Body                  |
@@ -80,13 +76,21 @@ Update the route middleware to handle the following HTTP requests and send back 
 | `GET`          | `/authors/-/books1`   | N/A                          | `404`           | `Not Found`                    |
 | `GET`          | `/authors/one/books`  | N/A                          | `404`           | `Not Found`                    |
 
-In the `routes/authors.js` module, update the router middleware to handle above RESTful route table. Make sure the route middleware handles the successful HTTP requests as before.
+More specifically, the server should:
+
+- Handle the above RESTful route table with middleware defined in the `routes/authors.js` module.
+
+- Ensure the route middleware handles the successful HTTP requests as before.
 
 You can run the following test suite to verify the middleware works as expected.
 
 ```shell
 npm test test/part2.routes.authors.bonus.test.js
 ```
+
+## Bonus
+
+Using your preferred ESLint rules, lint your project with the `npm run lint .` command.
 
 ## Bonus
 
