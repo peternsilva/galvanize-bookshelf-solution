@@ -57,7 +57,7 @@ Using your preferred ESLint rules, lint your project with the `npm run lint .` c
 
 ## Bonus
 
-Next, update your server to handle the following problem HTTP requests and send the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body use the `text/plain` content type.
+Next, update your server to handle the following failure HTTP requests and send the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body use the `text/plain` content type.
 
 | Request Method | Request URL           | Request Body                 | Response Status | Response Body                  |
 |----------------|-----------------------|------------------------------|-----------------|--------------------------------|
@@ -78,7 +78,7 @@ Next, update your server to handle the following problem HTTP requests and send 
 | `GET`          | `/authors/-/books1`   | N/A                          | `404`           | `Not Found`                    |
 | `GET`          | `/authors/one/books`  | N/A                          | `404`           | `Not Found`                    |
 
-In the `routes/authors.js` module, update the necessary middleware to handle above RESTful route table. Make sure the route handler handles the positive case case before.
+In the `routes/authors.js` module, update the router middleware to handle above RESTful route table. Make sure the route middleware handles the successful HTTP requests as before.
 
 You can run the following test suite to verify the negative cases when the middleware responds with a `400` status code.
 
