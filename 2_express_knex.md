@@ -53,6 +53,10 @@ You can run the following test suite to verify the middleware works as expected.
 npm test test/part2.routes.books.test.js
 ```
 
+## Linting
+
+Using your preferred ESLint rules, lint your project with the `npm run lint .` command.
+
 ## Bonus
 
 Update the route middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body use the `text/plain` content type.
@@ -90,7 +94,38 @@ npm test test/part2.routes.authors.bonus.test.js
 
 ## Bonus
 
-Using your preferred ESLint rules, lint your project with the `npm run lint .` command.
+Update the route middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body use the `text/plain` content type.
+
+| Request Method | Request URL         | Request Body                 | Response Status | Response Body                   |
+|----------------|---------------------|------------------------------|-----------------|---------------------------------|
+| `GET`          | `/books/9000`       | N/A                          | `404`           | `Not Found`                     |
+| `GET`          | `/books/-1`         | N/A                          | `404`           | `Not Found`                     |
+| `GET`          | `/books/one`        | N/A                          | `404`           | `Not Found`                     |
+| `POST`         | `/books`            | `{ "title": "", ... }`       | `400`           | `Title name must not be blank`  |
+| `POST`         | `/books`            | `{ "genre": "", ... }`       | `400`           | `Genre name must not be blank`  |
+| `POST`         | `/books`            | `{ "description": "", ... }` | `400`           | `Description must not be blank` |
+| `POST`         | `/books`            | `{ "coverUrl": "", ... }`    | `400`           | `Cover must not be blank`       |
+| `POST`         | `/books`            | `{ "authorId": "", ... }`    | `400`           | `Author must be selected`       |
+| `POST`         | `/books`            | `{ "authorId": 9000, ... }`  | `400`           | `Author does not exist`         |
+| `PATCH`        | `/books/9000`       | N/A                          | `404`           | `Not Found`                     |
+| `PATCH`        | `/books/-1`         | N/A                          | `404`           | `Not Found`                     |
+| `PATCH`        | `/books/one`        | N/A                          | `404`           | `Not Found`                     |
+| `PATCH`        | `/books/1`          | `{ "authorId": 9000, ... }`  | `400`           | `Author does not exist`         |
+| `DELETE`       | `/books/9000`       | N/A                          | `404`           | `Not Found`                     |
+| `DELETE`       | `/books/-1`         | N/A                          | `404`           | `Not Found`                     |
+| `DELETE`       | `/books/one`        | N/A                          | `404`           | `Not Found`                     |
+
+More specifically, the server should:
+
+- Handle the above RESTful route table with middleware defined in the `routes/authors.js` module.
+
+- Ensure the route middleware handles the successful HTTP requests as before.
+
+You can run the following test suite to verify the middleware works as expected.
+
+```shell
+npm test test/part2.routes.authors.bonus.test.js
+```
 
 ## Bonus
 
