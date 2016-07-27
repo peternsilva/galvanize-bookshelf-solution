@@ -42,9 +42,9 @@ suite('part2 routes authors bonus', () => {
       .expect(404, 'Not Found', done);
   });
 
-  test('GET /authors/abracadabra', (done) => {
+  test('GET /authors/one', (done) => {
     request(server)
-      .get('/authors/abracadabra')
+      .get('/authors/one')
       .expect('Content-Type', /plain/)
       .expect(404, 'Not Found', done);
   });
@@ -123,9 +123,9 @@ suite('part2 routes authors bonus', () => {
       .expect(404, 'Not Found', done);
   });
 
-  test('PATCH /authors/abracadabra', (done) => {
+  test('PATCH /authors/one', (done) => {
     request(server)
-      .patch('/authors/abracadabra')
+      .patch('/authors/one')
       .expect('Content-Type', /plain/)
       .expect(404, 'Not Found', done);
   });
@@ -144,9 +144,9 @@ suite('part2 routes authors bonus', () => {
       .expect(404, 'Not Found', done);
   });
 
-  test('DELETE /authors/abracadabra', (done) => {
+  test('DELETE /authors/one', (done) => {
     request(server)
-      .del('/authors/abracadabra')
+      .del('/authors/one')
       .expect('Content-Type', /plain/)
       .expect(404, 'Not Found', done);
   });
@@ -165,9 +165,9 @@ suite('part2 routes authors bonus', () => {
       .expect(404, 'Not Found', done);
   });
 
-  test('GET /authors/abracadabra/books', (done) => {
+  test('GET /authors/one/books', (done) => {
     request(server)
-      .get('/authors/abracadabra/books')
+      .get('/authors/one/books')
       .expect('Content-Type', /plain/)
       .expect(404, 'Not Found', done);
   });
