@@ -1,0 +1,198 @@
+'use strict';
+
+process.env.NODE_ENV = 'test';
+
+const { suite, test } = require('mocha');
+const request = require('supertest');
+const knex = require('../knex');
+const server = require('../server');
+
+suite('part2 routes books bonus', () => {
+  before((done) => {
+    knex.migrate.latest()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  beforeEach((done) => {
+    knex.seed.run()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  test('GET /books/9000', (done) => {
+    request(server)
+      .get('/books/9000')
+      .expect('Content-Type', /plain/)
+      .expect(404, 'Not Found', done);
+  });
+
+  test('GET /books/-1', (done) => {
+    request(server)
+      .get('/books/-1')
+      .expect('Content-Type', /plain/)
+      .expect(404, 'Not Found', done);
+  });
+
+  test('GET /books/abracadabra', (done) => {
+    request(server)
+      .get('/books/abracadabra')
+      .expect('Content-Type', /plain/)
+      .expect(404, 'Not Found', done);
+  });
+
+  test('POST /books without authorId', (done) => {
+    /* eslint-disable max-len */
+    request(server)
+      .post('/books')
+      .send({
+        title: 'Think Python',
+        genre: 'Python',
+        description: 'If you want to learn how to program, working with Python is an excellent way to start. This hands-on guide takes you through the language a step at a time, beginning with basic programming concepts before moving on to functions, recursion, data structures, and object-oriented design. This second edition and its supporting code have been updated for Python 3.',
+        coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/think_python.jpg'
+      })
+      .expect('Content-Type', /plain/)
+      .expect(400, 'Author must be selected', done);
+
+      /* eslint-enable max-len */
+  });
+
+  test('POST /books with non-existant authorId', (done) => {
+    /* eslint-disable max-len */
+    request(server)
+      .post('/books')
+      .send({
+        authorId: 9000,
+        title: 'Think Python',
+        genre: 'Python',
+        description: 'If you want to learn how to program, working with Python is an excellent way to start. This hands-on guide takes you through the language a step at a time, beginning with basic programming concepts before moving on to functions, recursion, data structures, and object-oriented design. This second edition and its supporting code have been updated for Python 3.',
+        coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/think_python.jpg'
+      })
+      .expect('Content-Type', /plain/)
+      .expect(400, 'Author does not exist', done);
+
+      /* eslint-enable max-len */
+  });
+
+  test('POST /books without title', (done) => {
+    /* eslint-disable max-len */
+    request(server)
+      .post('/books')
+      .send({
+        authorId: 2,
+        genre: 'Python',
+        description: 'If you want to learn how to program, working with Python is an excellent way to start. This hands-on guide takes you through the language a step at a time, beginning with basic programming concepts before moving on to functions, recursion, data structures, and object-oriented design. This second edition and its supporting code have been updated for Python 3.',
+        coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/think_python.jpg'
+      })
+      .expect('Content-Type', /plain/)
+      .expect(400, 'Title must not be blank', done);
+
+      /* eslint-enable max-len */
+  });
+
+  test('POST /books without genre', (done) => {
+    /* eslint-disable max-len */
+    request(server)
+      .post('/books')
+      .send({
+        authorId: 2,
+        title: 'Think Python',
+        description: 'If you want to learn how to program, working with Python is an excellent way to start. This hands-on guide takes you through the language a step at a time, beginning with basic programming concepts before moving on to functions, recursion, data structures, and object-oriented design. This second edition and its supporting code have been updated for Python 3.',
+        coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/think_python.jpg'
+      })
+      .expect('Content-Type', /plain/)
+      .expect(400, 'Genre must not be blank', done);
+
+      /* eslint-enable max-len */
+  });
+
+  test('POST /books without description', (done) => {
+    /* eslint-disable max-len */
+    request(server)
+      .post('/books')
+      .send({
+        authorId: 2,
+        title: 'Think Python',
+        genre: 'Python',
+        coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/think_python.jpg'
+      })
+      .expect('Content-Type', /plain/)
+      .expect(400, 'Description must not be blank', done);
+
+      /* eslint-enable max-len */
+  });
+
+  test('POST /books without coverUrl', (done) => {
+    /* eslint-disable max-len */
+    request(server)
+      .post('/books')
+      .send({
+        authorId: 2,
+        title: 'Think Python',
+        genre: 'Python',
+        description: 'If you want to learn how to program, working with Python is an excellent way to start. This hands-on guide takes you through the language a step at a time, beginning with basic programming concepts before moving on to functions, recursion, data structures, and object-oriented design. This second edition and its supporting code have been updated for Python 3.'
+      })
+      .expect('Content-Type', /plain/)
+      .expect(400, 'Cover must not be blank', done);
+
+      /* eslint-enable max-len */
+  });
+
+  test('PATCH /books/9000', (done) => {
+    request(server)
+      .patch('/books/9000')
+      .expect('Content-Type', /plain/)
+      .expect(404, 'Not Found', done);
+  });
+
+  test('PATCH /books/-1', (done) => {
+    request(server)
+      .patch('/books/-1')
+      .expect('Content-Type', /plain/)
+      .expect(404, 'Not Found', done);
+  });
+
+  test('PATCH /books/abracadabra', (done) => {
+    request(server)
+      .patch('/books/abracadabra')
+      .expect('Content-Type', /plain/)
+      .expect(404, 'Not Found', done);
+  });
+
+  test('PATCH /books/1 with non-existant authorId', (done) => {
+    request(server)
+      .patch('/books/1')
+      .send({ authorId: 9000 })
+      .expect('Content-Type', /plain/)
+      .expect(400, 'Author does not exist', done);
+  });
+
+  test('DELETE /books/9000', (done) => {
+    request(server)
+      .del('/books/9000')
+      .expect('Content-Type', /plain/)
+      .expect(404, 'Not Found', done);
+  });
+
+  test('DELETE /books/-1', (done) => {
+    request(server)
+      .del('/books/-1')
+      .expect('Content-Type', /plain/)
+      .expect(404, 'Not Found', done);
+  });
+
+  test('DELETE /books/abracadabra', (done) => {
+    request(server)
+      .del('/books/abracadabra')
+      .expect('Content-Type', /plain/)
+      .expect(404, 'Not Found', done);
+  });
+});
