@@ -117,14 +117,14 @@ Update the route middleware to handle the following HTTP requests and send back 
 
 More specifically, the server should:
 
-- Handle the above RESTful route table with middleware defined in the `routes/authors.js` module.
+- Handle the above RESTful route table with middleware defined in the `routes/books.js` module.
 
 - Ensure the route middleware handles the successful HTTP requests as before.
 
 You can run the following test suite to verify the middleware works as expected.
 
 ```shell
-npm test test/part2.routes.authors.bonus.test.js
+npm test test/part2.routes.books.bonus.test.js
 ```
 
 ## Bonus
