@@ -4,7 +4,7 @@ In this assignment, you'll build a RESTful, database-driven HTTP server, using E
 
 ## Authors
 
-Add route handlers for the following HTTP requests and send back the associated HTTP response. The information in both the request body and the response body use the `application/json` content type.
+Add route middleware to handle the following HTTP requests and send back the associated HTTP response. The information in both the request body and the response body use the `application/json` content type.
 
 | Request Method | Request URL        | Request Body                                                          | Response Status | Response Body                                                               |
 |----------------|--------------------|-----------------------------------------------------------------------|-----------------|-----------------------------------------------------------------------------|
@@ -31,7 +31,7 @@ npm test test/part2.routes.authors.test.js
 
 ## Books
 
-Add route handlers for the following HTTP requests and send back the associated HTTP response. The information in both the request body and the response body use the `application/json` content type.
+Add route middleware to handle the following HTTP requests and send back the associated HTTP response. The information in both the request body and the response body use the `application/json` content type.
 
 | Request Method | Request URL        | Request Body                                                          | Response Status | Response Body                                                                |
 |----------------|--------------------|-----------------------------------------------------------------------|-----------------|------------------------------------------------------------------------------|
@@ -57,7 +57,7 @@ Using your preferred ESLint rules, lint your project with the `npm run lint .` c
 
 ## Bonus
 
-Next, update your server to handle the following failure HTTP requests and send the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body use the `text/plain` content type.
+Update the route middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body use the `text/plain` content type.
 
 | Request Method | Request URL           | Request Body                 | Response Status | Response Body                  |
 |----------------|-----------------------|------------------------------|-----------------|--------------------------------|
