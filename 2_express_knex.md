@@ -80,7 +80,7 @@ Next, update your server to handle the following failure HTTP requests and send 
 
 In the `routes/authors.js` module, update the router middleware to handle above RESTful route table. Make sure the route middleware handles the successful HTTP requests as before.
 
-You can run the following test suite to verify the negative cases when the middleware responds with a `400` status code.
+You can run the following test suite to verify the middleware works as expected.
 
 ```shell
 npm test test/part2.routes.authors.bonus.test.js
