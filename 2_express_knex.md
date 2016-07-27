@@ -23,7 +23,7 @@ More specifically, the server should:
 
 - Respond to a `GET /authors/:id/books` request with all books entities for a specific author ordered by their `title` column.
 
-You can run the following test suite to verify the positive case when each middleware responds with a `200` status code.
+You can run the following test suite to verify the middleware works as expected.
 
 ```shell
 npm test test/part2.routes.authors.test.js
@@ -41,11 +41,13 @@ Add route middleware to handle the following HTTP requests and send back the ass
 | `PATCH`        | `/books/9`         | `{ description: "Looks at type coercion problems." }`                 | `200`           | `{ id: 9, authorId: 3, "title": "You Don't Know JS: Types & Grammar", ... }` |
 | `DELETE`       | `/books/9`         | N/A                                                                   | `200`           | `{ authorId: 3, "title": "You Don't Know JS: Types & Grammar", ... }`        |
 
-In the `routes/books.js` module, add the necessary middleware to handle above RESTful route table. Note that the middleware for the following HTTP requests must respond with an array of entities ordered by their `id` attribute.
+More specifically, the server should:
 
-- `GET /books`
+- Handle the above RESTful route table with middleware defined in the `routes/books.js` module.
 
-You can run the following test suite to verify the positive case when each middleware responds with a `200` status code.
+- Respond to a `GET /books` request with all book entities ordered by their `title` column.
+
+You can run the following test suite to verify the middleware works as expected.
 
 ```shell
 npm test test/part2.routes.books.test.js
