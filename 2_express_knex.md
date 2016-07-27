@@ -57,9 +57,7 @@ Using your preferred ESLint rules, lint your project with the `npm run lint .` c
 
 ## Bonus
 
-Next, update your server to handle the following problem HTTP requests and send the associated HTTP response.
-
-**NOTE:** The information in the request body uses the `application/json` content type while the information in the response body use the `text/plain` content type.
+Next, update your server to handle the following problem HTTP requests and send the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body use the `text/plain` content type.
 
 | Request Method | Request URL           | Request Body                 | Response Status | Response Body                  |
 |----------------|-----------------------|------------------------------|-----------------|--------------------------------|
