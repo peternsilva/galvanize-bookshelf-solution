@@ -59,26 +59,26 @@ Using your preferred ESLint rules, lint your project with the `npm run lint .` c
 
 Next, update your server to handle the following problem HTTP requests and send the associated HTTP response.
 
-**NOTE:** The information in only the request body uses the `application/json` content type.
+**NOTE:** The information in the request body uses the `application/json` content type while the information in the response body use the `text/plain` content type.
 
-| Request Method | Request URL           | Request Body                 | Response Status | Response Content-Type | Response Body                  |
-|----------------|-----------------------|------------------------------|-----------------|-----------------------|--------------------------------|
-| `GET`          | `/authors/9000`       | N/A                          | `404`           | `text/plain`          | `Not Found`                    |
-| `GET`          | `/authors/-1`         | N/A                          | `404`           | `text/plain`          | `Not Found`                    |
-| `GET`          | `/authors/one`        | N/A                          | `404`           | `text/plain`          | `Not Found`                    |
-| `POST`         | `/authors`            | `{ "firstName": "", ... }`   | `400`           | `text/plain`          | `First name must not be blank` |
-| `POST`         | `/authors`            | `{ "lastName": "", ... }`    | `400`           | `text/plain`          | `Last name must not be blank`  |
-| `POST`         | `/authors`            | `{ "biography": "", ... }`   | `400`           | `text/plain`          | `Biography must not be blank`  |
-| `POST`         | `/authors`            | `{ "portraitUrl": "", ... }` | `400`           | `text/plain`          | `Portrait must not be blank`   |
-| `PATCH`        | `/authors/9000`       | N/A                          | `404`           | `text/plain`          | `Not Found`                    |
-| `PATCH`        | `/authors/-1`         | N/A                          | `404`           | `text/plain`          | `Not Found`                    |
-| `PATCH`        | `/authors/one`        | N/A                          | `404`           | `text/plain`          | `Not Found`                    |
-| `DELETE`       | `/authors/9000`       | N/A                          | `404`           | `text/plain`          | `Not Found`                    |
-| `DELETE`       | `/authors/-1`         | N/A                          | `404`           | `text/plain`          | `Not Found`                    |
-| `DELETE`       | `/authors/one`        | N/A                          | `404`           | `text/plain`          | `Not Found`                    |
-| `GET`          | `/authors/9000/books` | N/A                          | `404`           | `text/plain`          | `Not Found`                    |
-| `GET`          | `/authors/-/books1`   | N/A                          | `404`           | `text/plain`          | `Not Found`                    |
-| `GET`          | `/authors/one/books`  | N/A                          | `404`           | `text/plain`          | `Not Found`                    |
+| Request Method | Request URL           | Request Body                 | Response Status | Response Body                  |
+|----------------|-----------------------|------------------------------|-----------------|--------------------------------|
+| `GET`          | `/authors/9000`       | N/A                          | `404`           | `Not Found`                    |
+| `GET`          | `/authors/-1`         | N/A                          | `404`           | `Not Found`                    |
+| `GET`          | `/authors/one`        | N/A                          | `404`           | `Not Found`                    |
+| `POST`         | `/authors`            | `{ "firstName": "", ... }`   | `400`           | `First name must not be blank` |
+| `POST`         | `/authors`            | `{ "lastName": "", ... }`    | `400`           | `Last name must not be blank`  |
+| `POST`         | `/authors`            | `{ "biography": "", ... }`   | `400`           | `Biography must not be blank`  |
+| `POST`         | `/authors`            | `{ "portraitUrl": "", ... }` | `400`           | `Portrait must not be blank`   |
+| `PATCH`        | `/authors/9000`       | N/A                          | `404`           | `Not Found`                    |
+| `PATCH`        | `/authors/-1`         | N/A                          | `404`           | `Not Found`                    |
+| `PATCH`        | `/authors/one`        | N/A                          | `404`           | `Not Found`                    |
+| `DELETE`       | `/authors/9000`       | N/A                          | `404`           | `Not Found`                    |
+| `DELETE`       | `/authors/-1`         | N/A                          | `404`           | `Not Found`                    |
+| `DELETE`       | `/authors/one`        | N/A                          | `404`           | `Not Found`                    |
+| `GET`          | `/authors/9000/books` | N/A                          | `404`           | `Not Found`                    |
+| `GET`          | `/authors/-/books1`   | N/A                          | `404`           | `Not Found`                    |
+| `GET`          | `/authors/one/books`  | N/A                          | `404`           | `Not Found`                    |
 
 In the `routes/authors.js` module, update the necessary middleware to handle above RESTful route table. Make sure the route handler handles the positive case case before.
 
