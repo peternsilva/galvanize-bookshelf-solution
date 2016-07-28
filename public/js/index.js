@@ -9,14 +9,16 @@
 
       for (const book of books) {
         const $anchor = $('<a>').attr('href', `/book.html?id=${book.id}`);
-        const $book = $('<div>').addClass('col s12 m4 l3 center-align book');
+        const $card = $('<div>').addClass('card');
+        const $cardImage = $('<div>').addClass('card-image');
+        const $col = $('<div>').addClass('col s6 m4 l3');
         const $img = $('<img>').attr({ src: book.coverUrl, alt: book.title });
-        const $title = $('<div>').text(book.title);
 
-        $anchor.append($img);
-        $anchor.append($title);
-        $book.append($anchor);
-        $books.append($book);
+        $cardImage.append($img);
+        $anchor.append($cardImage);
+        $card.append($anchor)
+        $col.append($card);
+        $books.append($col);
       }
     })
     .fail(() => {

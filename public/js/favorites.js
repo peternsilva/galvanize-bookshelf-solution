@@ -9,14 +9,16 @@
 
       for (const favs of favorites) {
         const $anchor = $('<a>').attr('href', `/book.html?id=${favs.bookId}`);
-        const $fav = $('<div>').addClass('col s12 m4 l3 center-align fav');
+        const $card = $('<div>').addClass('card');
+        const $cardImage = $('<div>').addClass('card-image');
+        const $col = $('<div>').addClass('col s6 m4 l3');
         const $img = $('<img>').attr({ src: favs.coverUrl, alt: favs.title });
-        const $title = $('<div>').text(favs.title);
 
-        $anchor.append($img);
-        $anchor.append($title);
-        $fav.append($anchor);
-        $favs.append($fav);
+        $cardImage.append($img);
+        $anchor.append($cardImage);
+        $card.append($anchor)
+        $col.append($card);
+        $favs.append($col);
       }
     })
     .fail(() => {
