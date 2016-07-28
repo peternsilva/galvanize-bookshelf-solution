@@ -54,8 +54,8 @@ suite('part2 routes books bonus', () => {
     request(server)
       .post('/books')
       .send({
-        authorId: 2,
         genre: 'Python',
+        author: 'Allen B. Downey',
         description: 'If you want to learn how to program, working with Python is an excellent way to start. This hands-on guide takes you through the language a step at a time, beginning with basic programming concepts before moving on to functions, recursion, data structures, and object-oriented design. This second edition and its supporting code have been updated for Python 3.',
         coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/think_python.jpg'
       })
@@ -65,13 +65,29 @@ suite('part2 routes books bonus', () => {
       /* eslint-enable max-len */
   });
 
+  test('POST /books without author', (done) => {
+    /* eslint-disable max-len */
+    request(server)
+      .post('/books')
+      .send({
+        title: 'Think Python',
+        genre: 'Python',
+        description: 'If you want to learn how to program, working with Python is an excellent way to start. This hands-on guide takes you through the language a step at a time, beginning with basic programming concepts before moving on to functions, recursion, data structures, and object-oriented design. This second edition and its supporting code have been updated for Python 3.',
+        coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/think_python.jpg'
+      })
+      .expect('Content-Type', /plain/)
+      .expect(400, 'Author must not be blank', done);
+
+      /* eslint-enable max-len */
+  });
+
   test('POST /books without genre', (done) => {
     /* eslint-disable max-len */
     request(server)
       .post('/books')
       .send({
-        authorId: 2,
         title: 'Think Python',
+        author: 'Allen B. Downey',
         description: 'If you want to learn how to program, working with Python is an excellent way to start. This hands-on guide takes you through the language a step at a time, beginning with basic programming concepts before moving on to functions, recursion, data structures, and object-oriented design. This second edition and its supporting code have been updated for Python 3.',
         coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/think_python.jpg'
       })
@@ -86,8 +102,8 @@ suite('part2 routes books bonus', () => {
     request(server)
       .post('/books')
       .send({
-        authorId: 2,
         title: 'Think Python',
+        author: 'Allen B. Downey',
         genre: 'Python',
         coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/think_python.jpg'
       })
@@ -102,46 +118,13 @@ suite('part2 routes books bonus', () => {
     request(server)
       .post('/books')
       .send({
-        authorId: 2,
         title: 'Think Python',
+        author: 'Allen B. Downey',
         genre: 'Python',
         description: 'If you want to learn how to program, working with Python is an excellent way to start. This hands-on guide takes you through the language a step at a time, beginning with basic programming concepts before moving on to functions, recursion, data structures, and object-oriented design. This second edition and its supporting code have been updated for Python 3.'
       })
       .expect('Content-Type', /plain/)
       .expect(400, 'Cover must not be blank', done);
-
-      /* eslint-enable max-len */
-  });
-
-  test('POST /books without authorId', (done) => {
-    /* eslint-disable max-len */
-    request(server)
-      .post('/books')
-      .send({
-        title: 'Think Python',
-        genre: 'Python',
-        description: 'If you want to learn how to program, working with Python is an excellent way to start. This hands-on guide takes you through the language a step at a time, beginning with basic programming concepts before moving on to functions, recursion, data structures, and object-oriented design. This second edition and its supporting code have been updated for Python 3.',
-        coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/think_python.jpg'
-      })
-      .expect('Content-Type', /plain/)
-      .expect(400, 'Author must be selected', done);
-
-      /* eslint-enable max-len */
-  });
-
-  test('POST /books with non-existant authorId', (done) => {
-    /* eslint-disable max-len */
-    request(server)
-      .post('/books')
-      .send({
-        authorId: 9000,
-        title: 'Think Python',
-        genre: 'Python',
-        description: 'If you want to learn how to program, working with Python is an excellent way to start. This hands-on guide takes you through the language a step at a time, beginning with basic programming concepts before moving on to functions, recursion, data structures, and object-oriented design. This second edition and its supporting code have been updated for Python 3.',
-        coverUrl: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/think_python.jpg'
-      })
-      .expect('Content-Type', /plain/)
-      .expect(400, 'Author does not exist', done);
 
       /* eslint-enable max-len */
   });
@@ -165,15 +148,6 @@ suite('part2 routes books bonus', () => {
       .patch('/books/one')
       .expect('Content-Type', /plain/)
       .expect(404, 'Not Found', done);
-  });
-
-
-  test('PATCH /books/1 with non-existant authorId', (done) => {
-    request(server)
-      .patch('/books/1')
-      .send({ authorId: 9000 })
-      .expect('Content-Type', /plain/)
-      .expect(400, 'Author does not exist', done);
   });
 
   test('DELETE /books/9000', (done) => {

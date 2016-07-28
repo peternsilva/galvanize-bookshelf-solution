@@ -17,26 +17,13 @@
     Materialize.updateTextFields();
   };
 
-  const renderAuthors = function(authors, book) {
-    const $authors = authors.map((author) => {
-      return $('<option>')
-        .attr('value', author.id)
-        .text(`${author.firstName} ${author.lastName}`);
-    });
-
-    $('#author')
-      .append($authors)
-      .val(book.authorId)
-      .material_select();
-  };
-
   const attachListeners = function(book) {
     // eslint-disable-next-line max-statements
     $('#editBookForm').submit((event) => {
       event.preventDefault();
 
       const title = $('#title').val().trim();
-      const authorId = Number.parseInt($('#author').val());
+      const author =$('#author').val().trim();
       const genre = $('#genre').val().trim();
       const description = $('#description').val().trim();
       const coverUrl = $('#cover').val().trim();
@@ -45,8 +32,8 @@
         return Materialize.toast('Title must not be blank', 3000);
       }
 
-      if (Number.isNaN(authorId)) {
-        return Materialize.toast('Author must be selected', 3000);
+      if (!author) {
+        return Materialize.toast('Author must not be blank', 3000);
       }
 
       if (!genre) {
@@ -65,7 +52,7 @@
         url: `/books/${book.id}`,
         type: 'PATCH',
         contentType: 'application/json',
-        data: JSON.stringify({ title, authorId, genre, description, coverUrl })
+        data: JSON.stringify({ title, author, genre, description, coverUrl })
       };
 
       $.ajax(options)
@@ -81,16 +68,7 @@
   $.getJSON(`/books/${bookId}`)
     .done((book) => {
       renderBook(book);
-
-      $.getJSON('/authors')
-        .done((authors) => {
-          renderAuthors(authors, book);
-
-          attachListeners(book);
-        })
-        .fail(() => {
-          Materialize.toast("Unable to retrieve book's author", 3000);
-        });
+      attachListeners(book);
     })
     .fail(() => {
       Materialize.toast('Unable to retrieve book', 3000);

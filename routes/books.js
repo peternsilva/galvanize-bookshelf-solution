@@ -45,10 +45,14 @@ router.get('/books/:id', (req, res, next) => {
 });
 
 router.post('/books', (req, res, next) => {
-  const { title, genre, description, coverUrl } = req.body;
+  const { title, author, genre, description, coverUrl } = req.body;
 
   if (!title || !title.trim()) {
     return next(boom.create(400, 'Title must not be blank'));
+  }
+
+  if (!author || !author.trim()) {
+    return next(boom.create(400, 'Author must not be blank'));
   }
 
   if (!genre || !genre.trim()) {
@@ -63,25 +67,11 @@ router.post('/books', (req, res, next) => {
     return next(boom.create(400, 'Cover must not be blank'));
   }
 
-  const authorId = Number.parseInt(req.body.authorId);
+  const insertBook = { title, author, genre, description, coverUrl };
+  const row = decamelizeKeys(insertBook);
 
-  if (Number.isNaN(authorId)) {
-    return next(boom.create(400, 'Author must be selected'));
-  }
-
-  knex('authors')
-    .where('id', authorId)
-    .first()
-    .then((author) => {
-      if (!author) {
-        throw boom.create(400, 'Author does not exist');
-      }
-
-      const book = { title, genre, description, coverUrl, authorId };
-      const row = decamelizeKeys(book);
-
-      return knex('books').insert(row, '*');
-    })
+  knex('books')
+    .insert(row, '*')
     .then((rows) => {
       const book = camelizeKeys(rows[0]);
 
@@ -99,8 +89,6 @@ router.patch('/books/:id', (req, res, next) => {
     return next();
   }
 
-  const updatedBook = {};
-
   knex('books')
     .where('id', id)
     .first()
@@ -109,43 +97,30 @@ router.patch('/books/:id', (req, res, next) => {
         throw boom.create(404, 'Not Found');
       }
 
-      const { title, genre, description, coverUrl } = req.body;
+      const { title, author, genre, description, coverUrl } = req.body;
+      const updateBook = {};
 
       if (title) {
-        updatedBook.title = title;
+        updateBook.title = title;
+      }
+
+      if (author) {
+        updateBook.author = author;
       }
 
       if (genre) {
-        updatedBook.genre = genre;
+        updateBook.genre = genre;
       }
 
       if (description) {
-        updatedBook.description = description;
+        updateBook.description = description;
       }
 
       if (coverUrl) {
-        updatedBook.coverUrl = coverUrl;
+        updateBook.coverUrl = coverUrl;
       }
 
-      if (req.body.authorId) {
-        const authorId = Number.parseInt(req.body.authorId);
-
-        if (!Number.isNaN(authorId)) {
-          updatedBook.authorId = authorId;
-        }
-
-        return knex('authors')
-          .where('id', authorId)
-          .first()
-          .then((author) => {
-            if (!author) {
-              throw boom.create(400, 'Author does not exist');
-            }
-          });
-      }
-    })
-    .then(() => {
-      const row = decamelizeKeys(updatedBook);
+      const row = decamelizeKeys(updateBook);
 
       return knex('books')
         .update(row, '*')

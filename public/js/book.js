@@ -9,18 +9,11 @@
 
   const renderBook = function(book) {
     $('#title').text(book.title);
+    $('#author').text(book.author);
     $('#genre').text(book.genre);
     $('#description').text(book.description);
     $('#cover').attr({ src: book.coverUrl, alt: book.title });
     $('#editBook').attr('href', `/edit_book.html?id=${book.id}`);
-  };
-
-  const renderAuthor = function(author) {
-    const $author = $('<a>')
-      .attr('href', `author.html?id=${author.id}`)
-      .text(`${author.firstName} ${author.lastName}`);
-
-    $('#author').append($author);
   };
 
   const attachListeners = function(book) {
@@ -94,16 +87,7 @@
   $.getJSON(`/books/${bookId}`)
     .done((book) => {
       renderBook(book);
-
-      $.getJSON(`/authors/${book.authorId}`)
-        .done((author) => {
-          renderAuthor(author);
-
-          attachListeners(book);
-        })
-        .fail(() => {
-          Materialize.toast("Unable to retrieve book's author", 3000);
-        });
+      attachListeners(book);
     })
     .fail(() => {
       Materialize.toast('Unable to retrieve book', 3000);
