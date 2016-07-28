@@ -54,6 +54,8 @@
         .done(() => {
           $('#addFavorite').addClass('hide');
           $('#removeFavorite').removeClass('hide');
+
+          Materialize.toast('Added book to your favorites', 3000);
         })
         .fail(() => {
           Materialize.toast('Unable to add this book to your favorites', 3000);
@@ -74,6 +76,8 @@
         .done(() => {
           $('#removeFavorite').addClass('hide');
           $('#addFavorite').removeClass('hide');
+
+          Materialize.toast('Removed book from your favorites', 3000);
         })
         .fail(() => {
           Materialize.toast(

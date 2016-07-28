@@ -26,7 +26,7 @@
 
     $.ajax(options)
       .done(() => {
-        window.location.href = '/index.html';
+        window.location.href = '/favorites.html';
       })
       .fail(($xhr) => {
         Materialize.toast($xhr.responseText, 3000);
