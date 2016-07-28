@@ -127,21 +127,24 @@ router.patch('/books/:id', (req, res, next) => {
         updatedBook.coverUrl = coverUrl;
       }
 
-      const authorId = Number.parseInt(req.body.authorId);
+      if (req.body.authorId) {
+        const authorId = Number.parseInt(req.body.authorId);
 
-      if (!Number.isNaN(authorId)) {
-        updatedBook.authorId = authorId;
+        if (!Number.isNaN(authorId)) {
+          updatedBook.authorId = authorId;
+        }
+
+        return knex('authors')
+          .where('id', authorId)
+          .first()
+          .then((author) => {
+            if (!author) {
+              throw boom.create(400, 'Author does not exist');
+            }
+          });
       }
-
-      return knex('authors')
-        .where('id', authorId)
-        .first();
     })
-    .then((author) => {
-      if (!author) {
-        throw boom.create(400, 'Author does not exist');
-      }
-
+    .then(() => {
       const row = decamelizeKeys(updatedBook);
 
       return knex('books')
