@@ -14,7 +14,7 @@ In the `routes/books.js` module, add middleware to handle the following HTTP req
 | `PATCH`        | `/books/9`         | `{ description: "Looks at type coercion problems." }`    | `200`           | `{ id: 9, ..., description: "Looks at type coercion problems.", ... }` |
 | `DELETE`       | `/books/9`         | N/A                                                      | `200`           | `{ "title": "You Don't Know JS: Types & Grammar", ... }`               |
 
-**NOTE:** Respond to a `GET /books` request with all book entities ordered by their `title` column.
+**NOTE:** The response to a `GET /books` request contains all book entities ordered by their `title` column.
 
 You can run the following test suite to verify the middleware works as expected.
 
