@@ -1,6 +1,6 @@
 # Knex Migrations and Seeds
 
-For this assignment, your task is to build a web application to manage a book collection. In the first part, you'll lay the foundation by creating a Knex migration and seed files. Start by forking and cloning this repository to your development environment.
+For this assignment, your task is to build a web application to manage a book collection. In the first part, you'll lay the foundation by creating Knex migration and seed files. Start by forking and cloning this repository to your development environment.
 
 Then, install the necessary dependencies via NPM.
 
@@ -43,7 +43,7 @@ npm test test/part1.migrations.test.js
 
 ## Migrations
 
-Translate the following entity relationship diagram into Knex migration files.
+Translate the following entity relationship diagram into a Knex migration file.
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────────────────────────┐
@@ -68,7 +68,7 @@ More specifically, the migration files should:
 
 ## Seeds
 
-Translate the following author and book [JavaScript entities](https://gist.github.com/ryansobol/fb74ad1e3090b1ce5abdc0d30ae154e8) into Knex seed files. More specifically, the seed files should:
+Translate the following [JavaScript entities](https://gist.github.com/ryansobol/fb74ad1e3090b1ce5abdc0d30ae154e8) into Knex seed files. More specifically, the seed files should:
 
 - Live in the `seeds` directory.
 - Seed one table per seed file.
