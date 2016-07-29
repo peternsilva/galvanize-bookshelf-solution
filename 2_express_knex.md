@@ -24,7 +24,7 @@ npm test test/part2.routes.books.test.js
 
 ## Bonus
 
-After migrating and seeding the `bookshelf_dev` databae, start an HTTP server.
+After migrating and seeding the `bookshelf_dev` database, start an HTTP server.
 
 ```shell
 npm start
