@@ -82,9 +82,9 @@ Using your preferred ESLint rules, lint your project with the `npm run lint .` c
 
 ## Bonus
 
-Play around with a live [Galvanize Bookshelf](https://ryansobol-galvanize-bookshelf.herokuapp.com) application. By the end of this series of assignments, you'll build the backend application that'll support the frontend application.
+Play around with a live [Galvanize Bookshelf](https://ryansobol-galvanize-bookshelf.herokuapp.com) application. By the end of this series of assignments, you have a server application built to support this client application.
 
-Check out the frontend application in the `public` directory.
+Check out the client application in the `public` directory. Look at the HTML, CSS, and JavaScript.
 
 ## Bonus
 
