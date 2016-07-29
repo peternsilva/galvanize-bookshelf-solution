@@ -88,7 +88,7 @@ Then, take a peek at the code for the client application. It lives in the `publi
 
 - How the HTML files scaffold the base structure and content that's presented on page load.
 - How the JavaScript files modify this structure and content as a result of AJAX requests.
-- How the CSS files customize the base look-and-feel provided by the Materialize framework.
+- How the CSS files customize the look-and-feel of the structure and content.
 
 For your Q2 Project, you'll be building both a server application and a client application.
 
