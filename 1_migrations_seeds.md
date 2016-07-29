@@ -90,7 +90,7 @@ Then, take a peek at the code for the client application. It lives in the `publi
 - How the JavaScript files modify this structure and content as a result of AJAX requests.
 - How the CSS files customize the look-and-feel of the structure and content.
 
-For your Q2 Project, you'll be building both a server application and a client application.
+**TIP:** It's important to remember how these techniques work because you'll be building both a server application and a client application for your Q2 Project.
 
 ## Bonus
 
