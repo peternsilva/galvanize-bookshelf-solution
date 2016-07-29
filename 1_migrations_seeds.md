@@ -86,9 +86,9 @@ Play around with a live version of [Galvanize Bookshelf](https://ryansobol-galva
 
 Then, take a peek at the code for the client application. It lives in the `public` directory of this project. As you read over the code, familiarize yourself with the following techniques.
 
-- How the HTML scaffolds the base structure and content that's presented on page load.
-- How the JavaScript modifies this structure and content as a result of AJAX requests.
-- How the CSS customizes the base look-and-feel provided by the Materialize framework.
+- How the HTML files scaffold the base structure and content that's presented on page load.
+- How the JavaScript files modify this structure and content as a result of AJAX requests.
+- How the CSS files customize the base look-and-feel provided by the Materialize framework.
 
 For your Q2 Project, you'll be building both a server application and a client application.
 
