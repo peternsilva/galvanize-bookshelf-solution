@@ -8,7 +8,14 @@
       const $books = $('#books');
 
       for (const book of books) {
-        const $anchor = $('<a>').attr('href', `/book.html?id=${book.id}`);
+        const $anchor = $('<a>')
+          .attr({
+            href: `/book.html?id=${book.id}`,
+            'data-delay': '50',
+            'data-tooltip': book.title
+          })
+          .tooltip();
+
         const $card = $('<div>').addClass('card');
         const $cardImage = $('<div>').addClass('card-image');
         const $col = $('<div>').addClass('col s6 m4 l3');
