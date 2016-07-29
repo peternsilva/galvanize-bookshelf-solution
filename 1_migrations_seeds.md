@@ -84,7 +84,11 @@ Using your preferred ESLint rules, lint your project with the `npm run lint .` c
 
 Play around with a live [Galvanize Bookshelf](https://ryansobol-galvanize-bookshelf.herokuapp.com) application. By the end of this series of assignments, you have a server application built to support this client application.
 
-Check out the client application in the `public` directory. Look at the HTML, CSS, and JavaScript.
+Take a peek at the client application in the `public` directory. Familiarize yourself with the following.
+
+- How the HTML scaffolds the base structure and content to be presented on page load.
+- How the JavaScript adds structure and content to the DOM as a result of AJAX requests.
+- How the CSS customizes the base look-and-feel provided by the Materialize framework.
 
 ## Bonus
 
