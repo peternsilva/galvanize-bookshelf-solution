@@ -9,6 +9,7 @@
 
   const renderBook = function(book) {
     $('#title').val(book.title);
+    $('#author').val(book.author);
     $('#genre').val(book.genre);
     $('#description').text(book.description);
     $('#cover').val(book.coverUrl);
