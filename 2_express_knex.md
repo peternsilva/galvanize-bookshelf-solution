@@ -4,7 +4,7 @@ In this assignment, you'll build a RESTful, database-driven HTTP server, using E
 
 ## Books
 
-In the `routes/books.js` module, add route middleware to handle the following HTTP requests and send back the associated HTTP response. The information in both the request body and the response body use the `application/json` content type.
+In the `routes/books.js` module, add middleware to handle the following HTTP requests and send back the associated HTTP response. The information in both the request body and the response body use the `application/json` content type.
 
 | Request Method | Request URL        | Request Body                                             | Response Status | Response Body                                                          |
 |----------------|--------------------|----------------------------------------------------------|-----------------|------------------------------------------------------------------------|
@@ -28,7 +28,7 @@ Using your preferred ESLint rules, lint your project with the `npm run lint .` c
 
 ## Bonus
 
-In the `routes/books.js` module, update the route middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body use the `text/plain` content type.
+In the `routes/books.js` module, update the middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body use the `text/plain` content type.
 
 | Request Method | Request URL         | Request Body                 | Response Status | Response Body                   |
 |----------------|---------------------|------------------------------|-----------------|---------------------------------|
@@ -49,7 +49,7 @@ In the `routes/books.js` module, update the route middleware to handle the follo
 | `DELETE`       | `/books/-1`         | N/A                          | `404`           | `Not Found`                     |
 | `DELETE`       | `/books/one`        | N/A                          | `404`           | `Not Found`                     |
 
-**NOTE:** Ensure the route middleware handles the previous successful HTTP requests as before.
+**NOTE:** Ensure the middleware handles the previous HTTP requests as before.
 
 You can run the following test suite to verify the middleware works as expected.
 
