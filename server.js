@@ -28,8 +28,8 @@ switch (app.get('env')) {
 app.use(bodyParser.json());
 app.use(cookieSession({
   name: 'bookshelf',
-  secret: process.env.SESSION_SECRET,
-  secure: app.get('env') === 'production'
+  secret: process.env.SESSION_SECRET
+  // secure: app.get('env') === 'production'
 }));
 
 const path = require('path');
