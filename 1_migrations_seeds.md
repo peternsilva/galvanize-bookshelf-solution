@@ -84,7 +84,7 @@ Using your preferred ESLint rules, lint your project with the `npm run lint .` c
 
 Play around with a live version of [Galvanize Bookshelf](https://ryansobol-galvanize-bookshelf.herokuapp.com). By the end of this series of assignments, you'll have built a server application to support this client application.
 
-In this project, take a peek at the code for the client application which lives in the `public` directory. Familiarize yourself with the following techniques.
+Then, take a peek at the code for the client application. It lives in the `public` directory of this project. As you read over the code, familiarize yourself with the following techniques.
 
 - How the HTML scaffolds the base structure and content that's presented on page load.
 - How the JavaScript modifies this structure and content as a result of AJAX requests.
