@@ -76,13 +76,15 @@ Translate the following author and book [JavaScript entities](https://gist.githu
 
 ## Bonus
 
-Using the [Knex documentation](http://knexjs.org/), chain an index onto the `books.author_id` foreign key column.
-
-## Bonus
-
 Using your preferred ESLint rules, lint your project with the `npm run lint .` command.
 
 **TIP:** If you use the builtin `eslint-config-ryansobol` shareable rules, you may want to disable the `camelcase` and `max-len` rules with [inline comments](http://eslint.org/docs/user-guide/configuring#disabling-rules-with-inline-comments) where appropriate.
+
+## Bonus
+
+Play around with a live [Galvanize Bookshelf](https://ryansobol-galvanize-bookshelf.herokuapp.com) application. By the end of this series of assignments, you'll build the backend application that'll support the frontend application.
+
+Check out the frontend application in the `public` directory.
 
 ## Bonus
 
