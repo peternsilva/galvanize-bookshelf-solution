@@ -6,13 +6,13 @@ In this assignment, you'll build a RESTful, database-driven HTTP server, using E
 
 Add route middleware to handle the following HTTP requests and send back the associated HTTP response. The information in both the request body and the response body use the `application/json` content type.
 
-| Request Method | Request URL        | Request Body                                             | Response Status | Response Body                                                   |
-|----------------|--------------------|----------------------------------------------------------|-----------------|-----------------------------------------------------------------|
-| `GET`          | `/books`           | N/A                                                      | `200`           | `[{ id: 1, "title": "JavaScript, The Good Parts", ... }, ...]`  |
-| `GET`          | `/books/1`         | N/A                                                      | `200`           | `{ id: 1, "title": "JavaScript, The Good Parts", ... }`         |
-| `POST`         | `/books`           | `{ "title": "You Don't Know JS: Types & Grammar", ... }` | `200`           | `{ id: 9, "title": "You Don't Know JS: Types & Grammar", ... }` |
-| `PATCH`        | `/books/9`         | `{ description: "Looks at type coercion problems." }`    | `200`           | `{ id: 9, "title": "You Don't Know JS: Types & Grammar", ... }` |
-| `DELETE`       | `/books/9`         | N/A                                                      | `200`           | `{ "title": "You Don't Know JS: Types & Grammar", ... }`        |
+| Request Method | Request URL        | Request Body                                             | Response Status | Response Body                                                          |
+|----------------|--------------------|----------------------------------------------------------|-----------------|------------------------------------------------------------------------|
+| `GET`          | `/books`           | N/A                                                      | `200`           | `[{ id: 1, "title": "JavaScript, The Good Parts", ... }, ...]`         |
+| `GET`          | `/books/1`         | N/A                                                      | `200`           | `{ id: 1, "title": "JavaScript, The Good Parts", ... }`                |
+| `POST`         | `/books`           | `{ "title": "You Don't Know JS: Types & Grammar", ... }` | `200`           | `{ id: 9, "title": "You Don't Know JS: Types & Grammar", ... }`        |
+| `PATCH`        | `/books/9`         | `{ description: "Looks at type coercion problems." }`    | `200`           | `{ id: 9, ..., description: "Looks at type coercion problems.", ... }` |
+| `DELETE`       | `/books/9`         | N/A                                                      | `200`           | `{ "title": "You Don't Know JS: Types & Grammar", ... }`               |
 
 More specifically, the server should:
 
