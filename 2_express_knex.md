@@ -2,44 +2,17 @@
 
 In this assignment, you'll build a RESTful, database-driven HTTP server, using Express and Knex, to manage your migrated and seeded database.
 
-## Authors
-
-Add route middleware to handle the following HTTP requests and send back the associated HTTP response. The information in both the request body and the response body use the `application/json` content type.
-
-| Request Method | Request URL        | Request Body                                                          | Response Status | Response Body                                                               |
-|----------------|--------------------|-----------------------------------------------------------------------|-----------------|-----------------------------------------------------------------------------|
-| `GET`          | `/authors`         | N/A                                                                   | `200`           | `[{ id: 1, "firstName": "Douglas", "lastName": "Crockford", ... }, ...]`    |
-| `GET`          | `/authors/1`       | N/A                                                                   | `200`           | `{ id: 1, "firstName": "Douglas", "lastName": "Crockford", ... }`           |
-| `POST`         | `/authors`         | `{ "firstName": "Shelley", "lastName": "Powers", ... }`               | `200`           | `{ id: 6, "firstName": "Shelley", "lastName": "Powers", ... }`              |
-| `PATCH`        | `/authors/6`       | `{ "biography": "Author, web developer, and technology architect." }` | `200`           | `{ id: 6, "firstName": "Shelley", "lastName": "Powers", ... }`              |
-| `DELETE`       | `/authors/6`       | N/A                                                                   | `200`           | `{ "firstName": "Shelley", "lastName": "Powers", ... }`                     |
-| `GET`          | `/authors/1/books` | N/A                                                                   | `200`           | `[{ id: 1, authorId: 1, "title": "JavaScript, The Good Parts", ... }, ...]` |
-
-More specifically, the server should:
-
-- Handle the above RESTful route table with middleware defined in the `routes/authors.js` module.
-
-- Respond to a `GET /authors` request with all author entities ordered by their `first_name` and `last_name` columns.
-
-- Respond to a `GET /authors/:id/books` request with all books entities for a specific author ordered by their `title` column.
-
-You can run the following test suite to verify the middleware works as expected.
-
-```shell
-npm test test/part2.routes.authors.test.js
-```
-
 ## Books
 
 Add route middleware to handle the following HTTP requests and send back the associated HTTP response. The information in both the request body and the response body use the `application/json` content type.
 
-| Request Method | Request URL        | Request Body                                                          | Response Status | Response Body                                                                |
-|----------------|--------------------|-----------------------------------------------------------------------|-----------------|------------------------------------------------------------------------------|
-| `GET`          | `/books`           | N/A                                                                   | `200`           | `[{ id: 1, authorId: 1, "title": "JavaScript, The Good Parts", ... }, ...]`  |
-| `GET`          | `/books/1`         | N/A                                                                   | `200`           | `{ id: 1, authorId: 1, "title": "JavaScript, The Good Parts", ... }`         |
-| `POST`         | `/books`           | `{ authorId: 3, "title": "You Don't Know JS: Types & Grammar", ... }` | `200`           | `{ id: 9, authorId: 3, "title": "You Don't Know JS: Types & Grammar", ... }` |
-| `PATCH`        | `/books/9`         | `{ description: "Looks at type coercion problems." }`                 | `200`           | `{ id: 9, authorId: 3, "title": "You Don't Know JS: Types & Grammar", ... }` |
-| `DELETE`       | `/books/9`         | N/A                                                                   | `200`           | `{ authorId: 3, "title": "You Don't Know JS: Types & Grammar", ... }`        |
+| Request Method | Request URL        | Request Body                                             | Response Status | Response Body                                                   |
+|----------------|--------------------|----------------------------------------------------------|-----------------|-----------------------------------------------------------------|
+| `GET`          | `/books`           | N/A                                                      | `200`           | `[{ id: 1, "title": "JavaScript, The Good Parts", ... }, ...]`  |
+| `GET`          | `/books/1`         | N/A                                                      | `200`           | `{ id: 1, "title": "JavaScript, The Good Parts", ... }`         |
+| `POST`         | `/books`           | `{ "title": "You Don't Know JS: Types & Grammar", ... }` | `200`           | `{ id: 9, "title": "You Don't Know JS: Types & Grammar", ... }` |
+| `PATCH`        | `/books/9`         | `{ description: "Looks at type coercion problems." }`    | `200`           | `{ id: 9, "title": "You Don't Know JS: Types & Grammar", ... }` |
+| `DELETE`       | `/books/9`         | N/A                                                      | `200`           | `{ "title": "You Don't Know JS: Types & Grammar", ... }`        |
 
 More specifically, the server should:
 
