@@ -34,41 +34,6 @@ Using your preferred ESLint rules, lint your project with the `npm run lint .` c
 
 Update the route middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body use the `text/plain` content type.
 
-| Request Method | Request URL           | Request Body                 | Response Status | Response Body                  |
-|----------------|-----------------------|------------------------------|-----------------|--------------------------------|
-| `GET`          | `/authors/9000`       | N/A                          | `404`           | `Not Found`                    |
-| `GET`          | `/authors/-1`         | N/A                          | `404`           | `Not Found`                    |
-| `GET`          | `/authors/one`        | N/A                          | `404`           | `Not Found`                    |
-| `POST`         | `/authors`            | `{ "firstName": "", ... }`   | `400`           | `First name must not be blank` |
-| `POST`         | `/authors`            | `{ "lastName": "", ... }`    | `400`           | `Last name must not be blank`  |
-| `POST`         | `/authors`            | `{ "biography": "", ... }`   | `400`           | `Biography must not be blank`  |
-| `POST`         | `/authors`            | `{ "portraitUrl": "", ... }` | `400`           | `Portrait must not be blank`   |
-| `PATCH`        | `/authors/9000`       | N/A                          | `404`           | `Not Found`                    |
-| `PATCH`        | `/authors/-1`         | N/A                          | `404`           | `Not Found`                    |
-| `PATCH`        | `/authors/one`        | N/A                          | `404`           | `Not Found`                    |
-| `DELETE`       | `/authors/9000`       | N/A                          | `404`           | `Not Found`                    |
-| `DELETE`       | `/authors/-1`         | N/A                          | `404`           | `Not Found`                    |
-| `DELETE`       | `/authors/one`        | N/A                          | `404`           | `Not Found`                    |
-| `GET`          | `/authors/9000/books` | N/A                          | `404`           | `Not Found`                    |
-| `GET`          | `/authors/-/books1`   | N/A                          | `404`           | `Not Found`                    |
-| `GET`          | `/authors/one/books`  | N/A                          | `404`           | `Not Found`                    |
-
-More specifically, the server should:
-
-- Handle the above RESTful route table with middleware defined in the `routes/authors.js` module.
-
-- Ensure the route middleware handles the successful HTTP requests as before.
-
-You can run the following test suite to verify the middleware works as expected.
-
-```shell
-npm test test/part2.routes.authors.bonus.test.js
-```
-
-## Bonus
-
-Update the route middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body use the `text/plain` content type.
-
 | Request Method | Request URL         | Request Body                 | Response Status | Response Body                   |
 |----------------|---------------------|------------------------------|-----------------|---------------------------------|
 | `GET`          | `/books/9000`       | N/A                          | `404`           | `Not Found`                     |
