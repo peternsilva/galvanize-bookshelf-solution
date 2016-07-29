@@ -1,12 +1,7 @@
 body {
-  background-color: #eceff1;
   flex-direction: column;
   display: flex;
   min-height: 100vh;
-}
-
-nav {
-  background-color: #455a64;
 }
 
 nav .logo-text {
@@ -32,10 +27,6 @@ nav ul li {
   font-weight: 200;
   letter-spacing: 0.2rem;
   text-transform: uppercase;
-}
-
-nav ul a {
-  color: #b6b6b6;
 }
 
 main {
@@ -64,20 +55,8 @@ main .parallax-container img {
   width: 100%;
 }
 
-main a {
-  color: #727272;
-}
-
-main a:hover {
-  color: #607d8b;
-}
-
 main .card {
   margin-top: 30px;
-}
-
-footer.page-footer {
-  background-color: #607d8b;
 }
 
 footer.page-footer small {
