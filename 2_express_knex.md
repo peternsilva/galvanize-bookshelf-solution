@@ -14,7 +14,7 @@ Add route middleware to handle the following HTTP requests and send back the ass
 | `PATCH`        | `/books/9`         | `{ description: "Looks at type coercion problems." }`    | `200`           | `{ id: 9, ..., description: "Looks at type coercion problems.", ... }` |
 | `DELETE`       | `/books/9`         | N/A                                                      | `200`           | `{ "title": "You Don't Know JS: Types & Grammar", ... }`               |
 
-Handle the above RESTful route table with middleware defined in the `routes/books.js` module. Respond to a `GET /books` request with all book entities ordered by their `title` column.
+In the `routes/books.js` module, define middleware to handle the above RESTful route table. Respond to a `GET /books` request with all book entities ordered by their `title` column.
 
 You can run the following test suite to verify the middleware works as expected.
 
@@ -49,7 +49,7 @@ Update the route middleware to handle the following HTTP requests and send back 
 | `DELETE`       | `/books/-1`         | N/A                          | `404`           | `Not Found`                     |
 | `DELETE`       | `/books/one`        | N/A                          | `404`           | `Not Found`                     |
 
-Handle the above RESTful route table with middleware defined in the `routes/books.js` module. Ensure the route middleware handles the successful HTTP requests as before.
+In the `routes/books.js` module, define middleware to handle the above RESTful route table. Ensure the route middleware handles the successful HTTP requests as before.
 
 You can run the following test suite to verify the middleware works as expected.
 
