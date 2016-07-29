@@ -7,6 +7,7 @@ const request = require('supertest');
 const knex = require('../knex');
 const server = require('../server');
 
+// eslint-disable-next-line max-statements
 suite('part2 routes books bonus', () => {
   before((done) => {
     knex.migrate.latest()

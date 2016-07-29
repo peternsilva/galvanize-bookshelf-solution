@@ -68,10 +68,9 @@ router.post('/books', (req, res, next) => {
   }
 
   const insertBook = { title, author, genre, description, coverUrl };
-  const row = decamelizeKeys(insertBook);
 
   knex('books')
-    .insert(row, '*')
+    .insert(decamelizeKeys(insertBook), '*')
     .then((rows) => {
       const book = camelizeKeys(rows[0]);
 
@@ -120,10 +119,8 @@ router.patch('/books/:id', (req, res, next) => {
         updateBook.coverUrl = coverUrl;
       }
 
-      const row = decamelizeKeys(updateBook);
-
       return knex('books')
-        .update(row, '*')
+        .update(decamelizeKeys(updateBook), '*')
         .where('id', id);
     })
     .then((rows) => {

@@ -16,7 +16,7 @@
 
         $cardImage.append($img);
         $anchor.append($cardImage);
-        $card.append($anchor)
+        $card.append($anchor);
         $col.append($card);
         $favs.append($col);
       }

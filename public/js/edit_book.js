@@ -24,7 +24,7 @@
       event.preventDefault();
 
       const title = $('#title').val().trim();
-      const author =$('#author').val().trim();
+      const author = $('#author').val().trim();
       const genre = $('#genre').val().trim();
       const description = $('#description').val().trim();
       const coverUrl = $('#cover').val().trim();

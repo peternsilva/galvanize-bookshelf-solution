@@ -48,8 +48,8 @@
     });
 
   window.QUERY_PARAMETERS = {};
+
   if (window.location.search) {
-    // strip the leading ? on the query parameters string
     window.location.search.substr(1).split('&').forEach((paramStr) => {
       const param = paramStr.split('=');
 

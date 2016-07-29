@@ -67,10 +67,10 @@ router.post('/favorites', checkAuth, (req, res, next) => {
         throw boom.create(404, 'Not Found');
       }
 
-      const favorite = { bookId, userId: req.session.userId };
-      const row = decamelizeKeys(favorite);
+      const insertFavorite = { bookId, userId: req.session.userId };
 
-      return knex('favorites').insert(row, '*');
+      return knex('favorites')
+        .insert(decamelizeKeys(insertFavorite), '*');
     })
     .then((rows) => {
       const favorite = camelizeKeys(rows[0]);
