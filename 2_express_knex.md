@@ -22,7 +22,27 @@ You can run the following test suite to verify the middleware works as expected.
 npm test test/part2.routes.books.test.js
 ```
 
-## Linting
+## Bonus
+
+After migrating and seeding the `bookshelf_dev` databae, start an HTTP server.
+
+```shell
+npm start
+```
+
+Then, open the books page.
+
+```shell
+open http://localhost:8000/index.html
+```
+
+And play around with the live application. Then, take a peek at the code for the client application. It lives in the `public` directory of this project. As you read over the code, familiarize yourself with the following techniques.
+
+- How the HTML files scaffold the base structure and content that's presented on page load.
+- How the JavaScript files modify this structure and content as a result of AJAX requests.
+- How the CSS files customize the look-and-feel of the structure and content.
+
+## Bonus
 
 Using your preferred ESLint rules, lint your project with the `npm run lint .` command.
 
