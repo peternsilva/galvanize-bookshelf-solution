@@ -60,17 +60,21 @@ Translate the following entity relationship diagram into a Knex migration file.
 └─────────────┴─────────────────────────┴──────────────────────────────────────────────────┘
 ```
 
-More specifically, the migration file should:
+You can run the following test suite to verify the migration file works as expected.
 
-- Live in the `migrations` directory.
-- Pass all the tests when `npm test test/part1.migrations.test.js` is run.
+```shell
+npm test test/part1.migrations.test.js
+```
 
 ## Seeds
 
-Translate the following [JavaScript entities](https://gist.github.com/ryansobol/fb74ad1e3090b1ce5abdc0d30ae154e8) into a Knex seed file. More specifically, the seed file should:
+Translate the following [JavaScript entities](https://gist.github.com/ryansobol/fb74ad1e3090b1ce5abdc0d30ae154e8) into a Knex seed file.
 
-- Live in the `seeds` directory.
-- Pass all the tests when `npm test test/part1.seeds.test.js` is run.
+You can run the following test suite to verify the seed file works as expected.
+
+```shell
+npm test test/part1.seeds.test.js
+```
 
 ## Bonus
 
