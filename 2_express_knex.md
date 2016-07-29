@@ -42,6 +42,8 @@ Then, play around with the live application by viewing and editing its books. As
 - How the JavaScript files modify this structure and content as a result of AJAX requests.
 - How the CSS files customize the look-and-feel of the structure and content.
 
+**TIP:** It's important to remember how these techniques work because you'll be building both a server application and a client application for your Q2 Project.
+
 ## Bonus
 
 Using your preferred ESLint rules, lint your project with the `npm run lint .` command.
