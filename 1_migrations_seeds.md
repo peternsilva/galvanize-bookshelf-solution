@@ -78,11 +78,11 @@ npm test test/part1.seeds.test.js
 
 Using your preferred ESLint rules, lint your project with the `npm run lint .` command.
 
-**TIP:** If you use the builtin `eslint-config-ryansobol` shareable rules, you may want to disable the `camelcase` and `max-len` rules with [inline comments](http://eslint.org/docs/user-guide/configuring#disabling-rules-with-inline-comments) where appropriate.
+**TIP:** If you use the builtin `eslint-config-ryansobol` rules, you may want to disable the `camelcase` and `max-len` rules with [inline comments](http://eslint.org/docs/user-guide/configuring#disabling-rules-with-inline-comments) where appropriate.
 
 ## Bonus
 
-Play around with a live version of the [Galvanize Bookshelf](https://ryansobol-galvanize-bookshelf.herokuapp.com) application. By the end of this series of assignments, you'll have built a server application to support this client application.
+Play around with a live version of [Galvanize Bookshelf](https://ryansobol-galvanize-bookshelf.herokuapp.com). By the end of this series of assignments, you'll have built a server application to support this client application.
 
 In this project, take a peek at the code for the client application which lives in the `public` directory. Familiarize yourself with the following techniques.
 
