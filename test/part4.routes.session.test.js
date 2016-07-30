@@ -28,7 +28,7 @@ suite('part4 routes session', () => {
       });
   });
 
-  test('GET /session false', (done) => {
+  test('GET /session without session', (done) => {
     request(server)
       .get('/session')
       .expect('Content-Type', /json/)
@@ -58,7 +58,7 @@ suite('part4 routes session', () => {
       }, done);
   });
 
-  test('GET /session true', (done) => {
+  test('GET /session with session', (done) => {
     const agent = request.agent(server);
 
     request(server)
