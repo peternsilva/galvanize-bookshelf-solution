@@ -1,6 +1,6 @@
 # User Registration
 
-In this assignment, you'll add the necessary code to allow users to register accounts with the system.
+In this assignment, you'll build a user registration system for the application.
 
 ## Migrations
 
@@ -20,11 +20,11 @@ Translate the following entity relationship diagram into a Knex migration file.
 └────────────────┴─────────────────────────┴───────────────────────┘
 ```
 
-More specifically, the migration file should:
+You can run the following test suite to verify the migration file works as expected.
 
-- Live in the `migrations` directory.
-- Migrate one table per migration file.
-- Pass all the tests when `npm test test/part3.migrations.test.js` is run.
+```shell
+npm test test/part3.migrations.test.js
+```
 
 ## Routes
 
