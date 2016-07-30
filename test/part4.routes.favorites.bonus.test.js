@@ -23,28 +23,14 @@ suite('part4 routes favorites bonus', () => {
   beforeEach((done) => {
     knex.seed.run()
       .then(() => {
-        request(server)
-          .post('/session')
-          .set('Content-Type', 'application/json')
-          .send({
-            email: 'jkrowling@gmail.com',
-            password: 'youreawizard'
-          })
-          .end((err, res) => {
-            if (err) {
-              return done(err);
-            }
-
-            agent.saveCookies(res);
-            done();
-          });
+        done();
       })
       .catch((err) => {
         done(err);
       });
   });
 
-  test('GET /favorites', (done) => {
+  test('GET /favorites with authentication', (done) => {
     /* eslint-disable max-len */
     agent
       .get('/favorites')

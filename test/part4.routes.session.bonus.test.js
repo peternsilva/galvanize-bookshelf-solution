@@ -59,7 +59,7 @@ suite('part4 routes session bonus', () => {
         password: 'youreawizard'
       })
       .expect('Content-Type', /plain/)
-      .expect(401, 'Bad email or password', done);
+      .expect(400, 'Bad email or password', done);
   });
 
   test('POST /session with bad password', (done) => {
@@ -71,6 +71,6 @@ suite('part4 routes session bonus', () => {
         password: 'badpassword'
       })
       .expect('Content-Type', /plain/)
-      .expect(401, 'Bad email or password', done);
+      .expect(400, 'Bad email or password', done);
   });
 });
