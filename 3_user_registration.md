@@ -1,6 +1,6 @@
 # User Registration
 
-In this assignment, you'll build a user registration system for the application.
+In this assignment, you'll build a user registration system for the HTTP server.
 
 ## Migrations
 
@@ -28,7 +28,7 @@ npm test test/part3.migrations.test.js
 
 ## Routes
 
-Next, update your server to handle the following HTTP request and send the appropriate HTTP response.
+In the `routes/users.js` module, add middleware to handle the following HTTP requests and send back the associated HTTP response. The information in both the request body and response body use the `application/json` content type.
 
 **NOTE:** The information in just the request body uses the `application/json` content type.
 
