@@ -3,7 +3,6 @@
 process.env.NODE_ENV = 'test';
 
 const { suite, test } = require('mocha');
-const bcrypt = require('bcrypt');
 const request = require('supertest');
 const knex = require('../knex');
 const server = require('../server');
@@ -55,7 +54,7 @@ suite('part4 routes session', () => {
         id: 1,
         firstName: 'Joanne',
         lastName: 'Rowling',
-        email: 'jkrowling@gmail.com',
+        email: 'jkrowling@gmail.com'
       }, done);
   });
 
