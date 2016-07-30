@@ -1,6 +1,6 @@
 # Express and Knex
 
-In this assignment, you'll build a RESTful, database-driven HTTP server, using Express and Knex, to manage your migrated and seeded database.
+In this assignment, you'll build a RESTful, database-driven, HTTP server, using Express and Knex, to manage your migrated and seeded database.
 
 ## Books
 

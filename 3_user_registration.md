@@ -1,6 +1,6 @@
 # User Registration
 
-In this assignment, you'll build a user registration system for the HTTP server.
+In this assignment, you'll build a user registration system for your RESTful, database-driven, HTTP server.
 
 ## Migrations
 
