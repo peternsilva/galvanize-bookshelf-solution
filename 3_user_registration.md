@@ -36,7 +36,7 @@ In the `routes/users.js` module, add middleware to handle the following HTTP req
 
 **NOTE:** Only store a cryptographic hash of the password in the database. And _don't_ send the new user's password or hashed password in the response body.
 
-You can run the following test suite to verify the positive case when the middleware responds with a `200` status code.
+You can run the following test suite to verify the middleware works as expected.
 
 ```shell
 npm test test/part3.routes.users.test.js
