@@ -74,7 +74,41 @@ npm test test/part4.routes.favorites.test.js
 
 ## Bonus
 
-| Request Method | Request URL        | Request Body                                                     | Response Status | Response Body  |
-|----------------|--------------------|------------------------------------------------------------------|-----------------|----------------|
-| `POST`         | `/session`         | `{ "email": "bad.email@gmail.com", "password": "youreawizard" }` | `401`           | `Unauthorized` |
-| `POST`         | `/session`         | `{ "email": "jkrowling@gmail.com", "password": "badpassword" }`  | `401`           | `Unauthorized` |
+After migrating and seeding the `bookshelf_dev` database, start an HTTP server.
+
+```shell
+npm start
+```
+
+And open the log in page.
+
+```shell
+open http://localhost:8000/login.html
+```
+
+Then, play around with the live application by registering a new user. As you play, take a peek at the code for the client application and familiarize yourself with the following techniques.
+
+- How the HTML files scaffold the base structure and content that's presented on page load.
+- How the JavaScript files modify this structure and content as a result of AJAX requests.
+- How the CSS files customize the look-and-feel of the structure and content.
+
+**TIP:** It's important to remember how these techniques work because you'll be building both a server application and a client application for your Q2 Project.
+
+## Bonus
+
+In the `routes/session.js` module, update middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body uses the `text/plain` content type.
+
+| Request Method | Request URL        | Request Body                                                     | Response Status | Response Body                |
+|----------------|--------------------|------------------------------------------------------------------|-----------------|------------------------------|
+| `POST`         | `/session`         | `{ "email": "", ... }`                                           | `400`           | `Email must not be blank`    |
+| `POST`         | `/session`         | `{ "password": "", ... }`                                        | `400`           | `Password must not be blank` |
+| `POST`         | `/session`         | `{ "email": "bad.email@gmail.com", "password": "youreawizard" }` | `401`           | `Unauthorized`               |
+| `POST`         | `/session`         | `{ "email": "jkrowling@gmail.com", "password": "badpassword" }`  | `401`           | `Unauthorized`               |
+
+You can run the following test suite to verify the middleware works as expected.
+
+```shell
+npm test test/part4.routes.session.bonus.test.js
+```
+
+**NOTE:** Ensure the middleware handles the previous HTTP requests as before.
