@@ -37,6 +37,7 @@ suite('part3 routes', () => {
 
     request(server)
       .post('/users')
+      .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .send({
         firstName: 'John',

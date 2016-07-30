@@ -31,6 +31,7 @@ suite('part4 routes session bonus', () => {
   test('POST /session with no email', (done) => {
     request(server)
       .post('/session')
+      .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .send({
         password: 'youreawizard'
@@ -42,6 +43,7 @@ suite('part4 routes session bonus', () => {
   test('POST /session with no password', (done) => {
     request(server)
       .post('/session')
+      .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .send({
         email: 'jkrowling@gmail.com'

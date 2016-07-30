@@ -36,10 +36,11 @@
     }
 
     const options = {
-      url: '/users',
-      type: 'POST',
       contentType: 'application/json',
-      data: JSON.stringify({ firstName, lastName, email, password })
+      data: JSON.stringify({ firstName, lastName, email, password }),
+      dataType: 'json',
+      type: 'POST',
+      url: '/users'
     };
 
     $.ajax(options)

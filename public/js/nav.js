@@ -18,7 +18,13 @@
         $logout.click((event) => {
           event.preventDefault();
 
-          $.ajax({ url: '/session', type: 'DELETE' })
+          const options = {
+            dataType: 'json',
+            type: 'DELETE',
+            url: '/session'
+          };
+
+          $.ajax(options)
             .done(() => {
               window.location.href = '/login.html';
             })

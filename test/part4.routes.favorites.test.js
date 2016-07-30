@@ -28,6 +28,7 @@ suite('part4 routes favorites', () => {
         .then(() => {
           request(server)
             .post('/session')
+            .set('Accept', 'application/json')
             .set('Content-Type', 'application/json')
             .send({
               email: 'jkrowling@gmail.com',
@@ -51,6 +52,7 @@ suite('part4 routes favorites', () => {
       /* eslint-disable max-len */
       agent
       .get('/favorites')
+      .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, [{
         id: 1,
@@ -71,6 +73,7 @@ suite('part4 routes favorites', () => {
     test('GET /favorites/check?bookId=1', (done) => {
       agent
       .get('/favorites/check?bookId=1')
+      .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, 'true', done);
     });
@@ -78,12 +81,14 @@ suite('part4 routes favorites', () => {
     test('GET /favorites/check?bookId=2', (done) => {
       agent
       .get('/favorites/check?bookId=2')
+      .set('Accept', 'application/json')
       .expect(200, 'false', done);
     });
 
     test('POST /favorites', (done) => {
       agent
       .post('/favorites')
+      .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .send({ bookId: 2 })
       .expect('Content-Type', /json/)
@@ -97,6 +102,7 @@ suite('part4 routes favorites', () => {
     test('DELETE /favorites', (done) => {
       agent
       .delete('/favorites')
+      .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .send({ bookId: 1 })
       .expect('Content-Type', /json/)
@@ -131,41 +137,46 @@ suite('part4 routes favorites', () => {
 
     test('GET /favorites', (done) => {
       request(server)
-      .get('/favorites')
-      .expect('Content-Type', /plain/)
-      .expect(401, 'Unauthorized', done);
+        .get('/favorites')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /plain/)
+        .expect(401, 'Unauthorized', done);
     });
 
     test('GET /favorites/check?bookId=1', (done) => {
       request(server)
-      .get('/favorites/check?bookId=1')
-      .expect('Content-Type', /plain/)
-      .expect(401, 'Unauthorized', done);
+        .get('/favorites/check?bookId=1')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /plain/)
+        .expect(401, 'Unauthorized', done);
     });
 
     test('GET /favorites/check?bookId=2', (done) => {
       request(server)
-      .get('/favorites/check?bookId=2')
-      .expect('Content-Type', /plain/)
-      .expect(401, 'Unauthorized', done);
+        .get('/favorites/check?bookId=2')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /plain/)
+        .expect(401, 'Unauthorized', done);
     });
 
     test('POST /favorites', (done) => {
       request(server)
-      .post('/favorites')
-      .set('Content-Type', 'application/json')
-      .send({ bookId: 2 })
-      .expect('Content-Type', /plain/)
-      .expect(401, 'Unauthorized', done);
+        .post('/favorites')
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json')
+        .send({ bookId: 2 })
+        .expect('Content-Type', /plain/)
+        .expect(401, 'Unauthorized', done);
     });
 
     test('DELETE /favorites', (done) => {
       request(server)
-      .del('/favorites')
-      .set('Content-Type', 'application/json')
-      .send({ bookId: 1 })
-      .expect('Content-Type', /plain/)
-      .expect(401, 'Unauthorized', done);
+        .del('/favorites')
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json')
+        .send({ bookId: 1 })
+        .expect('Content-Type', /plain/)
+        .expect(401, 'Unauthorized', done);
     });
   });
 });

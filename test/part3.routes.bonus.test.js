@@ -34,6 +34,7 @@ suite('part3 routes bonus', () => {
   test('POST /users with no email', (done) => {
     request(server)
       .post('/users')
+      .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .send({
         firstName: 'John',
@@ -47,6 +48,7 @@ suite('part3 routes bonus', () => {
   test('POST /users with no password', (done) => {
     request(server)
       .post('/users')
+      .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .send({
         firstName: 'John',
@@ -69,6 +71,7 @@ suite('part3 routes bonus', () => {
       .then(() => {
         request(server)
           .post('/users')
+          .set('Accept', 'application/json')
           .set('Content-Type', 'application/json')
           .send({
             firstName: 'John',

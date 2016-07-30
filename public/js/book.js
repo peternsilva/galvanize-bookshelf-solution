@@ -27,8 +27,9 @@
       event.preventDefault();
 
       const options = {
-        url: `/books/${book.id}`,
-        type: 'DELETE'
+        dataType: 'json',
+        type: 'DELETE',
+        url: `/books/${book.id}`
       };
 
       $.ajax(options)
@@ -44,10 +45,11 @@
       event.preventDefault();
 
       const options = {
-        url: '/favorites',
-        type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({ bookId: book.id })
+        data: JSON.stringify({ bookId: book.id }),
+        dataType: 'json',
+        type: 'POST',
+        url: '/favorites'
       };
 
       $.ajax(options)
@@ -66,10 +68,11 @@
       event.preventDefault();
 
       const options = {
-        url: '/favorites',
-        type: 'DELETE',
         contentType: 'application/json',
-        data: JSON.stringify({ bookId: book.id })
+        data: JSON.stringify({ bookId: book.id }),
+        dataType: 'json',
+        type: 'DELETE',
+        url: '/favorites'
       };
 
       $.ajax(options)

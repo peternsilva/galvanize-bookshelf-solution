@@ -31,6 +31,7 @@ suite('part4 routes session', () => {
   test('GET /session without session', (done) => {
     request(server)
       .get('/session')
+      .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, 'false', done);
   });
@@ -38,6 +39,7 @@ suite('part4 routes session', () => {
   test('POST /session', (done) => {
     request(server)
       .post('/session')
+      .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .send({
         email: 'jkrowling@gmail.com',
@@ -63,6 +65,7 @@ suite('part4 routes session', () => {
 
     request(server)
       .post('/session')
+      .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .send({
         email: 'jkrowling@gmail.com',
@@ -77,6 +80,7 @@ suite('part4 routes session', () => {
 
         agent
           .get('/session')
+          .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
           .expect(200, 'true', done);
       });
@@ -84,7 +88,8 @@ suite('part4 routes session', () => {
 
   test('DELETE /session', (done) => {
     request(server)
-      .delete('/session')
+      .del('/session')
+      .set('Accept', 'application/json')
       .expect('set-cookie', /bookshelf=; path=\//)
       .expect('set-cookie', /bookshelf.sig=[a-zA-Z0-9=\-_]*; path=\//)
       .expect('Content-Type', /json/)
@@ -94,6 +99,7 @@ suite('part4 routes session', () => {
   test('POST /session with bad email', (done) => {
     request(server)
       .post('/session')
+      .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .send({
         email: 'bad.email@gmail.com',
@@ -106,6 +112,7 @@ suite('part4 routes session', () => {
   test('POST /session with bad password', (done) => {
     request(server)
       .post('/session')
+      .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .send({
         email: 'jkrowling@gmail.com',

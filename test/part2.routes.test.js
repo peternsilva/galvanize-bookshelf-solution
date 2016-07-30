@@ -32,6 +32,7 @@ suite('part2 routes', () => {
     /* eslint-disable max-len */
     request(server)
       .get('/books')
+      .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, [{
         id: 7,
@@ -114,6 +115,7 @@ suite('part2 routes', () => {
     /* eslint-disable max-len */
     request(server)
       .get('/books/1')
+      .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, {
         id: 1,
@@ -133,6 +135,7 @@ suite('part2 routes', () => {
     /* eslint-disable max-len */
     request(server)
       .post('/books')
+      .set('Accept', 'application/json')
       .send({
         title: 'Think Python',
         author: 'Allen B. Downey',
@@ -161,6 +164,7 @@ suite('part2 routes', () => {
     /* eslint-disable max-len */
     request(server)
       .patch('/books/1')
+      .set('Accept', 'application/json')
       .send({
         title: 'Think like Python',
         author: 'Allen B. Downey',
@@ -189,6 +193,7 @@ suite('part2 routes', () => {
     /* eslint-disable max-len */
     request(server)
       .del('/books/1')
+      .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect((res) => {
         delete res.body.createdAt;

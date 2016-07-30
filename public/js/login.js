@@ -18,10 +18,11 @@
     }
 
     const options = {
-      url: '/session',
-      type: 'POST',
       contentType: 'application/json',
-      data: JSON.stringify({ email, password })
+      data: JSON.stringify({ email, password }),
+      dataType: 'json',
+      type: 'POST',
+      url: '/session'
     };
 
     $.ajax(options)

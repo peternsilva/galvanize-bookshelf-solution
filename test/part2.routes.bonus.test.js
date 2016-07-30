@@ -32,6 +32,7 @@ suite('part2 routes bonus', () => {
   test('GET /books/9000', (done) => {
     request(server)
       .get('/books/9000')
+      .set('Accept', 'application/json')
       .expect('Content-Type', /plain/)
       .expect(404, 'Not Found', done);
   });
@@ -39,6 +40,7 @@ suite('part2 routes bonus', () => {
   test('GET /books/-1', (done) => {
     request(server)
       .get('/books/-1')
+      .set('Accept', 'application/json')
       .expect('Content-Type', /plain/)
       .expect(404, 'Not Found', done);
   });
@@ -46,6 +48,7 @@ suite('part2 routes bonus', () => {
   test('GET /books/one', (done) => {
     request(server)
       .get('/books/one')
+      .set('Accept', 'application/json')
       .expect('Content-Type', /plain/)
       .expect(404, 'Not Found', done);
   });
@@ -54,6 +57,7 @@ suite('part2 routes bonus', () => {
     /* eslint-disable max-len */
     request(server)
       .post('/books')
+      .set('Accept', 'application/json')
       .send({
         genre: 'Python',
         author: 'Allen B. Downey',
@@ -70,6 +74,7 @@ suite('part2 routes bonus', () => {
     /* eslint-disable max-len */
     request(server)
       .post('/books')
+      .set('Accept', 'application/json')
       .send({
         title: 'Think Python',
         genre: 'Python',
@@ -86,6 +91,7 @@ suite('part2 routes bonus', () => {
     /* eslint-disable max-len */
     request(server)
       .post('/books')
+      .set('Accept', 'application/json')
       .send({
         title: 'Think Python',
         author: 'Allen B. Downey',
@@ -102,6 +108,7 @@ suite('part2 routes bonus', () => {
     /* eslint-disable max-len */
     request(server)
       .post('/books')
+      .set('Accept', 'application/json')
       .send({
         title: 'Think Python',
         author: 'Allen B. Downey',
@@ -118,6 +125,7 @@ suite('part2 routes bonus', () => {
     /* eslint-disable max-len */
     request(server)
       .post('/books')
+      .set('Accept', 'application/json')
       .send({
         title: 'Think Python',
         author: 'Allen B. Downey',
@@ -133,6 +141,7 @@ suite('part2 routes bonus', () => {
   test('PATCH /books/9000', (done) => {
     request(server)
       .patch('/books/9000')
+      .set('Accept', 'application/json')
       .expect('Content-Type', /plain/)
       .expect(404, 'Not Found', done);
   });
@@ -140,6 +149,7 @@ suite('part2 routes bonus', () => {
   test('PATCH /books/-1', (done) => {
     request(server)
       .patch('/books/-1')
+      .set('Accept', 'application/json')
       .expect('Content-Type', /plain/)
       .expect(404, 'Not Found', done);
   });
@@ -147,6 +157,7 @@ suite('part2 routes bonus', () => {
   test('PATCH /books/one', (done) => {
     request(server)
       .patch('/books/one')
+      .set('Accept', 'application/json')
       .expect('Content-Type', /plain/)
       .expect(404, 'Not Found', done);
   });
@@ -154,6 +165,7 @@ suite('part2 routes bonus', () => {
   test('DELETE /books/9000', (done) => {
     request(server)
       .del('/books/9000')
+      .set('Accept', 'application/json')
       .expect('Content-Type', /plain/)
       .expect(404, 'Not Found', done);
   });
@@ -161,6 +173,7 @@ suite('part2 routes bonus', () => {
   test('DELETE /books/-1', (done) => {
     request(server)
       .del('/books/-1')
+      .set('Accept', 'application/json')
       .expect('Content-Type', /plain/)
       .expect(404, 'Not Found', done);
   });
@@ -168,6 +181,7 @@ suite('part2 routes bonus', () => {
   test('DELETE /books/one', (done) => {
     request(server)
       .del('/books/one')
+      .set('Accept', 'application/json')
       .expect('Content-Type', /plain/)
       .expect(404, 'Not Found', done);
   });
