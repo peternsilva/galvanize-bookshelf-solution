@@ -32,8 +32,11 @@ router.post('/session', (req, res, next) => {
       return bcrypt.compare(req.body.password, user.hashedPassword);
     })
     .then(() => {
+      delete user.hashedPassword;
+
       req.session.userId = user.id;
-      res.sendStatus(200);
+
+      res.send(user);
     })
     .catch(bcrypt.MISMATCH_ERROR, () => {
       throw boom.create(401, 'User could not be logged in');
