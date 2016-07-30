@@ -17,10 +17,20 @@ router.get('/session', (req, res) => {
 });
 
 router.post('/session', (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email || !email.trim()) {
+    return next(boom.create(400, 'Email must not be blank'));
+  }
+
+  if (!password || password.length < 8) {
+    return next(boom.create(400, 'Password must not be blank'));
+  }
+
   let user;
 
   knex('users')
-    .where('email', req.body.email)
+    .where('email', email)
     .first()
     .then((row) => {
       if (!row) {
@@ -29,7 +39,7 @@ router.post('/session', (req, res, next) => {
 
       user = camelizeKeys(row);
 
-      return bcrypt.compare(req.body.password, user.hashedPassword);
+      return bcrypt.compare(password, user.hashedPassword);
     })
     .then(() => {
       delete user.hashedPassword;
