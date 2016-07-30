@@ -53,16 +53,14 @@ In the `routes/books.js` module, update the middleware to handle the following H
 | `GET`          | `/books/9000`       | N/A                          | `404`           | `Not Found`                     |
 | `GET`          | `/books/-1`         | N/A                          | `404`           | `Not Found`                     |
 | `GET`          | `/books/one`        | N/A                          | `404`           | `Not Found`                     |
-| `POST`         | `/books`            | `{ "title": "", ... }`       | `400`           | `Title name must not be blank`  |
+| `POST`         | `/books`            | `{ "title": "", ... }`       | `400`           | `Title must not be blank`       |
+| `POST`         | `/books`            | `{ "author": "", ... }`      | `400`           | `Author must not be blank`      |
 | `POST`         | `/books`            | `{ "genre": "", ... }`       | `400`           | `Genre name must not be blank`  |
 | `POST`         | `/books`            | `{ "description": "", ... }` | `400`           | `Description must not be blank` |
-| `POST`         | `/books`            | `{ "coverUrl": "", ... }`    | `400`           | `Cover must not be blank`       |
-| `POST`         | `/books`            | `{ "authorId": "", ... }`    | `400`           | `Author must be selected`       |
-| `POST`         | `/books`            | `{ "authorId": 9000, ... }`  | `400`           | `Author does not exist`         |
+| `POST`         | `/books`            | `{ "coverUrl": "", ... }`    | `400`           | `Cover URL must not be blank`   |
 | `PATCH`        | `/books/9000`       | N/A                          | `404`           | `Not Found`                     |
 | `PATCH`        | `/books/-1`         | N/A                          | `404`           | `Not Found`                     |
 | `PATCH`        | `/books/one`        | N/A                          | `404`           | `Not Found`                     |
-| `PATCH`        | `/books/1`          | `{ "authorId": 9000, ... }`  | `400`           | `Author does not exist`         |
 | `DELETE`       | `/books/9000`       | N/A                          | `404`           | `Not Found`                     |
 | `DELETE`       | `/books/-1`         | N/A                          | `404`           | `Not Found`                     |
 | `DELETE`       | `/books/one`        | N/A                          | `404`           | `Not Found`                     |

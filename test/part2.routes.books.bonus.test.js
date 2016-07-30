@@ -125,7 +125,7 @@ suite('part2 routes books bonus', () => {
         description: 'If you want to learn how to program, working with Python is an excellent way to start. This hands-on guide takes you through the language a step at a time, beginning with basic programming concepts before moving on to functions, recursion, data structures, and object-oriented design. This second edition and its supporting code have been updated for Python 3.'
       })
       .expect('Content-Type', /plain/)
-      .expect(400, 'Cover must not be blank', done);
+      .expect(400, 'Cover URL must not be blank', done);
 
       /* eslint-enable max-len */
   });

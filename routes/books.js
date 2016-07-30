@@ -64,7 +64,7 @@ router.post('/books', (req, res, next) => {
   }
 
   if (!coverUrl || !coverUrl.trim()) {
-    return next(boom.create(400, 'Cover must not be blank'));
+    return next(boom.create(400, 'Cover URL must not be blank'));
   }
 
   const insertBook = { title, author, genre, description, coverUrl };

@@ -46,7 +46,7 @@
       }
 
       if (!coverUrl) {
-        return Materialize.toast('Cover must not be blank', 3000);
+        return Materialize.toast('Cover URL must not be blank', 3000);
       }
 
       const options = {
