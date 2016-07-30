@@ -45,6 +45,13 @@ In the `routes/session.js` module, add middleware to handle the following HTTP r
 
 **NOTE:** The second `GET /session` request assumes a session was created by the previous `POST /session` request. Also, don't send the user's password or hashed password in the response body.
 
+Additionally, ensure the `POST /session` middleware handles the following HTTP requests and sends back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body uses the `text/plain` content type.
+
+| Request Method | Request URL        | Request Body                                                     | Response Status | Response Body                |
+|----------------|--------------------|------------------------------------------------------------------|-----------------|------------------------------|
+| `POST`         | `/session`         | `{ "email": "bad.email@gmail.com", "password": "youreawizard" }` | `400`           | `Bad email or password`      |
+| `POST`         | `/session`         | `{ "email": "jkrowling@gmail.com", "password": "badpassword" }`  | `400`           | `Bad email or password`      |
+
 You can run the following test suite to verify the middleware works as expected.
 
 ```shell
@@ -105,12 +112,10 @@ Then, play around with the live application by logging in a user and viewing the
 
 In the `routes/session.js` module, update middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body uses the `text/plain` content type.
 
-| Request Method | Request URL        | Request Body                                                     | Response Status | Response Body                |
-|----------------|--------------------|------------------------------------------------------------------|-----------------|------------------------------|
-| `POST`         | `/session`         | `{ "email": "", ... }`                                           | `400`           | `Email must not be blank`    |
-| `POST`         | `/session`         | `{ "password": "", ... }`                                        | `400`           | `Password must not be blank` |
-| `POST`         | `/session`         | `{ "email": "bad.email@gmail.com", "password": "youreawizard" }` | `400`           | `Bad email or password`      |
-| `POST`         | `/session`         | `{ "email": "jkrowling@gmail.com", "password": "badpassword" }`  | `400`           | `Bad email or password`      |
+| Request Method | Request URL        | Request Body              | Response Status | Response Body                |
+|----------------|--------------------|---------------------------|-----------------|------------------------------|
+| `POST`         | `/session`         | `{ "email": "", ... }`    | `400`           | `Email must not be blank`    |
+| `POST`         | `/session`         | `{ "password": "", ... }` | `400`           | `Password must not be blank` |
 
 You can run the following test suite to verify the middleware works as expected.
 

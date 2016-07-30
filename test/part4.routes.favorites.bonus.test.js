@@ -51,7 +51,7 @@ suite('part4 routes favorites bonus', () => {
       .expect(400, 'Book ID must be an integer', done);
   });
 
-  test('POST /favorites', (done) => {
+  test('POST /favorites with non-integer bookId', (done) => {
     agent
       .post('/favorites')
       .send({ bookId: 'two' })
@@ -59,7 +59,7 @@ suite('part4 routes favorites bonus', () => {
       .expect(400, 'Book ID must be an integer', done);
   });
 
-  test('POST /favorites', (done) => {
+  test('POST /favorites with unknown bookId', (done) => {
     agent
       .post('/favorites')
       .send({ bookId: 9000 })
@@ -67,7 +67,7 @@ suite('part4 routes favorites bonus', () => {
       .expect(404, 'Book not found', done);
   });
 
-  test('DELETE /favorites', (done) => {
+  test('DELETE /favorites with non-integer bookId', (done) => {
     agent
       .del('/favorites')
       .send({ bookId: 'one' })
@@ -75,7 +75,7 @@ suite('part4 routes favorites bonus', () => {
       .expect(400, 'Book ID must be an integer', done);
   });
 
-  test('DELETE /favorites', (done) => {
+  test('DELETE /favorites with unknown favorite', (done) => {
     agent
       .del('/favorites')
       .send({ bookId: 9000 })

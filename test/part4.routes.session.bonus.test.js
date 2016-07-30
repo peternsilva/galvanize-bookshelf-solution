@@ -49,28 +49,4 @@ suite('part4 routes session bonus', () => {
       .expect('Content-Type', /plain/)
       .expect(400, 'Password must not be blank', done);
   });
-
-  test('POST /session with bad email', (done) => {
-    request(server)
-      .post('/session')
-      .set('Content-Type', 'application/json')
-      .send({
-        email: 'bad.email@gmail.com',
-        password: 'youreawizard'
-      })
-      .expect('Content-Type', /plain/)
-      .expect(400, 'Bad email or password', done);
-  });
-
-  test('POST /session with bad password', (done) => {
-    request(server)
-      .post('/session')
-      .set('Content-Type', 'application/json')
-      .send({
-        email: 'jkrowling@gmail.com',
-        password: 'badpassword'
-      })
-      .expect('Content-Type', /plain/)
-      .expect(400, 'Bad email or password', done);
-  });
 });
