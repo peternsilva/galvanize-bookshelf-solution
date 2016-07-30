@@ -36,7 +36,7 @@ And open the books page.
 open http://localhost:8000/index.html
 ```
 
-Then, play around with the live application by viewing and editing its books. As you play, take a peek at the code for the client application and familiarize yourself with the following techniques.
+Then, play around with the live application by viewing, editing, and deleting its books. As you play, take a peek at the code for the client application and familiarize yourself with the following techniques.
 
 - How the HTML files scaffold the base structure and content that's presented on page load.
 - How the JavaScript files modify this structure and content as a result of AJAX requests.
