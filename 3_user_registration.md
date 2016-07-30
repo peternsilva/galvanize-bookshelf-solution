@@ -47,7 +47,7 @@ In the `routes/users.js` module, add middleware to handle the following HTTP req
 You can run the following test suite to verify the middleware works as expected.
 
 ```shell
-npm test test/part3.routes.users.test.js
+npm test test/part3.routes.test.js
 ```
 
 ## Bonus
@@ -85,7 +85,7 @@ In the `routes/users.js` module, update the middleware to handle the following H
 You can run the following test suite to verify the middleware works as expected.
 
 ```shell
-npm test test/part3.routes.users.test.js
+npm test test/part3.routes.bonus.test.js
 ```
 
 **NOTE:** Ensure the middleware handles the previous HTTP requests as before.

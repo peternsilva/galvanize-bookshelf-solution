@@ -19,7 +19,7 @@ In the `routes/books.js` module, add middleware to handle the following HTTP req
 You can run the following test suite to verify the middleware works as expected.
 
 ```shell
-npm test test/part2.routes.books.test.js
+npm test test/part2.routes.test.js
 ```
 
 ## Bonus
@@ -68,7 +68,7 @@ In the `routes/books.js` module, update the middleware to handle the following H
 You can run the following test suite to verify the middleware works as expected.
 
 ```shell
-npm test test/part2.routes.books.bonus.test.js
+npm test test/part2.routes.bonus.test.js
 ```
 
 **NOTE:** Ensure the middleware handles the previous HTTP requests as before.
