@@ -68,13 +68,11 @@ Then, play around with the live application by registering a new user. As you pl
 
 In the `routes/users.js` module, update the middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body uses the `text/plain` content type.
 
-| Request Method | Request URL        | Request Body                                                                                                        | Response Status | Response Content-Type | Response Body                |
-|----------------|--------------------|---------------------------------------------------------------------------------------------------------------------|-----------------|-----------------------|------------------------------|
-| `POST`         | `/users`           | `{ "first_name": "John", "last_name": "Siracusa", "password": "ilikebigcats" }`                                     | `400`           | `text/plain`          | `Email must not be blank`    |
-| `POST`         | `/users`           | `{ "first_name": "John", "last_name": "Siracusa", "email": "john.siracusa@gmail.com" }`                             | `400`           | `text/plain`          | `Password must not be blank` |
-| `POST`         | `/users`           | `{ "first_name": "John", "last_name": "Siracusa", "email": "john.siracusa@gmail.com", "password": "ilikebigcats" }` | `400`           | `text/plain`          | `Email already exists`       |
-
-You can run the following test suite to verify the negative cases when the middleware responds with a `400` status code.
+| Request Method | Request URL        | Request Body                              | Response Status | Response Body                |
+|----------------|--------------------|-------------------------------------------|-----------------|------------------------------|
+| `POST`         | `/users`           | `{ email: "", ... }`                      | `400`           | `Email must not be blank`    |
+| `POST`         | `/users`           | `{ password: "", ... }`                   | `400`           | `Password must not be blank` |
+| `POST`         | `/users`           | `{ "email": "jkrowling@gmail.com", ... }` | `400`           | `Email already exists`       |
 
 You can run the following test suite to verify the middleware works as expected.
 
