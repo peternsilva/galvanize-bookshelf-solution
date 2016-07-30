@@ -76,11 +76,11 @@ Then, play around with the live application by registering a new user. As you pl
 
 In the `routes/users.js` module, update the middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body uses the `text/plain` content type.
 
-| Request Method | Request URL        | Request Body                              | Response Status | Response Body                |
-|----------------|--------------------|-------------------------------------------|-----------------|------------------------------|
-| `POST`         | `/users`           | `{ email: "", ... }`                      | `400`           | `Email must not be blank`    |
-| `POST`         | `/users`           | `{ password: "", ... }`                   | `400`           | `Password must not be blank` |
-| `POST`         | `/users`           | `{ "email": "jkrowling@gmail.com", ... }` | `400`           | `Email already exists`       |
+| Request Method | Request URL        | Request Body                              | Response Status | Response Body                                 |
+|----------------|--------------------|-------------------------------------------|-----------------|-----------------------------------------------|
+| `POST`         | `/users`           | `{ email: "", ... }`                      | `400`           | `Email must not be blank`                     |
+| `POST`         | `/users`           | `{ password: "", ... }`                   | `400`           | `Password must be at least 8 characters long` |
+| `POST`         | `/users`           | `{ "email": "jkrowling@gmail.com", ... }` | `400`           | `Email already exists`                        |
 
 You can run the following test suite to verify the middleware works as expected.
 

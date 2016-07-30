@@ -32,6 +32,7 @@ suite('part3 seeds', () => {
   test('users', (done) => {
     knex('users').orderBy('id', 'ASC')
       .then((actual) => {
+        /* eslint-disable max-len */
         const expected = [{
           id: 1,
           first_name: 'Joanne',
@@ -41,6 +42,8 @@ suite('part3 seeds', () => {
           created_at: new Date('2016-06-29 14:26:16 UTC'),
           updated_at: new Date('2016-06-29 14:26:16 UTC')
         }];
+
+        /* eslint-enable max-len */
 
         for (let i = 0; i < expected.length; i++) {
           assert.deepEqual(
