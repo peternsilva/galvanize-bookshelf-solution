@@ -36,17 +36,13 @@ npm test test/part4.seeds.test.js
 
 In the `routes/session.js` module, add middleware to handle the following HTTP requests and send back the associated HTTP response. The information in both the request body and response body use the `application/json` content type.
 
-**NOTE:** The information in just the request body uses the `application/json` content type.
-
 | Request Method | Request URL        | Request Body                                                     | Response Status | Response Body                                    |
 |----------------|--------------------|------------------------------------------------------------------|-----------------|--------------------------------------------------|
 | `GET`          | `/session`         | N/A                                                              | `200`           | `false`                                          |
 | `POST`         | `/session`         | `{ "email": "jkrowling@gmail.com", "password": "youreawizard" }` | `200`           | `{ id: 1, "email": "jkrowling@gmail.com", ... }` |
 | `GET`          | `/session`         | N/A                                                              | `200`           | `true`         |
 
-In the `routes/session.js` module, add the necessary middleware to handle above RESTful route table.
-
-You can run the following test suite to verify both the positive and the negative cases when the middleware responds with a `200` or `401` status code.
+You can run the following test suite to verify the middleware works as expected.
 
 ```shell
 npm test test/part4.routes.session.test.js
