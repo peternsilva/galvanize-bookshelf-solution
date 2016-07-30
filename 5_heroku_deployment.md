@@ -1,6 +1,8 @@
 # Heroku Deployment
 
-In this assignment, you'll deploy your database-drive, HTTP server to Heroku. Once your application is deployed, add its URL to your Github repository.
+In this assignment, you'll deploy your RESTful, database-driven, HTTP server to Heroku.
+
+## Pre-deployment
 
 Remember to generate a secret key that'll be used to sign session information on the production environment.
 
@@ -19,5 +21,9 @@ Deploy the code to Heroku. More specifically, the deployment should:
 - Push the changes to the master branch of your Heroku remote.
 - Seed the production database by running a one-off command on Heroku.
 - After about one minute, check that the production database has the correct number of tables and rows.
+
+## Post-deployment
+
+Once your application is deployed, add its URL to your Github repository.
 
 ![How to set a Github URL](images/github_url.png)
