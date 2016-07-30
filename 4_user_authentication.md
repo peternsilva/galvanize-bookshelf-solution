@@ -43,7 +43,7 @@ In the `routes/session.js` module, add middleware to handle the following HTTP r
 | `GET`          | `/session`         | N/A                                                              | `200`           | `true`                                           |
 | `DELETE`       | `/session`         | N/A                                                              | `200`           | `true`                                           |
 
-**NOTE:** Don't send the user's password or hashed password in the response body.
+**NOTE:** The second `GET /session` request assumes a user is logged in. Also, _don't_ send the user's password or hashed password in the response body.
 
 You can run the following test suite to verify the middleware works as expected.
 
