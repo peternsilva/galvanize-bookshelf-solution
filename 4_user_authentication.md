@@ -101,8 +101,8 @@ In the `routes/session.js` module, update middleware to handle the following HTT
 |----------------|--------------------|------------------------------------------------------------------|-----------------|------------------------------|
 | `POST`         | `/session`         | `{ "email": "", ... }`                                           | `400`           | `Email must not be blank`    |
 | `POST`         | `/session`         | `{ "password": "", ... }`                                        | `400`           | `Password must not be blank` |
-| `POST`         | `/session`         | `{ "email": "bad.email@gmail.com", "password": "youreawizard" }` | `401`           | `Bad email or password`      |
-| `POST`         | `/session`         | `{ "email": "jkrowling@gmail.com", "password": "badpassword" }`  | `401`           | `Bad email or password`      |
+| `POST`         | `/session`         | `{ "email": "bad.email@gmail.com", "password": "youreawizard" }` | `400`           | `Bad email or password`      |
+| `POST`         | `/session`         | `{ "email": "jkrowling@gmail.com", "password": "badpassword" }`  | `400`           | `Bad email or password`      |
 
 You can run the following test suite to verify the middleware works as expected.
 
@@ -116,17 +116,17 @@ npm test test/part4.routes.session.bonus.test.js
 
 In the `routes/favorites.js` module, update middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body uses the `text/plain` content type.
 
-| Request Method | Request URL        | Request Body                                                     | Response Status | Response Body                |
-|----------------|--------------------|------------------------------------------------------------------|-----------------|------------------------------|
-| `POST`         | `/session`         | `{ "email": "", ... }`                                           | `400`           | `Email must not be blank`    |
-| `POST`         | `/session`         | `{ "password": "", ... }`                                        | `400`           | `Password must not be blank` |
-| `POST`         | `/session`         | `{ "email": "bad.email@gmail.com", "password": "youreawizard" }` | `400`           | `Bad email or password`      |
-| `POST`         | `/session`         | `{ "email": "jkrowling@gmail.com", "password": "badpassword" }`  | `400`           | `Bad email or password`      |
+| Request Method | Request URL                 | Request Body      | Response Status | Response Body  |
+|----------------|-----------------------------|-------------------|-----------------|----------------|
+| `GET`          | `/favorites`                | N/A               | `401`           | `Unauthorized` |
+| `GET`          | `/favorites/check?bookId=1` | N/A               | `401`           | `Unauthorized` |
+| `POST`         | `/favorites`                | `{ "bookId": 2 }` | `401`           | `Unauthorized` |
+| `DELETE`       | `/favorites`                | `{ "bookId": 2 }` | `401`           | `Unauthorized` |
 
 You can run the following test suite to verify the middleware works as expected.
 
 ```shell
-npm test test/part4.routes.session.bonus.test.js
+npm test test/part4.routes.favorites.bonus.test.js
 ```
 
 **NOTE:** Ensure the middleware handles the previous HTTP requests as before.
