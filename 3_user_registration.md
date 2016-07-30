@@ -83,3 +83,11 @@ npm test test/part3.routes.users.test.js
 ```
 
 **NOTE:** Ensure the middleware handles the previous HTTP requests as before.
+
+## Bonus
+
+Using your preferred ESLint rules, lint your project with the `npm run lint .` command.
+
+## Bonus
+
+Once you're satisfied, find a classmate and see if he or she would like some help.
