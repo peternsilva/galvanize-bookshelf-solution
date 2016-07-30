@@ -26,7 +26,7 @@ npm test test/part4.migrations.test.js
 
 ## Seeds
 
-Translate the following [JavaScript entities](https://gist.github.com/ryansobol/0bcc0058af3ce5823263ac005a34b050) into a Knex seed file. You can run the following test suite to verify the seed file works as expected.
+Translate the following [JavaScript entity](https://gist.github.com/ryansobol/0bcc0058af3ce5823263ac005a34b050) into a Knex seed file. You can run the following test suite to verify the seed file works as expected.
 
 ```shell
 npm test test/part4.seeds.test.js
