@@ -27,3 +27,15 @@ Deploy the code to Heroku. More specifically, the deployment should:
 Once your application is deployed, add its URL to your Github repository.
 
 ![How to set a Github URL](images/github_url.png)
+
+Test
+
+```shell
+npm test
+```
+
+Lint
+
+```shell
+npm run lint .
+```
