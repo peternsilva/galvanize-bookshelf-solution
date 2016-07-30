@@ -65,13 +65,13 @@ In the `routes/books.js` module, update the middleware to handle the following H
 | `DELETE`       | `/books/-1`         | N/A                          | `404`           | `Not Found`                     |
 | `DELETE`       | `/books/one`        | N/A                          | `404`           | `Not Found`                     |
 
-**NOTE:** Ensure the middleware handles the previous HTTP requests as before.
-
 You can run the following test suite to verify the middleware works as expected.
 
 ```shell
 npm test test/part2.routes.books.bonus.test.js
 ```
+
+**NOTE:** Ensure the middleware handles the previous HTTP requests as before.
 
 ## Bonus
 
