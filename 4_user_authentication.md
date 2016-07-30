@@ -85,7 +85,7 @@ And open the log in page.
 open http://localhost:8000/login.html
 ```
 
-Then, play around with the live application by registering a new user. As you play, take a peek at the code for the client application and familiarize yourself with the following techniques.
+Then, play around with the live application by authenticating a user and viewing their favorite books. As you play, take a peek at the code for the client application and familiarize yourself with the following techniques.
 
 - How the HTML files scaffold the base structure and content that's presented on page load.
 - How the JavaScript files modify this structure and content as a result of AJAX requests.
