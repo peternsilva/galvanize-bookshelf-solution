@@ -32,11 +32,10 @@ In the `routes/users.js` module, add middleware to handle the following HTTP req
 
 **NOTE:** The information in just the request body uses the `application/json` content type.
 
-| Request Method | Request URL        | Request Body                                                                                                        | Response Status | Response Content-Type | Response Body |
-|----------------|--------------------|---------------------------------------------------------------------------------------------------------------------|-----------------|-----------------------|---------------|
-| `POST`         | `/users`           | `{ "first_name": "John", "last_name": "Siracusa", "email": "john.siracusa@gmail.com", "password": "ilikebigcats" }` | `200`           | `text/plain`          | `OK`          |
+| Request Method | Request URL        | Request Body                                                                                                        | Response Status | Response Body                                                                           |
+|----------------|--------------------|---------------------------------------------------------------------------------------------------------------------|-----------------|-----------------------------------------------------------------------------------------|
+| `POST`         | `/users`           | `{ "first_name": "John", "last_name": "Siracusa", "email": "john.siracusa@gmail.com", "password": "ilikebigcats" }` | `200`           | `{ "first_name": "John", "last_name": "Siracusa", "email": "john.siracusa@gmail.com" }` |
 
-In the `routes/users.js` module, add the necessary middleware to handle above RESTful route table. Make sure the route handler securely registers new users using the following techniques.
 
 - Only store a cryptographic hash of the password in the database.
 - Do _not_ send the new user's password or hashed password in the response body.
