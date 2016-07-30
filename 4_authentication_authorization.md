@@ -1,6 +1,6 @@
 # Authentication and Authorization
 
-In this assignment, you'll build a user authentication system for your RESTful, database-driven, HTTP server.
+In this assignment, you'll build authentication and authorization systems for your RESTful, database-driven, HTTP server.
 
 ## Migrations
 
