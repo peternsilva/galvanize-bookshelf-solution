@@ -57,12 +57,13 @@ In the `routes/favorites.js` module, add middleware to handle the following HTTP
 
 **NOTE:** The following routes assume a user with an `id` of `1` is authenticated.
 
-| Request Method | Request URL      | Response Status | Response Body                                                         |
-|----------------|------------------|-----------------|-----------------------------------------------------------------------|
-| `GET`          | `/favorites`     | `200`           | `[{ "id": 1, "author_id": 2, "title": "Python In A Nutshell", ... }]` |
-| `GET`          | `/favorites/1`   | `200`           | `{ "id": 1, "author_id": 2, "title": "Python In A Nutshell", ... }`   |
-| `POST`         | `/favorites/2`   | `200`           | `{ "id": 2, "book_id": 2, "user_id": 1 }`                             |
-| `DELETE`       | `/favorites/2`   | `200`           | `{ "book_id": 2, "user_id": 1 }`                                      |
+| Request Method | Request URL                 | Request Body       | Response Status | Response Body                                        |
+|----------------|-----------------------------|--------------------|-----------------|------------------------------------------------------|
+| `GET`          | `/favorites`                | N/A                | `200`           | `[{ "id": 1, "bookId": 1, "userId": 1, ... }, ... ]` |
+| `GET`          | `/favorites/check?bookId=1` | N/A                | `200`           | `true`                                               |
+| `GET`          | `/favorites/check?bookId=2` | N/A                | `200`           | `false`                                              |
+| `POST`         | `/favorites`                | `{ "bookId": 2 } ` | `200`           | `{ "id": 2, "bookId": 2, "userId": 1, ... }`         |
+| `DELETE`       | `/favorites`                | `{ "bookId": 2 }`  | `200`           | `{ "bookId": 2, "userId": 1, ... }`                  |
 
 You can run the following test suite to verify the middleware works as expected.
 
