@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 'use strict';
 
 process.env.NODE_ENV = 'test';
@@ -22,8 +20,7 @@ suite('part4 routes session', () => {
   });
 
   beforeEach((done) => {
-    knex('users')
-      .del()
+    knex.seed.run()
       .then(() => {
         done();
       })
@@ -32,91 +29,58 @@ suite('part4 routes session', () => {
       });
   });
 
+  test('GET /session false', (done) => {
+    request(server)
+      .get('/session')
+      .expect('Content-Type', /json/)
+      .expect(200, 'false', done);
+  });
+
   test('POST /session', (done) => {
-    const password = 'ilikebigcats';
-
-    /* eslint-disable no-sync */
-    knex('users')
-      .insert({
-        first_name: 'John',
-        last_name: 'Siracusa',
-        email: 'john.siracusa@gmail.com',
-        hashed_password: bcrypt.hashSync(password, 1)
+    request(server)
+      .post('/session')
+      .set('Content-Type', 'application/json')
+      .send({
+        email: 'jkrowling@gmail.com',
+        password: 'youreawizard'
       })
-      .then(() => {
-        request(server)
-          .post('/session')
-          .set('Content-Type', 'application/json')
-          .send({
-            email: 'john.siracusa@gmail.com',
-            password
-          })
-          .expect('set-cookie', /bookshelf=[a-zA-Z0-9=]*; path=\//)
-          .expect('set-cookie', /bookshelf.sig=[a-zA-Z0-9=\-_]*; path=\//)
-          .expect('Content-Type', /plain/)
-          .expect(200, 'OK', done);
+      .expect('set-cookie', /bookshelf=[a-zA-Z0-9=]*; path=\//)
+      .expect('set-cookie', /bookshelf.sig=[a-zA-Z0-9=\-_]*; path=\//)
+      .expect('Content-Type', /json/)
+      .expect((res) => {
+        delete res.body.createdAt;
+        delete res.body.updatedAt;
       })
-      .catch((err) => {
-        done(err);
-      });
-
-      /* eslint-enable no-sync */
+      .expect(200, {
+        id: 1,
+        firstName: 'Joanne',
+        lastName: 'Rowling',
+        email: 'jkrowling@gmail.com',
+      }, done);
   });
 
-  test('POST /session with bad email', (done) => {
-    const password = 'ilikebigcats';
+  test('GET /session true', (done) => {
+    const agent = request.agent(server);
 
-    /* eslint-disable no-sync */
-    knex('users')
-      .insert({
-        first_name: 'John',
-        last_name: 'Siracusa',
-        email: 'john.siracusa@gmail.com',
-        hashed_password: bcrypt.hashSync(password, 1)
+    request(server)
+      .post('/session')
+      .set('Content-Type', 'application/json')
+      .send({
+        email: 'jkrowling@gmail.com',
+        password: 'youreawizard'
       })
-      .then(() => {
-        request(server)
-          .post('/session')
-          .set('Content-Type', 'application/json')
-          .send({
-            email: 'bad.email@gmail.com',
-            password
-          })
-          .expect('Content-Type', /plain/)
-          .expect(401, 'User could not be logged in', done);
-      })
-      .catch((err) => {
-        done(err);
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        agent.saveCookies(res);
+
+        agent
+          .get('/session')
+          .expect('Content-Type', /json/)
+          .expect(200, 'true', done);
       });
-
-      /* eslint-enable no-sync */
-  });
-
-  test('POST /session with bad password', (done) => {
-    /* eslint-disable no-sync */
-    knex('users')
-      .insert({
-        first_name: 'John',
-        last_name: 'Siracusa',
-        email: 'john.siracusa@gmail.com',
-        hashed_password: bcrypt.hashSync('ilikebigcats', 1)
-      })
-      .then(() => {
-        request(server)
-          .post('/session')
-          .set('Content-Type', 'application/json')
-          .send({
-            email: 'john.siracusa@gmail.com',
-            password: 'badpassword'
-          })
-          .expect('Content-Type', /plain/)
-          .expect(401, 'User could not be logged in', done);
-      })
-      .catch((err) => {
-        done(err);
-      });
-
-      /* eslint-enable no-sync */
   });
 
   test('DELETE /session', (done) => {
@@ -124,7 +88,7 @@ suite('part4 routes session', () => {
       .delete('/session')
       .expect('set-cookie', /bookshelf=; path=\//)
       .expect('set-cookie', /bookshelf.sig=[a-zA-Z0-9=\-_]*; path=\//)
-      .expect('Content-Type', /plain/)
-      .expect(200, 'OK', done);
+      .expect('Content-Type', /json/)
+      .expect(200, 'true', done);
   });
 });

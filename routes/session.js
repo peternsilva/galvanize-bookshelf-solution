@@ -48,7 +48,7 @@ router.post('/session', (req, res, next) => {
 
 router.delete('/session', (req, res) => {
   req.session = null;
-  res.sendStatus(200);
+  res.send(true);
 });
 
 module.exports = router;

@@ -41,6 +41,7 @@ In the `routes/session.js` module, add middleware to handle the following HTTP r
 | `GET`          | `/session`         | N/A                                                              | `200`           | `false`                                          |
 | `POST`         | `/session`         | `{ "email": "jkrowling@gmail.com", "password": "youreawizard" }` | `200`           | `{ id: 1, "email": "jkrowling@gmail.com", ... }` |
 | `GET`          | `/session`         | N/A                                                              | `200`           | `true`                                           |
+| `DELETE`       | `/session`         | N/A                                                              | `200`           | `true`                                           |
 
 **NOTE:** Don't send the user's password or hashed password in the response body.
 
@@ -73,6 +74,7 @@ npm test test/part4.routes.favorites.test.js
 
 ## Bonus
 
-| Request Method | Request URL        | Request Body                                                     | Response Status | Response Content-Type | Response Body  |
-| `POST`         | `/session`         | `{ "email": "bad.email@gmail.com", "password": "youreawizard" }` | `401`           | `text/plain`          | `Unauthorized` |
-| `POST`         | `/session`         | `{ "email": "jkrowling@gmail.com", "password": "badpassword" }`  | `401`           | `text/plain`          | `Unauthorized` |
+| Request Method | Request URL        | Request Body                                                     | Response Status | Response Body  |
+|----------------|--------------------|------------------------------------------------------------------|-----------------|----------------|
+| `POST`         | `/session`         | `{ "email": "bad.email@gmail.com", "password": "youreawizard" }` | `401`           | `Unauthorized` |
+| `POST`         | `/session`         | `{ "email": "jkrowling@gmail.com", "password": "badpassword" }`  | `401`           | `Unauthorized` |
