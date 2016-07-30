@@ -130,9 +130,9 @@ For the route table below, assume a session has been created for a user with an
 |----------------|-------------------------------|-----------------------|-----------------|------------------------------|
 | `GET`          | `/favorites/check?bookId=one` | N/A                   | `400`           | `Book ID must be an integer` |
 | `POST`         | `/favorites`                  | `{ "bookId": "two" }` | `400`           | `Book ID must be an integer` |
-| `POST`         | `/favorites`                  | `{ "bookId": 9000 }`  | `400`           | `Book doesn't exist`         |
+| `POST`         | `/favorites`                  | `{ "bookId": 9000 }`  | `404`           | `Book not found`             |
 | `DELETE`       | `/favorites`                  | `{ "bookId": "one" }` | `400`           | `Book ID must be an integer` |
-
+| `DELETE`       | `/favorites`                  | `{ "bookId": 9000 }`  | `404`           | `Favorite not found`         |
 
 You can run the following test suite to verify the middleware works as expected.
 
