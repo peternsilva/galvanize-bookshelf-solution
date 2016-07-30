@@ -44,9 +44,29 @@ npm test test/part3.routes.users.test.js
 
 ## Bonus
 
-Next, update your server to handle the following problem HTTP requests and send the appropriate HTTP response.
+After migrating and seeding the `bookshelf_dev` database, start an HTTP server.
 
-**NOTE:** The information in just the request body uses the `application/json` content type.
+```shell
+npm start
+```
+
+And open the books page.
+
+```shell
+open http://localhost:8000/index.html
+```
+
+Then, play around with the live application by registering a new user. As you play, take a peek at the code for the client application and familiarize yourself with the following techniques.
+
+- How the HTML files scaffold the base structure and content that's presented on page load.
+- How the JavaScript files modify this structure and content as a result of AJAX requests.
+- How the CSS files customize the look-and-feel of the structure and content.
+
+**TIP:** It's important to remember how these techniques work because you'll be building both a server application and a client application for your Q2 Project.
+
+## Bonus
+
+In the `routes/users.js` module, update the middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body uses the `text/plain` content type.
 
 | Request Method | Request URL        | Request Body                                                                                                        | Response Status | Response Content-Type | Response Body                |
 |----------------|--------------------|---------------------------------------------------------------------------------------------------------------------|-----------------|-----------------------|------------------------------|
@@ -54,10 +74,12 @@ Next, update your server to handle the following problem HTTP requests and send 
 | `POST`         | `/users`           | `{ "first_name": "John", "last_name": "Siracusa", "email": "john.siracusa@gmail.com" }`                             | `400`           | `text/plain`          | `Password must not be blank` |
 | `POST`         | `/users`           | `{ "first_name": "John", "last_name": "Siracusa", "email": "john.siracusa@gmail.com", "password": "ilikebigcats" }` | `400`           | `text/plain`          | `Email already exists`       |
 
-In the `routes/users.js` module, update the necessary middleware to handle above RESTful route table. Make sure the route handler continues to securely register new users as before.
-
 You can run the following test suite to verify the negative cases when the middleware responds with a `400` status code.
+
+You can run the following test suite to verify the middleware works as expected.
 
 ```shell
 npm test test/part3.routes.users.test.js
 ```
+
+**NOTE:** Ensure the middleware handles the previous HTTP requests as before.
