@@ -102,8 +102,8 @@ In the `routes/session.js` module, update middleware to handle the following HTT
 |----------------|--------------------|------------------------------------------------------------------|-----------------|------------------------------|
 | `POST`         | `/session`         | `{ "email": "", ... }`                                           | `400`           | `Email must not be blank`    |
 | `POST`         | `/session`         | `{ "password": "", ... }`                                        | `400`           | `Password must not be blank` |
-| `POST`         | `/session`         | `{ "email": "bad.email@gmail.com", "password": "youreawizard" }` | `401`           | `Unauthorized`               |
-| `POST`         | `/session`         | `{ "email": "jkrowling@gmail.com", "password": "badpassword" }`  | `401`           | `Unauthorized`               |
+| `POST`         | `/session`         | `{ "email": "bad.email@gmail.com", "password": "youreawizard" }` | `401`           | `Bad email or password`      |
+| `POST`         | `/session`         | `{ "email": "jkrowling@gmail.com", "password": "badpassword" }`  | `401`           | `Bad email or password`      |
 
 You can run the following test suite to verify the middleware works as expected.
 

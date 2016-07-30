@@ -24,7 +24,7 @@ router.post('/session', (req, res, next) => {
     .first()
     .then((row) => {
       if (!row) {
-        throw boom.create(401, 'User could not be logged in');
+        throw boom.create(401, 'Bad email or password');
       }
 
       user = camelizeKeys(row);
@@ -39,7 +39,7 @@ router.post('/session', (req, res, next) => {
       res.send(user);
     })
     .catch(bcrypt.MISMATCH_ERROR, () => {
-      throw boom.create(401, 'User could not be logged in');
+      throw boom.create(401, 'Bad email or password');
     })
     .catch((err) => {
       next(err);

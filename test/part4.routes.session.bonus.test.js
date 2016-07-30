@@ -18,7 +18,7 @@
 //           password
 //         })
 //         .expect('Content-Type', /plain/)
-//         .expect(401, 'User could not be logged in', done);
+//         .expect(401, 'Bad email or password', done);
 //     })
 //     .catch((err) => {
 //       done(err);
@@ -45,7 +45,7 @@
 //           password: 'badpassword'
 //         })
 //         .expect('Content-Type', /plain/)
-//         .expect(401, 'User could not be logged in', done);
+//         .expect(401, 'Bad email or password', done);
 //     })
 //     .catch((err) => {
 //       done(err);
