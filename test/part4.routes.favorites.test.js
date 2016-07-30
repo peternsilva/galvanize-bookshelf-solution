@@ -1,3 +1,5 @@
+/* eslint-disable max-nested-callbacks */
+
 'use strict';
 
 process.env.NODE_ENV = 'test';
@@ -8,8 +10,6 @@ const knex = require('../knex');
 const server = require('../server');
 
 suite('part4 routes favorites', () => {
-  const agent = request.agent(server);
-
   before((done) => {
     knex.migrate.latest()
       .then(() => {
@@ -20,33 +20,36 @@ suite('part4 routes favorites', () => {
       });
   });
 
-  beforeEach((done) => {
-    knex.seed.run()
+  suite('with session', () => {
+    const agent = request.agent(server);
+
+    beforeEach((done) => {
+      knex.seed.run()
       .then(() => {
         request(server)
-          .post('/session')
-          .set('Content-Type', 'application/json')
-          .send({
-            email: 'jkrowling@gmail.com',
-            password: 'youreawizard'
-          })
-          .end((err, res) => {
-            if (err) {
-              return done(err);
-            }
+        .post('/session')
+        .set('Content-Type', 'application/json')
+        .send({
+          email: 'jkrowling@gmail.com',
+          password: 'youreawizard'
+        })
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
 
-            agent.saveCookies(res);
-            done();
-          });
+          agent.saveCookies(res);
+          done();
+        });
       })
       .catch((err) => {
         done(err);
       });
-  });
+    });
 
-  test('GET /favorites', (done) => {
-    /* eslint-disable max-len */
-    agent
+    test('GET /favorites', (done) => {
+      /* eslint-disable max-len */
+      agent
       .get('/favorites')
       .expect('Content-Type', /json/)
       .expect(200, [{
@@ -63,23 +66,23 @@ suite('part4 routes favorites', () => {
       }], done);
 
       /* eslint-enable max-len */
-  });
+    });
 
-  test('GET /favorites/check?bookId=1', (done) => {
-    agent
+    test('GET /favorites/check?bookId=1', (done) => {
+      agent
       .get('/favorites/check?bookId=1')
       .expect('Content-Type', /json/)
       .expect(200, 'true', done);
-  });
+    });
 
-  test('GET /favorites/check?bookId=2', (done) => {
-    agent
+    test('GET /favorites/check?bookId=2', (done) => {
+      agent
       .get('/favorites/check?bookId=2')
       .expect(200, 'false', done);
-  });
+    });
 
-  test('POST /favorites', (done) => {
-    agent
+    test('POST /favorites', (done) => {
+      agent
       .post('/favorites')
       .set('Content-Type', 'application/json')
       .send({ bookId: 2 })
@@ -89,10 +92,10 @@ suite('part4 routes favorites', () => {
         delete res.body.updatedAt;
       })
       .expect(200, { id: 2, bookId: 2, userId: 1 }, done);
-  });
+    });
 
-  test('DELETE /favorites', (done) => {
-    agent
+    test('DELETE /favorites', (done) => {
+      agent
       .delete('/favorites')
       .set('Content-Type', 'application/json')
       .send({ bookId: 1 })
@@ -102,5 +105,67 @@ suite('part4 routes favorites', () => {
         delete res.body.updatedAt;
       })
       .expect(200, { bookId: 1, userId: 1 }, done);
+    });
+  });
+
+  suite('without session', () => {
+    before((done) => {
+      knex.migrate.latest()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+    });
+
+    beforeEach((done) => {
+      knex.seed.run()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+    });
+
+    test('GET /favorites', (done) => {
+      request(server)
+      .get('/favorites')
+      .expect('Content-Type', /plain/)
+      .expect(401, 'Unauthorized', done);
+    });
+
+    test('GET /favorites/check?bookId=1', (done) => {
+      request(server)
+      .get('/favorites/check?bookId=1')
+      .expect('Content-Type', /plain/)
+      .expect(401, 'Unauthorized', done);
+    });
+
+    test('GET /favorites/check?bookId=2', (done) => {
+      request(server)
+      .get('/favorites/check?bookId=2')
+      .expect('Content-Type', /plain/)
+      .expect(401, 'Unauthorized', done);
+    });
+
+    test('POST /favorites', (done) => {
+      request(server)
+      .post('/favorites')
+      .set('Content-Type', 'application/json')
+      .send({ bookId: 2 })
+      .expect('Content-Type', /plain/)
+      .expect(401, 'Unauthorized', done);
+    });
+
+    test('DELETE /favorites', (done) => {
+      request(server)
+      .del('/favorites')
+      .set('Content-Type', 'application/json')
+      .send({ bookId: 1 })
+      .expect('Content-Type', /plain/)
+      .expect(401, 'Unauthorized', done);
+    });
   });
 });

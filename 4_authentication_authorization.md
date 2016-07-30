@@ -1,4 +1,4 @@
-# User Authentication
+# Authentication and Authorization
 
 In this assignment, you'll build a user authentication system for your RESTful, database-driven, HTTP server.
 
@@ -55,7 +55,7 @@ npm test test/part4.routes.session.test.js
 
 In the `routes/favorites.js` module, add middleware to handle the following HTTP requests and send back the associated HTTP response. The information in both the request body and response body use the `application/json` content type.
 
-**NOTE:** When reading the route table below, assume a user with an `id` of `1` is authenticated.
+For the route table below, assume a session has been created for a user with an `id` of `1`.
 
 | Request Method | Request URL                 | Request Body       | Response Status | Response Body                                        |
 |----------------|-----------------------------|--------------------|-----------------|------------------------------------------------------|
@@ -64,6 +64,16 @@ In the `routes/favorites.js` module, add middleware to handle the following HTTP
 | `GET`          | `/favorites/check?bookId=2` | N/A                | `200`           | `false`                                              |
 | `POST`         | `/favorites`                | `{ "bookId": 2 } ` | `200`           | `{ "id": 2, "bookId": 2, "userId": 1, ... }`         |
 | `DELETE`       | `/favorites`                | `{ "bookId": 1 }`  | `200`           | `{ "bookId": 1, "userId": 1, ... }`                  |
+
+For the route table below, assume no session has been created.
+
+| Request Method | Request URL                 | Request Body      | Response Status | Response Body     |
+|----------------|-----------------------------|-------------------|-----------------|-------------------|
+| `GET`          | `/favorites`                | N/A               | `401`           | `Unauthorized`    |
+| `GET`          | `/favorites/check?bookId=1` | N/A               | `401`           | `Unauthorized`    |
+| `GET`          | `/favorites/check?bookId=2` | N/A               | `401`           | `Unauthorized`    |
+| `POST`         | `/favorites`                | `{ "bookId": 2 }` | `401`           | `Unauthorized`    |
+| `DELETE`       | `/favorites`                | `{ "bookId": 1 }` | `401`           | `Unauthorized`    |
 
 You can run the following test suite to verify the middleware works as expected.
 
@@ -116,12 +126,6 @@ npm test test/part4.routes.session.bonus.test.js
 
 In the `routes/favorites.js` module, update middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body uses the `text/plain` content type.
 
-| Request Method | Request URL                 | Request Body      | Response Status | Response Body  |
-|----------------|-----------------------------|-------------------|-----------------|----------------|
-| `GET`          | `/favorites`                | N/A               | `401`           | `Unauthorized` |
-| `GET`          | `/favorites/check?bookId=1` | N/A               | `401`           | `Unauthorized` |
-| `POST`         | `/favorites`                | `{ "bookId": 2 }` | `401`           | `Unauthorized` |
-| `DELETE`       | `/favorites`                | `{ "bookId": 1 }` | `401`           | `Unauthorized` |
 
 You can run the following test suite to verify the middleware works as expected.
 
