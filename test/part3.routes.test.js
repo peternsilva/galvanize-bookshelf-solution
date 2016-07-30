@@ -11,7 +11,7 @@ const request = require('supertest');
 const knex = require('../knex');
 const server = require('../server');
 
-suite('part3 routes users', () => {
+suite('part3 routes', () => {
   before((done) => {
     knex.migrate.latest()
       .then(() => {
