@@ -1,6 +1,6 @@
 # User Authentication
 
-In this assignment, you'll add the necessary code to allow registered users to authenticate with the system.
+In this assignment, you'll build a user authentication system for your RESTful, database-driven, HTTP server.
 
 ## Migrations
 
@@ -18,19 +18,19 @@ Translate the following entity relationship diagram into a Knex migration file.
 └────────────────┴─────────────────────────┴────────────────────────────────────────────────┘
 ```
 
-More specifically, the migration file should:
+You can run the following test suite to verify the migration file works as expected.
 
-- Live in the `migrations` directory.
-- Migrate one table per migration file.
-- Pass all the tests when `npm test test/part4.migrations.test.js` is run.
+```shell
+npm test test/part4.migrations.test.js
+```
 
 ## Seeds
 
-Translate the following [JavaScript entities](https://gist.github.com/ryansobol/0bcc0058af3ce5823263ac005a34b050) into Knex seed files. More specifically, the seed files should:
+Translate the following [JavaScript entities](https://gist.github.com/ryansobol/0bcc0058af3ce5823263ac005a34b050) into a Knex seed file. You can run the following test suite to verify the seed file works as expected.
 
-- Live in the `seeds` directory.
-- Seed one table per seed file.
-- Pass all the tests when `npm test test/part4.seeds.test.js` is run.
+```shell
+npm test test/part4.seeds.test.js
+```
 
 ## `session` routes
 
