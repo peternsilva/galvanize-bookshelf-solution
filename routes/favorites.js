@@ -15,7 +15,7 @@ const checkAuth = function(req, res, next) {
   next();
 };
 
-router.get('/favorites', (req, res, next) => {
+router.get('/favorites', checkAuth, (req, res, next) => {
   knex('favorites')
     .innerJoin('books', 'books.id', 'favorites.book_id')
     .where('favorites.user_id', req.session.userId)
