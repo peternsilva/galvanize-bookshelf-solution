@@ -46,10 +46,6 @@ Then, play around with the live application by viewing, editing, and deleting it
 
 ## Bonus
 
-Using your preferred ESLint rules, lint your project with the `npm run lint .` command.
-
-## Bonus
-
 In the `routes/books.js` module, update the middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body use the `text/plain` content type.
 
 | Request Method | Request URL         | Request Body                 | Response Status | Response Body                   |
@@ -78,6 +74,10 @@ You can run the following test suite to verify the middleware works as expected.
 ```shell
 npm test test/part2.routes.books.bonus.test.js
 ```
+
+## Bonus
+
+Using your preferred ESLint rules, lint your project with the `npm run lint .` command.
 
 ## Bonus
 
