@@ -30,8 +30,6 @@ npm test test/part3.migrations.test.js
 
 In the `routes/users.js` module, add middleware to handle the following HTTP requests and send back the associated HTTP response. The information in both the request body and response body use the `application/json` content type.
 
-**NOTE:** The information in just the request body uses the `application/json` content type.
-
 | Request Method | Request URL        | Request Body                                                                                                        | Response Status | Response Body                                                                                  |
 |----------------|--------------------|---------------------------------------------------------------------------------------------------------------------|-----------------|------------------------------------------------------------------------------------------------|
 | `POST`         | `/users`           | `{ "first_name": "John", "last_name": "Siracusa", "email": "john.siracusa@gmail.com", "password": "ilikebigcats" }` | `200`           | `{ id: 2, "first_name": "John", "last_name": "Siracusa", "email": "john.siracusa@gmail.com" }` |
