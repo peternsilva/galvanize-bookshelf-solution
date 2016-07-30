@@ -53,20 +53,18 @@ npm test test/part4.routes.session.test.js
 
 ## `favorites` routes
 
-Next, update your server to handle the following HTTP request and send the appropriate HTTP response.
+In the `routes/favorites.js` module, add middleware to handle the following HTTP requests and send back the associated HTTP response. The information in both the request body and response body use the `application/json` content type.
 
-**NOTE:** The following routes assume a user where `id = 1` is authenticated.
+**NOTE:** The following routes assume a user with an `id` of `1` is authenticated.
 
-| Request Method | Request URL      | Response Status | Response Content-Type | Response Body                                                         |
-|----------------|------------------|-----------------|-----------------------|-----------------------------------------------------------------------|
-| `GET`          | `/favorites`     | `200`           | `application/json`    | `[{ "id": 1, "author_id": 2, "title": "Python In A Nutshell", ... }]` |
-| `GET`          | `/favorites/1`   | `200`           | `application/json`    | `{ "id": 1, "author_id": 2, "title": "Python In A Nutshell", ... }`   |
-| `POST`         | `/favorites/2`   | `200`           | `application/json`    | `{ "id": 2, "book_id": 2, "user_id": 1 }`                             |
-| `DELETE`       | `/favorites/2`   | `200`           | `application/json`    | `{ "book_id": 2, "user_id": 1 }`                                      |
+| Request Method | Request URL      | Response Status | Response Body                                                         |
+|----------------|------------------|-----------------|-----------------------------------------------------------------------|
+| `GET`          | `/favorites`     | `200`           | `[{ "id": 1, "author_id": 2, "title": "Python In A Nutshell", ... }]` |
+| `GET`          | `/favorites/1`   | `200`           | `{ "id": 1, "author_id": 2, "title": "Python In A Nutshell", ... }`   |
+| `POST`         | `/favorites/2`   | `200`           | `{ "id": 2, "book_id": 2, "user_id": 1 }`                             |
+| `DELETE`       | `/favorites/2`   | `200`           | `{ "book_id": 2, "user_id": 1 }`                                      |
 
-In the `routes/favorites.js` module, add the necessary middleware to handle above RESTful route table.
-
-You can run the following test suite to verify both the positive and the negative cases when the middleware responds with a `200` or `401` status code.
+You can run the following test suite to verify the middleware works as expected.
 
 ```shell
 npm test test/part4.routes.favorites.test.js
@@ -94,9 +92,28 @@ Then, play around with the live application by registering a new user. As you pl
 
 **TIP:** It's important to remember how these techniques work because you'll be building both a server application and a client application for your Q2 Project.
 
-## Bonus
+## `session` bonus
 
 In the `routes/session.js` module, update middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body uses the `text/plain` content type.
+
+| Request Method | Request URL        | Request Body                                                     | Response Status | Response Body                |
+|----------------|--------------------|------------------------------------------------------------------|-----------------|------------------------------|
+| `POST`         | `/session`         | `{ "email": "", ... }`                                           | `400`           | `Email must not be blank`    |
+| `POST`         | `/session`         | `{ "password": "", ... }`                                        | `400`           | `Password must not be blank` |
+| `POST`         | `/session`         | `{ "email": "bad.email@gmail.com", "password": "youreawizard" }` | `401`           | `Bad email or password`      |
+| `POST`         | `/session`         | `{ "email": "jkrowling@gmail.com", "password": "badpassword" }`  | `401`           | `Bad email or password`      |
+
+You can run the following test suite to verify the middleware works as expected.
+
+```shell
+npm test test/part4.routes.session.bonus.test.js
+```
+
+**NOTE:** Ensure the middleware handles the previous HTTP requests as before.
+
+## `favorites` bonus
+
+In the `routes/favorites.js` module, update middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body uses the `text/plain` content type.
 
 | Request Method | Request URL        | Request Body                                                     | Response Status | Response Body                |
 |----------------|--------------------|------------------------------------------------------------------|-----------------|------------------------------|
