@@ -60,7 +60,7 @@ npm test test/part4.routes.session.test.js
 
 ## Authorization
 
-In the `routes/favorites.js` module, add middleware to handle the following HTTP requests and send back the associated HTTP response. For the route table below, assume a session has been created for a user with an `id` of `1`. The information in both the request body and response body use the `application/json` content type.
+In the `routes/favorites.js` module, add middleware to handle the following HTTP requests and send back the associated HTTP response. The information in both the request body and response body use the `application/json` content type. Assume a session has been created for a user with an `id` of `1`.
 
 | Request Method | Request URL                 | Request Body       | Response Status | Response Body                                        |
 |----------------|-----------------------------|--------------------|-----------------|------------------------------------------------------|
@@ -70,7 +70,7 @@ In the `routes/favorites.js` module, add middleware to handle the following HTTP
 | `POST`         | `/favorites`                | `{ "bookId": 2 } ` | `200`           | `{ "id": 2, "bookId": 2, "userId": 1, ... }`         |
 | `DELETE`       | `/favorites`                | `{ "bookId": 1 }`  | `200`           | `{ "bookId": 1, "userId": 1, ... }`                  |
 
-For the route table below, assume no session has been created. The information in the request body uses the `application/json` content type while the information in the response body uses the `text/plain` content type.
+Additionally, ensure the middleware handles the following HTTP requests and sends back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body uses the `text/plain` content type. Assume no session has been created. 
 
 | Request Method | Request URL                 | Request Body      | Response Status | Response Body     |
 |----------------|-----------------------------|-------------------|-----------------|-------------------|
@@ -127,9 +127,7 @@ npm test test/part4.routes.session.bonus.test.js
 
 ## Bonus
 
-In the `routes/favorites.js` module, update middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body uses the `text/plain` content type.
-
-For the route table below, assume a session has been created for a user with an `id` of `1`.
+In the `routes/favorites.js` module, update middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body uses the `text/plain` content type. For the route table below, assume a session has been created for a user with an `id` of `1`.
 
 | Request Method | Request URL                   | Request Body          | Response Status | Response Body                |
 |----------------|-------------------------------|-----------------------|-----------------|------------------------------|
