@@ -40,7 +40,9 @@ In the `routes/session.js` module, add middleware to handle the following HTTP r
 |----------------|--------------------|------------------------------------------------------------------|-----------------|--------------------------------------------------|
 | `GET`          | `/session`         | N/A                                                              | `200`           | `false`                                          |
 | `POST`         | `/session`         | `{ "email": "jkrowling@gmail.com", "password": "youreawizard" }` | `200`           | `{ id: 1, "email": "jkrowling@gmail.com", ... }` |
-| `GET`          | `/session`         | N/A                                                              | `200`           | `true`         |
+| `GET`          | `/session`         | N/A                                                              | `200`           | `true`                                           |
+
+**NOTE:** Don't send the user's password or hashed password in the response body.
 
 You can run the following test suite to verify the middleware works as expected.
 
