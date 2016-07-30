@@ -26,6 +26,14 @@ You can run the following test suite to verify the migration file works as expec
 npm test test/part3.migrations.test.js
 ```
 
+## Seeds
+
+Translate the following [JavaScript entities](https://gist.github.com/ryansobol/e1113da9ff1486c04f6175a35f975b65) into a Knex seed file. You can run the following test suite to verify the seed file works as expected.
+
+```shell
+npm test test/part3.seeds.test.js
+```
+
 ## Routes
 
 In the `routes/users.js` module, add middleware to handle the following HTTP requests and send back the associated HTTP response. The information in both the request body and response body use the `application/json` content type.
