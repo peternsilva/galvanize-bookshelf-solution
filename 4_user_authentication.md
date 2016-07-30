@@ -55,7 +55,7 @@ npm test test/part4.routes.session.test.js
 
 In the `routes/favorites.js` module, add middleware to handle the following HTTP requests and send back the associated HTTP response. The information in both the request body and response body use the `application/json` content type.
 
-**NOTE:** The following routes assume a user with an `id` of `1` is authenticated.
+**NOTE:** When reading the route table below, assume a user with an `id` of `1` is authenticated.
 
 | Request Method | Request URL                 | Request Body       | Response Status | Response Body                                        |
 |----------------|-----------------------------|--------------------|-----------------|------------------------------------------------------|
