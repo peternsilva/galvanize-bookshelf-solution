@@ -151,4 +151,4 @@ Using your preferred ESLint rules, lint your project with the `npm run lint .` c
 
 ## Bonus
 
-Once you're satisfied, find a classmate and see if he or she would like some help.
+Once you're satisfied, find a classmate and see if that person would like some help.

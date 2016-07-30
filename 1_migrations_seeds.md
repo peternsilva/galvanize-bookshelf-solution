@@ -94,4 +94,4 @@ Then, take a peek at the code for the client application. It lives in the `publi
 
 ## Bonus
 
-Once you're satisfied, find a classmate and see if he or she would like some help.
+Once you're satisfied, find a classmate and see if that person would like some help.
