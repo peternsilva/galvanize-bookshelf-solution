@@ -32,7 +32,7 @@ Translate the following [JavaScript entity](https://gist.github.com/ryansobol/0b
 npm test test/part4.seeds.test.js
 ```
 
-## `session` routes
+## Authentication
 
 In the `routes/session.js` module, add middleware to handle the following HTTP requests and send back the associated HTTP response. The information in both the request body and response body use the `application/json` content type.
 
@@ -58,7 +58,7 @@ You can run the following test suite to verify the middleware works as expected.
 npm test test/part4.routes.session.test.js
 ```
 
-## `favorites` routes
+## Authorization
 
 In the `routes/favorites.js` module, add middleware to handle the following HTTP requests and send back the associated HTTP response. For the route table below, assume a session has been created for a user with an `id` of `1`. The information in both the request body and response body use the `application/json` content type.
 
@@ -108,7 +108,7 @@ Then, play around with the live application by logging in a user and viewing the
 
 **TIP:** It's important to remember how these techniques work because you'll be building both a server application and a client application for your Q2 Project.
 
-## `session` bonus
+## Bonus
 
 In the `routes/session.js` module, update middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body uses the `text/plain` content type.
 
@@ -125,7 +125,7 @@ npm test test/part4.routes.session.bonus.test.js
 
 **NOTE:** Ensure the middleware handles the previous HTTP requests as before.
 
-## `favorites` bonus
+## Bonus
 
 In the `routes/favorites.js` module, update middleware to handle the following HTTP requests and send back the associated HTTP response. The information in the request body uses the `application/json` content type while the information in the response body uses the `text/plain` content type.
 
