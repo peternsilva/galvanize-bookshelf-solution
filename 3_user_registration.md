@@ -58,10 +58,10 @@ After migrating and seeding the `bookshelf_dev` database, start an HTTP server.
 npm start
 ```
 
-And open the books page.
+And open the sign up page.
 
 ```shell
-open http://localhost:8000/index.html
+open http://localhost:8000/signup.html
 ```
 
 Then, play around with the live application by registering a new user. As you play, take a peek at the code for the client application and familiarize yourself with the following techniques.
