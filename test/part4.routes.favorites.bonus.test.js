@@ -8,6 +8,8 @@ const knex = require('../knex');
 const server = require('../server');
 
 suite('part4 routes favorites bonus', () => {
+  const agent = request.agent(server);
+
   before((done) => {
     knex.migrate.latest()
       .then(() => {
@@ -21,42 +23,63 @@ suite('part4 routes favorites bonus', () => {
   beforeEach((done) => {
     knex.seed.run()
       .then(() => {
-        done();
+        request(server)
+          .post('/session')
+          .set('Content-Type', 'application/json')
+          .send({
+            email: 'jkrowling@gmail.com',
+            password: 'youreawizard'
+          })
+          .end((err, res) => {
+            if (err) {
+              return done(err);
+            }
+
+            agent.saveCookies(res);
+            done();
+          });
       })
       .catch((err) => {
         done(err);
       });
   });
 
-  test('GET /favorites without authentication', (done) => {
-    request(server)
-      .get('/favorites')
+  test('GET /favorites/check?bookId=one', (done) => {
+    agent
+      .get('/favorites/check?bookId=one')
       .expect('Content-Type', /plain/)
-      .expect(401, 'Unauthorized', done);
+      .expect(400, 'Book ID must be an integer', done);
   });
 
-  test('GET /favorites/check?bookId=1 without authentication', (done) => {
-    request(server)
-      .get('/favorites/check?bookId=1')
-      .expect('Content-Type', /plain/)
-      .expect(401, 'Unauthorized', done);
-  });
-
-  test('POST /favorites without authentication', (done) => {
-    request(server)
+  test('POST /favorites', (done) => {
+    agent
       .post('/favorites')
-      .set('Content-Type', 'application/json')
-      .send({ bookId: 2 })
+      .send({ bookId: 'two' })
       .expect('Content-Type', /plain/)
-      .expect(401, 'Unauthorized', done);
+      .expect(400, 'Book ID must be an integer', done);
   });
 
-  test('DELETE /favorites without authentication', (done) => {
-    request(server)
-      .del('/favorites')
-      .set('Content-Type', 'application/json')
-      .send({ bookId: 1 })
+  test('POST /favorites', (done) => {
+    agent
+      .post('/favorites')
+      .send({ bookId: 9000 })
       .expect('Content-Type', /plain/)
-      .expect(401, 'Unauthorized', done);
+      .expect(404, 'Book not found', done);
+  });
+
+  test('DELETE /favorites', (done) => {
+    agent
+      .del('/favorites')
+      .send({ bookId: 'one' })
+      .expect('Content-Type', /plain/)
+      .expect(400, 'Book ID must be an integer', done);
+  });
+
+  test('DELETE /favorites', (done) => {
+    agent
+      .del('/favorites')
+      .send({ bookId: 9000 })
+      .expect('Content-Type', /plain/)
+      .expect(404, 'Favorite not found', done);
   });
 });

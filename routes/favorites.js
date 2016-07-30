@@ -7,7 +7,7 @@ const { camelizeKeys, decamelizeKeys } = require('humps');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
-const checkAuth = function(req, res, next) {
+const authorize = function(req, res, next) {
   if (!req.session.userId) {
     return next(boom.create(401, 'Unauthorized'));
   }
@@ -15,7 +15,7 @@ const checkAuth = function(req, res, next) {
   next();
 };
 
-router.get('/favorites', checkAuth, (req, res, next) => {
+router.get('/favorites', authorize, (req, res, next) => {
   knex('favorites')
     .innerJoin('books', 'books.id', 'favorites.book_id')
     .where('favorites.user_id', req.session.userId)
@@ -30,8 +30,12 @@ router.get('/favorites', checkAuth, (req, res, next) => {
     });
 });
 
-router.get('/favorites/check', checkAuth, (req, res, next) => {
+router.get('/favorites/check', authorize, (req, res, next) => {
   const bookId = Number.parseInt(req.query.bookId);
+
+  if (!Number.isInteger(bookId)) {
+    return next(boom.create(400, 'Book ID must be an integer'));
+  }
 
   knex('books')
     .innerJoin('favorites', 'favorites.book_id', 'books.id')
@@ -52,11 +56,11 @@ router.get('/favorites/check', checkAuth, (req, res, next) => {
     });
 });
 
-router.post('/favorites', checkAuth, (req, res, next) => {
+router.post('/favorites', authorize, (req, res, next) => {
   const bookId = Number.parseInt(req.body.bookId);
 
-  if (Number.isNaN(bookId)) {
-    return next();
+  if (!Number.isInteger(bookId)) {
+    return next(boom.create(400, 'Book ID must be an integer'));
   }
 
   knex('books')
@@ -64,7 +68,7 @@ router.post('/favorites', checkAuth, (req, res, next) => {
     .first()
     .then((book) => {
       if (!book) {
-        throw boom.create(404, 'Not Found');
+        throw boom.create(404, 'Book not found');
       }
 
       const insertFavorite = { bookId, userId: req.session.userId };
@@ -82,11 +86,11 @@ router.post('/favorites', checkAuth, (req, res, next) => {
     });
 });
 
-router.delete('/favorites', checkAuth, (req, res, next) => {
+router.delete('/favorites', authorize, (req, res, next) => {
   const bookId = Number.parseInt(req.body.bookId);
 
-  if (Number.isNaN(bookId)) {
-    return next();
+  if (!Number.isInteger(bookId)) {
+    return next(boom.create(400, 'Book ID must be an integer'));
   }
 
   // eslint-disable-next-line camelcase
@@ -99,7 +103,7 @@ router.delete('/favorites', checkAuth, (req, res, next) => {
     .first()
     .then((row) => {
       if (!row) {
-        throw boom.create(404, 'Not Found');
+        throw boom.create(404, 'Favorite not found');
       }
 
       favorite = camelizeKeys(row);

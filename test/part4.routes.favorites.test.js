@@ -25,26 +25,26 @@ suite('part4 routes favorites', () => {
 
     beforeEach((done) => {
       knex.seed.run()
-      .then(() => {
-        request(server)
-        .post('/session')
-        .set('Content-Type', 'application/json')
-        .send({
-          email: 'jkrowling@gmail.com',
-          password: 'youreawizard'
-        })
-        .end((err, res) => {
-          if (err) {
-            return done(err);
-          }
+        .then(() => {
+          request(server)
+            .post('/session')
+            .set('Content-Type', 'application/json')
+            .send({
+              email: 'jkrowling@gmail.com',
+              password: 'youreawizard'
+            })
+            .end((err, res) => {
+              if (err) {
+                return done(err);
+              }
 
-          agent.saveCookies(res);
-          done();
+              agent.saveCookies(res);
+              done();
+            });
+        })
+        .catch((err) => {
+          done(err);
         });
-      })
-      .catch((err) => {
-        done(err);
-      });
     });
 
     test('GET /favorites', (done) => {
