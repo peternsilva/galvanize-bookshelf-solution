@@ -8,8 +8,6 @@ const knex = require('../knex');
 const server = require('../server');
 
 suite('part4 routes favorites bonus', () => {
-  const agent = request.agent(server);
-
   before((done) => {
     knex.migrate.latest()
       .then(() => {
@@ -30,63 +28,35 @@ suite('part4 routes favorites bonus', () => {
       });
   });
 
-  test('GET /favorites with authentication', (done) => {
-    /* eslint-disable max-len */
-    agent
+  test('GET /favorites without authentication', (done) => {
+    request(server)
       .get('/favorites')
-      .expect('Content-Type', /json/)
-      .expect(200, [{
-        id: 1,
-        bookId: 1,
-        userId: 1,
-        createdAt: '2016-06-26T14:26:16.000Z',
-        updatedAt: '2016-06-26T14:26:16.000Z',
-        title: 'JavaScript, The Good Parts',
-        author: 'Douglas Crockford',
-        genre: 'JavaScript',
-        description: 'Most programming languages contain good and bad parts, but JavaScript has more than its share of the bad, having been developed and released in a hurry before it could be refined. This authoritative book scrapes away these bad features to reveal a subset of JavaScript that\'s more reliable, readable, and maintainable than the language as a whole—a subset you can use to create truly extensible and efficient code.',
-        coverUrl: 'https://students-gschool-production.s3.amazonaws.com/uploads/asset/file/284/javascript_the_good_parts.jpg'
-      }], done);
-
-      /* eslint-enable max-len */
+      .expect('Content-Type', /plain/)
+      .expect(401, 'Unauthorized', done);
   });
 
-  test('GET /favorites/check?bookId=1', (done) => {
-    agent
+  test('GET /favorites/check?bookId=1 without authentication', (done) => {
+    request(server)
       .get('/favorites/check?bookId=1')
-      .expect('Content-Type', /json/)
-      .expect(200, 'true', done);
+      .expect('Content-Type', /plain/)
+      .expect(401, 'Unauthorized', done);
   });
 
-  test('GET /favorites/check?bookId=2', (done) => {
-    agent
-      .get('/favorites/check?bookId=2')
-      .expect(200, 'false', done);
-  });
-
-  test('POST /favorites', (done) => {
-    agent
+  test('POST /favorites without authentication', (done) => {
+    request(server)
       .post('/favorites')
       .set('Content-Type', 'application/json')
       .send({ bookId: 2 })
-      .expect('Content-Type', /json/)
-      .expect((res) => {
-        delete res.body.createdAt;
-        delete res.body.updatedAt;
-      })
-      .expect(200, { id: 2, bookId: 2, userId: 1 }, done);
+      .expect('Content-Type', /plain/)
+      .expect(401, 'Unauthorized', done);
   });
 
-  test('DELETE /favorites', (done) => {
-    agent
-      .delete('/favorites')
+  test('DELETE /favorites without authentication', (done) => {
+    request(server)
+      .del('/favorites')
       .set('Content-Type', 'application/json')
       .send({ bookId: 1 })
-      .expect('Content-Type', /json/)
-      .expect((res) => {
-        delete res.body.createdAt;
-        delete res.body.updatedAt;
-      })
-      .expect(200, { bookId: 1, userId: 1 }, done);
+      .expect('Content-Type', /plain/)
+      .expect(401, 'Unauthorized', done);
   });
 });
