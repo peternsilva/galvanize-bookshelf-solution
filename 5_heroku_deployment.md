@@ -4,7 +4,7 @@ In this assignment, you'll deploy both the server and client applications to Her
 
 ## Pre-deployment
 
-Complete the following steps to prepare for deployment.
+First, complete the following steps to prepare for deployment.
 
 1. Create a Heroku app called `USERNAME-galvanize-bookshelf` where `USERNAME` is your GitHub username in lowercase form.
 1. Generate a secret key for signing session information and set it to the `SESSION_SECRET` config variable of the new Heroku app.
@@ -16,6 +16,8 @@ Complete the following steps to prepare for deployment.
 
 ## Deployment
 
+Next, complete the following steps to deployment your applications.
+
 1. Push the changes to the master branch of your Heroku remote.
 1. Seed the production database by running a one-off command on Heroku.
 1. Visit the production URL of the Heroku app.
@@ -24,24 +26,16 @@ Complete the following steps to prepare for deployment.
 
 ## Post-deployment
 
-Once your application is deployed, add its URL to your Github repository.
+Finally, complete the following steps after deployment.
 
-Test
-
-```shell
-npm test
-```
-
-Lint
-
-```shell
-npm run lint .
-```
+1. Add its URL to your Github repository.
+1. Run the full test suite with `npm test` and fix an broken tests including bonus tests.
+1. Run the linter with `npm run lint .` and fix any linting errors.
 
 ## Bonus
 
-Schedule the application to re-seed the database every hour.
+Use the [Heroku Scheduler](https://devcenter.heroku.com/articles/scheduler) add-on to re-seed the database with `npm run knex seeds:run` every day at 10:00am UTC, which is 3:00am PST.
 
-```shell
-npm run knex seeds:run
-```
+## Bonus
+
+Once you're satisfied, find a classmate and see if that person would like some help.
