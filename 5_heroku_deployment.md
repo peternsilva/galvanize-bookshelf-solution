@@ -34,7 +34,7 @@ Finally, complete the following steps after deployment.
 
 ## Bonus
 
-Use the [Heroku Scheduler](https://devcenter.heroku.com/articles/scheduler) add-on to re-seed the database with `npm run knex seeds:run` every day at 10:00am UTC, which is 3:00am PST.
+Use the [Heroku Scheduler](https://devcenter.heroku.com/articles/scheduler) add-on to re-seed the production database with `npm run knex seeds:run` every hour.
 
 ## Bonus
 
