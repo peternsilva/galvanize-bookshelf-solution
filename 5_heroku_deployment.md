@@ -1,6 +1,6 @@
 # Heroku Deployment
 
-In this assignment, you'll deploy this application to Heroku.
+In this assignment, you'll deploy the application to Heroku.
 
 ## Pre-deployment
 
@@ -16,7 +16,7 @@ First, complete the following steps to prepare for deployment.
 
 ## Deployment
 
-Next, complete the following steps to deployment this application.
+Next, complete the following steps to deployment the application.
 
 1. Push the changes to the master branch of your Heroku remote.
 1. Seed the production database by running a one-off command on Heroku.
