@@ -13,13 +13,13 @@ First, complete the following steps to prepare for deployment.
 1. Update the `knexfile.js` file with the `production` database connection information.
 1. Update the `package.json` file with a `heroku-postbuild` script to migrate the production database.
 1. Add and commit the changes to your local git repository.
-1. Push the changes to the `origin/master` branch on GitHub.
+1. Push the changes to the `master` branch on GitHub.
 
 ## Deployment
 
 Next, complete the following steps to deployment the application.
 
-1. Push the changes to the `heroku/master` branch on Heroku.
+1. Push the changes to the `master` branch on Heroku.
 1. Seed the production database by running a one-off command on Heroku.
 1. Visit the Heroku app at `https://USERNAME-galvanize-bookshelf.herokuapp.com`.
 1. If the application isn't working, check Heroku's logs.
