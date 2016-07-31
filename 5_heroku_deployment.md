@@ -1,6 +1,6 @@
 # Heroku Deployment
 
-In this assignment, you'll deploy the application to Heroku.
+In this assignment, you'll deploy your database-driven application to Heroku.
 
 ## Pre-deployment
 
