@@ -20,7 +20,7 @@ Next, complete the following steps to deployment your applications.
 
 1. Push the changes to the master branch of your Heroku remote.
 1. Seed the production database by running a one-off command on Heroku.
-1. Visit the production URL of the Heroku app.
+1. Visit the Heroku app at `https://USERNAME-galvanize-bookshelf.herokuapp.com`.
 1. If the application isn't working, check Heroku's logs.
 1. Otherwise, celebrate with a beverage of choice!
 
