@@ -20,8 +20,8 @@ First, complete the following steps to prepare for deployment.
 Next, complete the following steps to deployment the application.
 
 1. Push the changes to the `master` branch on Heroku.
-1. Seed the production database by running a one-off command on Heroku.
-1. Visit the Heroku app at `https://USERNAME-galvanize-bookshelf.herokuapp.com`.
+1. Seed the production database with `npm run knex seeds:run` but as a one-off Heroku command.
+1. Visit the Heroku app at `https://USERNAME-galvanize-bookshelf.herokuapp.com/`.
 1. If the application isn't working, check Heroku's logs.
 1. Otherwise, celebrate with a beverage of choice!
 
@@ -29,7 +29,7 @@ Next, complete the following steps to deployment the application.
 
 Finally, complete the following steps after deployment.
 
-1. Add `https://USERNAME-galvanize-bookshelf.herokuapp.com` to your Github repository's URL.
+1. Add `https://USERNAME-galvanize-bookshelf.herokuapp.com/` to your Github repository's URL.
 1. Run the full test suite with `npm test` and fix any test errors including bonus tests.
 1. Run the linter with `npm run lint .` and fix any linting errors.
 
