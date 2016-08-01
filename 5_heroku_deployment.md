@@ -8,10 +8,10 @@ First, complete the following steps to prepare for deployment.
 
 1. Create a Heroku app called `USERNAME-galvanize-bookshelf` where `USERNAME` is your GitHub username in lowercase form.
 1. Generate a secret key to sign session information and set it to the `SESSION_SECRET` config variable of the new Heroku app.
-1. Add a Node version to the `engines` section of the `package.json` file.
+1. Update the `package.json` file with a dependency to a specific Node.js version.
 1. Enable the Heroku PostgreSQL add-on for the new Heroku app.
 1. Update the `knexfile.js` file with the `production` database connection information.
-1. Add a command to migrate the production database post-deployment to the `scripts` section of the `package.json` file. 
+1. Update the `package.json` file with a `heroku-postbuild` script to migrate the production database.
 1. Add and commit the changes to your local git repository.
 1. Push the changes to the `master` branch on GitHub.
 
