@@ -6,7 +6,8 @@ const express = require('express');
 const knex = require('../knex');
 const { camelizeKeys } = require('humps');
 
-const router = express.Router(); // eslint-disable-line new-cap
+// eslint-disable-next-line new-cap
+const router = express.Router();
 
 router.get('/session', (req, res) => {
   if (req.session.userId) {

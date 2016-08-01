@@ -5,7 +5,8 @@ const express = require('express');
 const knex = require('../knex');
 const { camelizeKeys, decamelizeKeys } = require('humps');
 
-const router = express.Router(); // eslint-disable-line new-cap
+// eslint-disable-next-line new-cap
+const router = express.Router();
 
 router.get('/books', (_req, res, next) => {
   knex('books')
