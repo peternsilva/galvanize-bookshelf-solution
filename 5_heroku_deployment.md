@@ -4,7 +4,7 @@ In this assignment, you'll deploy your database-driven application to Heroku.
 
 ## Pre-deployment
 
-First, complete the following steps to prepare for deployment.
+First, complete the following pre-deployment steps.
 
 1. Create a Heroku app called `USERNAME-galvanize-bookshelf` where `USERNAME` is your GitHub username in lowercase form.
 1. Generate a secret key to sign session information and set it to the `SESSION_SECRET` config variable of the new Heroku app.
@@ -17,7 +17,7 @@ First, complete the following steps to prepare for deployment.
 
 ## Deployment
 
-Next, complete the following steps to deploy the application.
+Next, complete the following deployment steps.
 
 1. Push the changes to the `master` branch on Heroku.
 1. Seed the production database with `npm run knex seeds:run` as a one-off Heroku command.
@@ -27,7 +27,7 @@ Next, complete the following steps to deploy the application.
 
 ## Post-deployment
 
-Finally, complete the following steps after deployment.
+Finally, complete the following post-deployment steps.
 
 1. Add `https://USERNAME-galvanize-bookshelf.herokuapp.com/` to your Github repository's URL.
 1. Fix any test errors, including bonus tests, with `npm test`.
