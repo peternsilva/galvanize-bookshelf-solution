@@ -17,12 +17,12 @@ First, complete the following steps to prepare for deployment.
 
 ## Deployment
 
-Next, complete the following steps to deployment the application.
+Next, complete the following steps to deploy the application.
 
 1. Push the changes to the `master` branch on Heroku.
-1. Seed the production database with `npm run knex seeds:run` but as a one-off Heroku command.
+1. Seed the production database with `npm run knex seeds:run` as a one-off Heroku command.
 1. Visit the Heroku app at `https://USERNAME-galvanize-bookshelf.herokuapp.com/`.
-1. If the application isn't working, check Heroku's logs.
+1. If the application isn't working, check the production logs with `heroku logs`.
 1. Otherwise, celebrate with a beverage of choice!
 
 ## Post-deployment
