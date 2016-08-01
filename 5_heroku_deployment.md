@@ -11,7 +11,7 @@ First, complete the following steps to prepare for deployment.
 1. Add a Node version to the `engines` section of the `package.json` file.
 1. Enable the Heroku PostgreSQL add-on for the new Heroku app.
 1. Update the `knexfile.js` file with the `production` database connection information.
-1. Add a `heroku-postbuild` migration command to the `scripts` section of the `package.json` file. 
+1. Add a command to migrate the production database post-deployment to the `scripts` section of the `package.json` file. 
 1. Add and commit the changes to your local git repository.
 1. Push the changes to the `master` branch on GitHub.
 
