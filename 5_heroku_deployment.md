@@ -32,6 +32,7 @@ Finally, complete the following post-deployment steps.
 1. Add `https://USERNAME-galvanize-bookshelf.herokuapp.com/` to your Github repository's URL.
 1. Fix any test errors, including bonus tests, with `npm test`.
 1. Fix any linting errors with `npm run lint .`.
+1. Submit your solution for grading.
 
 ## Bonus
 
