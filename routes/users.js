@@ -3,6 +3,7 @@
 const bcrypt = require('bcrypt-as-promised');
 const boom = require('boom');
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const knex = require('../knex');
 const { camelizeKeys, decamelizeKeys } = require('humps');
 
@@ -46,7 +47,16 @@ router.post('/users', (req, res, next) => {
 
       delete user.hashedPassword;
 
-      req.session.userId = user.id;
+      const expiry = new Date(Date.now() + 1000 * 60 * 60 * 3); // 3 hours
+      const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+        expiresIn: '3h'
+      });
+
+      res.cookie('accessToken', token, {
+        httpOnly: true,
+        expires: expiry,
+        secure: router.get('env') === 'production'
+      });
 
       res.send(user);
     })

@@ -2,6 +2,7 @@
 
 const boom = require('boom');
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const knex = require('../knex');
 const { camelizeKeys, decamelizeKeys } = require('humps');
 
@@ -9,17 +10,23 @@ const { camelizeKeys, decamelizeKeys } = require('humps');
 const router = express.Router();
 
 const authorize = function(req, res, next) {
-  if (!req.session.userId) {
-    return next(boom.create(401, 'Unauthorized'));
-  }
+  const accessToken = req.cookies.accessToken;
 
-  next();
+  jwt.verify(accessToken, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return next(boom.create(401, 'Unauthorized'));
+    }
+
+    req.token = decoded;
+
+    next();
+  });
 };
 
 router.get('/favorites', authorize, (req, res, next) => {
   knex('favorites')
     .innerJoin('books', 'books.id', 'favorites.book_id')
-    .where('favorites.user_id', req.session.userId)
+    .where('favorites.user_id', req.token.userId)
     .orderBy('books.title', 'ASC')
     .then((rows) => {
       const favs = camelizeKeys(rows);
@@ -42,7 +49,7 @@ router.get('/favorites/check', authorize, (req, res, next) => {
     .innerJoin('favorites', 'favorites.book_id', 'books.id')
     .where({
       'favorites.book_id': bookId,
-      'favorites.user_id': req.session.userId
+      'favorites.user_id': req.token.userId
     })
     .first()
     .then((row) => {
@@ -72,7 +79,7 @@ router.post('/favorites', authorize, (req, res, next) => {
         throw boom.create(404, 'Book not found');
       }
 
-      const insertFavorite = { bookId, userId: req.session.userId };
+      const insertFavorite = { bookId, userId: req.token.userId };
 
       return knex('favorites')
         .insert(decamelizeKeys(insertFavorite), '*');
@@ -95,7 +102,7 @@ router.delete('/favorites', authorize, (req, res, next) => {
   }
 
   // eslint-disable-next-line camelcase
-  const clause = { book_id: bookId, user_id: req.session.userId };
+  const clause = { book_id: bookId, user_id: req.token.userId };
 
   let favorite;
 

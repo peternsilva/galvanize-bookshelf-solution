@@ -3,21 +3,26 @@
 const bcrypt = require('bcrypt-as-promised');
 const boom = require('boom');
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const knex = require('../knex');
 const { camelizeKeys } = require('humps');
 
 // eslint-disable-next-line new-cap
 const router = express.Router();
 
-router.get('/session', (req, res) => {
-  if (req.session.userId) {
-    return res.send(true);
-  }
+router.get('/token', (req, res) => {
+  const accessToken = req.cookies.accessToken;
 
-  res.send(false);
+  jwt.verify(accessToken, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.send(false);
+    }
+
+    res.send(true);
+  });
 });
 
-router.post('/session', (req, res, next) => {
+router.post('/token', (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !email.trim()) {
@@ -45,7 +50,16 @@ router.post('/session', (req, res, next) => {
     .then(() => {
       delete user.hashedPassword;
 
-      req.session.userId = user.id;
+      const expiry = new Date(Date.now() + 1000 * 60 * 60 * 3); // 3 hours
+      const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+        expiresIn: '3h'
+      });
+
+      res.cookie('accessToken', token, {
+        httpOnly: true,
+        expires: expiry,
+        secure: router.get('env') === 'production'
+      });
 
       res.send(user);
     })
@@ -57,8 +71,8 @@ router.post('/session', (req, res, next) => {
     });
 });
 
-router.delete('/session', (req, res) => {
-  req.session = null;
+router.delete('/token', (req, res) => {
+  res.clearCookie('accessToken');
   res.send(true);
 });
 
