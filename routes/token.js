@@ -11,9 +11,9 @@ const { camelizeKeys } = require('humps');
 const router = express.Router();
 
 router.get('/token', (req, res) => {
-  const accessToken = req.cookies.accessToken;
+  const token = req.cookies.token;
 
-  jwt.verify(accessToken, process.env.JWT_SECRET, (err, decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       return res.send(false);
     }
@@ -55,7 +55,7 @@ router.post('/token', (req, res, next) => {
         expiresIn: '3h'
       });
 
-      res.cookie('accessToken', token, {
+      res.cookie('token', token, {
         httpOnly: true,
         expires: expiry,
         secure: router.get('env') === 'production'
@@ -72,7 +72,7 @@ router.post('/token', (req, res, next) => {
 });
 
 router.delete('/token', (req, res) => {
-  res.clearCookie('accessToken');
+  res.clearCookie('token');
   res.send(true);
 });
 
