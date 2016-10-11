@@ -63,7 +63,6 @@ app.use((err, _req, res, _next) => {
       .set('Content-Type', 'text/plain')
       .send(err.message);
   }
-
   // eslint-disable-next-line no-console
   console.error(err.stack);
   res.sendStatus(500);
