@@ -52,7 +52,7 @@ router.post('/users', (req, res, next) => {
         expiresIn: '3h'
       });
 
-      res.cookie('accessToken', token, {
+      res.cookie('token', token, {
         httpOnly: true,
         expires: expiry,
         secure: router.get('env') === 'production'
