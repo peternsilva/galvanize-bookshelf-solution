@@ -59,7 +59,9 @@ router.post('/token', (req, res, next) => {
         secure: router.get('env') === 'production'
       });
 
-      res.send(claim);
+      delete user.hashedPassword;
+
+      res.send(user);
     })
     .catch(bcrypt.MISMATCH_ERROR, () => {
       throw boom.create(400, 'Bad email or password');

@@ -42,7 +42,8 @@ router.post('/users', (req, res, next) => {
       return knex('users').insert(decamelizeKeys(insertUser), '*');
     })
     .then((rows) => {
-      const claim = { userId: rows[0].id };
+      const user = camelizeKeys(rows[0]);
+      const claim = { userId: user.id };
       const token = jwt.sign(claim, process.env.JWT_KEY, {
         expiresIn: '7 days'
       });
@@ -53,7 +54,9 @@ router.post('/users', (req, res, next) => {
         secure: router.get('env') === 'production'
       });
 
-      res.send(claim);
+      delete user.hashedPassword;
+
+      res.send(user);
     })
     .catch((err) => {
       next(err);
