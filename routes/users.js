@@ -39,26 +39,21 @@ router.post('/users', (req, res, next) => {
       const { firstName, lastName } = req.body;
       const insertUser = { firstName, lastName, email, hashedPassword };
 
-      return knex('users')
-        .insert(decamelizeKeys(insertUser), '*');
+      return knex('users').insert(decamelizeKeys(insertUser), '*');
     })
     .then((rows) => {
-      const user = camelizeKeys(rows[0]);
-
-      delete user.hashedPassword;
-
-      const expiry = new Date(Date.now() + 1000 * 60 * 60 * 3); // 3 hours
-      const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-        expiresIn: '3h'
+      const claim = { userId: rows[0].id };
+      const token = jwt.sign(claim, process.env.JWT_KEY, {
+        expiresIn: '7 days'
       });
 
       res.cookie('token', token, {
         httpOnly: true,
-        expires: expiry,
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),  // 7 days
         secure: router.get('env') === 'production'
       });
 
-      res.send(user);
+      res.send(claim);
     })
     .catch((err) => {
       next(err);
