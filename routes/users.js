@@ -25,11 +25,10 @@ router.post('/users', (req, res, next) => {
   }
 
   knex('users')
-    .select(knex.raw('1=1'))
     .where('email', email)
     .first()
-    .then((exists) => {
-      if (exists) {
+    .then((user) => {
+      if (user) {
         throw boom.create(400, 'Email already exists');
       }
 
