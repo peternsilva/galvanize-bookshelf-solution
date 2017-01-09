@@ -10,9 +10,7 @@ const { camelizeKeys, decamelizeKeys } = require('humps');
 const router = express.Router();
 
 const authorize = function(req, res, next) {
-  const { token } = req.cookies;
-
-  jwt.verify(token, process.env.JWT_KEY, (err, claim) => {
+  jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, claim) => {
     if (err) {
       return next(boom.create(401, 'Unauthorized'));
     }
