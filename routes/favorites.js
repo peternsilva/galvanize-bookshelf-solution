@@ -12,12 +12,12 @@ const router = express.Router();
 const authorize = function(req, res, next) {
   const { token } = req.cookies;
 
-  jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
+  jwt.verify(token, process.env.JWT_KEY, (err, claim) => {
     if (err) {
       return next(boom.create(401, 'Unauthorized'));
     }
 
-    req.token = decoded;
+    req.claim = claim;
 
     next();
   });
@@ -26,7 +26,7 @@ const authorize = function(req, res, next) {
 router.get('/favorites', authorize, (req, res, next) => {
   knex('favorites')
     .innerJoin('books', 'books.id', 'favorites.book_id')
-    .where('favorites.user_id', req.token.userId)
+    .where('favorites.user_id', req.claim.userId)
     .orderBy('books.title', 'ASC')
     .then((rows) => {
       const favs = camelizeKeys(rows);
@@ -49,7 +49,7 @@ router.get('/favorites/check', authorize, (req, res, next) => {
     .innerJoin('favorites', 'favorites.book_id', 'books.id')
     .where({
       'favorites.book_id': bookId,
-      'favorites.user_id': req.token.userId
+      'favorites.user_id': req.claim.userId
     })
     .first()
     .then((row) => {
@@ -79,7 +79,7 @@ router.post('/favorites', authorize, (req, res, next) => {
         throw boom.create(404, 'Book not found');
       }
 
-      const insertFavorite = { bookId, userId: req.token.userId };
+      const insertFavorite = { bookId, userId: req.claim.userId };
 
       return knex('favorites')
         .insert(decamelizeKeys(insertFavorite), '*');
@@ -102,7 +102,7 @@ router.delete('/favorites', authorize, (req, res, next) => {
   }
 
   // eslint-disable-next-line camelcase
-  const clause = { book_id: bookId, user_id: req.token.userId };
+  const clause = { book_id: bookId, user_id: req.claim.userId };
 
   let favorite;
 
