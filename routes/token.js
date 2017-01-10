@@ -27,7 +27,7 @@ router.post('/token', (req, res, next) => {
     return next(boom.create(400, 'Email must not be blank'));
   }
 
-  if (!password || password.length < 8) {
+  if (!password || !password.trim()) {
     return next(boom.create(400, 'Password must not be blank'));
   }
 
@@ -48,13 +48,13 @@ router.post('/token', (req, res, next) => {
     .then(() => {
       const claim = { userId: user.id };
       const token = jwt.sign(claim, process.env.JWT_KEY, {
-        expiresIn: '7 days'
+        expiresIn: '7 days'  // Adds an exp field to the payload
       });
 
       res.cookie('token', token, {
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),  // 7 days
-        secure: router.get('env') === 'production'
+        secure: router.get('env') === 'production'  // Set from the NODE_ENV
       });
 
       delete user.hashedPassword;
