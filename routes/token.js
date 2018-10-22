@@ -1,6 +1,6 @@
 'use strict';
 
-const bcrypt = require('bcrypt-as-promised');
+const bcrypt = require('bcrypt');
 const boom = require('boom');
 const express = require('express');
 const jwt = require('jsonwebtoken');
@@ -20,6 +20,7 @@ router.get('/token', (req, res) => {
   });
 });
 
+// LOGIN (w/ user-pass from POST data) (create token for sesh)
 router.post('/token', (req, res, next) => {
   const { email, password } = req.body;
 
@@ -42,8 +43,7 @@ router.post('/token', (req, res, next) => {
       }
 
       user = camelizeKeys(row);
-
-      return bcrypt.compare(password, user.hashedPassword);
+      return bcrypt.compare(password, user.hashedPassword)
     })
     .then(() => {
       const claim = { userId: user.id };
@@ -58,10 +58,9 @@ router.post('/token', (req, res, next) => {
       });
 
       delete user.hashedPassword;
-
       res.send(user);
     })
-    .catch(bcrypt.MISMATCH_ERROR, () => {
+    .catch(() => {
       throw boom.create(400, 'Bad email or password');
     })
     .catch((err) => {
@@ -69,9 +68,10 @@ router.post('/token', (req, res, next) => {
     });
 });
 
+// LOGOUT (del token)
 router.delete('/token', (req, res) => {
   res.clearCookie('token');
-  res.end();
+  res.send({'status': 200});
 });
 
 module.exports = router;

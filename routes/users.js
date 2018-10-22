@@ -1,6 +1,6 @@
 'use strict';
 
-const bcrypt = require('bcrypt-as-promised');
+const bcrypt = require('bcrypt');
 const boom = require('boom');
 const express = require('express');
 const jwt = require('jsonwebtoken');
@@ -10,6 +10,7 @@ const { camelizeKeys, decamelizeKeys } = require('humps');
 // eslint-disable-next-line new-cap
 const router = express.Router();
 
+// CREATE USER + (Log them in by creating token while we're at it)
 router.post('/users', (req, res, next) => {
   const { email, password } = req.body;
 
